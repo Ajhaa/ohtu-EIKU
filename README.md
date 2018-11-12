@@ -1,2 +1,2 @@
 # ohtu-EIKU
-Group EIKU ohtu miniproject
+Group EIKU miniproject for the University of Helsinki course *Ohjelmistotuotanto*
