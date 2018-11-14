@@ -1,7 +1,9 @@
 # Product Backlog
 
 - Voidaan luoda ja tallentaa lukuvinkki
+- Voidaan poistaa lukuvinkki
 - Voidaan selata kaikkia tallennettuja lukuvinkkejä
+
 - Voidaan tarkastella yksittäistä lukuvinkkiä
 - Voidaan muokata lukuvinkkiä
 - Lukuvinkki voidaan merkitä luetuksi
