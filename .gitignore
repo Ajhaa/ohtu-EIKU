@@ -1,7 +1,7 @@
-appliaction/.gradle/
-application/build/
-application/nbproject/
-application/.classpath
+application/linkkivinkit/.gradle/
+application/linkkivinkit/build/
+application/linkkivinkit/nbproject/
+application/linkkivinkit/.classpath
 
 # Ignore Gradle GUI config
 gradle-app.setting
