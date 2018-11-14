@@ -3,7 +3,6 @@
 - Voidaan luoda ja tallentaa lukuvinkki
 - Voidaan poistaa lukuvinkki
 - Voidaan selata kaikkia tallennettuja lukuvinkkejä
-
 - Voidaan tarkastella yksittäistä lukuvinkkiä
 - Voidaan muokata lukuvinkkiä
 - Lukuvinkki voidaan merkitä luetuksi
@@ -12,3 +11,9 @@
 - Voidaan filtteröidä ja hakea linkkejä hakusanoilla
 - Voidaan toteuttaa kaikki toiminnot web-käyttöliittymällä
 - Henkilökohtaiset tunnukset web-käyttöliittymässä
+
+# Sprint #1 Backlog
+
+- Voidaan luoda ja tallentaa lukuvinkki
+- Voidaan poistaa lukuvinkki
+- Voidaan selata kaikkia tallennettuja lukuvinkkejä
