@@ -1,7 +1,7 @@
 package domain;
 
 public class InternetContent extends Item {
-	private String title;
+    private String title;
     private String url;
 
     public InternetContent(String title, String url) {
