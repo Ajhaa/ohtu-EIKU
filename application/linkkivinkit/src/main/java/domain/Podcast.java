@@ -1,6 +1,6 @@
 package domain;
 
-public class Podcast {
+public class Podcast extends Item {
     private String name;
     private String title;
     private String description;
