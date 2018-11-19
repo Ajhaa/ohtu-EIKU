@@ -1,7 +1,7 @@
-package dao;
+package linkkivinkki.dao;
 
-import data.Database;
-import domain.Podcast;
+import linkkivinkki.data.Database;
+import linkkivinkki.domain.Podcast;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;

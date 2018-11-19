@@ -1,4 +1,4 @@
-package domain;
+package linkkivinkki.domain;
 
 public class InternetContent extends Item {
     private String title;

@@ -1,8 +1,8 @@
-package dao;
+package linkkivinkki.dao;
 
 
-import data.Database;
-import domain.Book;
+import linkkivinkki.data.Database;
+import linkkivinkki.domain.Book;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;

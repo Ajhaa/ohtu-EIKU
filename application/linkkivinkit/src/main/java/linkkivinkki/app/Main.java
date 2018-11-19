@@ -1,10 +1,10 @@
-package app;
+package linkkivinkki.app;
 
-import dao.BookDao;
-import dao.InternetContentDao;
-import dao.PodcastDao;
-import data.Database;
-import io.ConsoleIO;
+import linkkivinkki.dao.BookDao;
+import linkkivinkki.dao.InternetContentDao;
+import linkkivinkki.dao.PodcastDao;
+import linkkivinkki.data.Database;
+import linkkivinkki.io.ConsoleIO;
 import java.sql.SQLException;
 
 public class Main {

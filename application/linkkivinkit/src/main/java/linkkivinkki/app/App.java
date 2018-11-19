@@ -1,10 +1,10 @@
-package app;
+package linkkivinkki.app;
 
-import dao.Dao;
-import domain.Book;
-import domain.InternetContent;
-import domain.Podcast;
-import io.IO;
+import linkkivinkki.dao.Dao;
+import linkkivinkki.domain.Book;
+import linkkivinkki.domain.InternetContent;
+import linkkivinkki.domain.Podcast;
+import linkkivinkki.io.IO;
 
 public class App {
 

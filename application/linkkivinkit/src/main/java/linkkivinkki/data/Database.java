@@ -1,4 +1,4 @@
-package data;
+package linkkivinkki.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

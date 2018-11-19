@@ -1,9 +1,9 @@
 
-package io;
+package linkkivinkki.io;
 
-import domain.Book;
-import domain.InternetContent;
-import domain.Podcast;
+import linkkivinkki.domain.Book;
+import linkkivinkki.domain.InternetContent;
+import linkkivinkki.domain.Podcast;
 
 public interface IO {
     void print(String text);

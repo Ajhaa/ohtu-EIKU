@@ -15,6 +15,10 @@ if (!hasProperty('mainClass')) {
     ext.mainClass = 'app.Main'
 }
 
+project.ext {
+    cucumberVersion = '1.2.5'
+}    
+
 repositories {
     mavenCentral()
     // You may define additional repositories, or even remove "mavenCentral()".
@@ -27,12 +31,21 @@ dependencies {
     // You can read more about how to add dependency here:
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
     testCompile group: 'junit', name: 'junit', version: '4.10'
+    testCompile 'info.cukes:cucumber-java:' + cucumberVersion
+    testCompile 'info.cukes:cucumber-junit:' + cucumberVersion
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.25.2'
+
+    
 }
 
 run {
     standardInput = System.in
 }
 
-mainClassName = 'app.Main'
+test {
+    testLogging.showStandardStreams = true
+
+}
+
+mainClassName = 'linkkivinkki.app.Main'

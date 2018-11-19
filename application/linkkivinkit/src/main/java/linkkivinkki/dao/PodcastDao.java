@@ -1,8 +1,8 @@
-package dao;
+package linkkivinkki.dao;
 
-import data.Database;
-import domain.Item;
-import domain.Podcast;
+import linkkivinkki.data.Database;
+import linkkivinkki.domain.Item;
+import linkkivinkki.domain.Podcast;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

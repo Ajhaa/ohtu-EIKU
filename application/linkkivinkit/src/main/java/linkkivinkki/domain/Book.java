@@ -1,4 +1,4 @@
-package domain;
+package linkkivinkki.domain;
 
 public class Book extends Item {
     private String author;

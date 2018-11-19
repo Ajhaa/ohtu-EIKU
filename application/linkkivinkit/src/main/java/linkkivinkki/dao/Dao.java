@@ -1,6 +1,6 @@
-package dao;
+package linkkivinkki.dao;
 
-import domain.Item;
+import linkkivinkki.domain.Item;
 import java.util.List;
 
 public interface Dao {    

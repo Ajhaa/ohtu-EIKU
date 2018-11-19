@@ -1,4 +1,4 @@
-package domain;
+package linkkivinkki.domain;
 
 public class Podcast extends Item {
     private String name;
