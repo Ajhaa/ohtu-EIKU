@@ -82,6 +82,4 @@ public class Item {
     public void setReadDate(Date readDate) {
         this.readDate = readDate;
     }
-
-
 }
