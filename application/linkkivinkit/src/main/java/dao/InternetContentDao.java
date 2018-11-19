@@ -1,7 +1,8 @@
+
 package dao;
 
 import data.Database;
-import domain.Book;
+import domain.InternetContent;
 import domain.Item;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,33 +10,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BookDao implements Dao {
-
+public class InternetContentDao implements Dao {
+    
     private Database database;
-
-    public BookDao(Database database) {
+    
+    public InternetContentDao(Database database) {
         this.database = database;
     }
 
-    /**
-     * Fetch all Books from the database
+     /**
+     * Fetch all InternetContents from the database
      *
-     * @return a list containing every book
+     * @return a list containing every InternetContent
      */
     @Override
-    public ArrayList<Book> findAll() {
-        ArrayList<Book> list = new ArrayList<>();
+    public ArrayList<InternetContent> findAll() {
+        ArrayList<InternetContent> list = new ArrayList<>();
 
         try {
             Connection conn = database.getConnection();
-            PreparedStatement fetch = conn.prepareStatement("SELECT * FROM Book;");
+            PreparedStatement fetch = conn.prepareStatement("SELECT * FROM InternetContent;");
             ResultSet results = fetch.executeQuery();
+
             while (results.next()) {
-                Book b = new Book(results.getString("author"), results.getString("title"));
-                b.setId(results.getInt("id"));
+                InternetContent content = new InternetContent(results.getString("title"), results.getString("url"));
+                content.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
-                list.add(b);
+                list.add(content);
             }
 
             // Close the connection
@@ -57,26 +59,26 @@ public class BookDao implements Dao {
      */
     @Override
     public boolean add(Item i) {
-        // Make sure that the item we wish to add is a Book
-        if (i.getClass() != Book.class) {
+        // Make sure that the item we wish to add is a InternetContent
+        if (i.getClass() != InternetContent.class) {
             return false;
         }
 
         // Cast
-        Book b = (Book) i;
+        InternetContent content = (InternetContent) i;
 
         try {
             Connection conn = database.getConnection();
 
-            PreparedStatement addBook = conn.prepareStatement("INSERT INTO Book "
-                    + "(title, author) "
+            PreparedStatement addContent = conn.prepareStatement("INSERT INTO InternetContent "
+                    + "(title, url) "
                     + "VALUES (?, ?);");
-            addBook.setString(1, b.getTitle());
-            addBook.setString(2, b.getAuthor());
-            addBook.execute();
+            addContent.setString(1, content.getTitle());
+            addContent.setString(2, content.getUrl());
+            addContent.execute();
 
             // Close the connection
-            addBook.close();
+            addContent.close();
             conn.close();
 
         } catch (SQLException ex) {
@@ -86,21 +88,21 @@ public class BookDao implements Dao {
         return true;
     }
 
-    /**
-     * Deletes a Book with the given id
-     * @param id - The id of the Book to be deleted
+     /**
+     * Deletes a InternetContent with the given id
+     * @param id - The id of the InternetContent to be deleted
      * @return True if successful, false if something went wrong
      */
     @Override
     public boolean delete(int id) {
         try {
             Connection conn = database.getConnection();
-            PreparedStatement deleteBook = conn.prepareStatement("DELETE FROM Book WHERE id = ?;");
-            deleteBook.setInt(1, id);
-            deleteBook.execute();
+            PreparedStatement deleteContent = conn.prepareStatement("DELETE FROM InternetContent WHERE id = ?;");
+            deleteContent.setInt(1, id);
+            deleteContent.execute();
 
             // Close the connection
-            deleteBook.close();
+            deleteContent.close();
             conn.close();
 
         } catch (SQLException ex) {
@@ -108,6 +110,7 @@ public class BookDao implements Dao {
         }
 
         return true;
-    }
-
+    }    
 }
+    
+
