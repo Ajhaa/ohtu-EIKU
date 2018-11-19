@@ -47,4 +47,13 @@ public class BookDaoTest {
         assertEquals(b.getAuthor(), books.get(0).getAuthor());
         assertEquals(b.getTitle(), books.get(0).getTitle());
     }
+    
+    @Test
+    public void booksAreRemovedProperly() throws SQLException {
+        Book b = new Book("hello", "world");
+        dao.add(b);
+        ArrayList<Book> books = dao.findAll();
+        b = books.get(0);
+        assertTrue(dao.delete(b.getId()));
+    }
 }
