@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookDao implements Dao {
 
@@ -24,17 +23,16 @@ public class BookDao implements Dao {
      * @return a list containing every book
      */
     @Override
-    public List<Book> findAll() {
-        List<Book> list = new ArrayList<>();
+    public ArrayList<Book> findAll() {
+        ArrayList<Book> list = new ArrayList<>();
 
         try {
             Connection conn = database.getConnection();
             PreparedStatement fetch = conn.prepareStatement("SELECT * FROM Book;");
             ResultSet results = fetch.executeQuery();
-
             while (results.next()) {
-                Book b = new Book(results.getString("title"), results.getString("author"));
-                b.setId(results.getInt("item_id"));
+                Book b = new Book(results.getString("author"), results.getString("title"));
+                b.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
                 list.add(b);
