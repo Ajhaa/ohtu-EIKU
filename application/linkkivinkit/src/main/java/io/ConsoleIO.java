@@ -17,6 +17,11 @@ public class ConsoleIO implements IO {
     public void print(String text) {
         System.out.println(text);
     }
+    
+    @Override
+    public String getString() {
+        return scanner.nextLine();
+    }
 
     @Override
     public Book newBook() {
@@ -48,6 +53,5 @@ public class ConsoleIO implements IO {
         String description = scanner.nextLine();
         
         return new Podcast(name, title, description);
-    }   
-    
+    }
 }
