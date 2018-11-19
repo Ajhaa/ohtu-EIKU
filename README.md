@@ -1,5 +1,7 @@
 # ohtu-EIKU
-[![Build Status](https://www.travis-ci.org/Ajhaa/ohtu-EIKU.svg?branch=master)](https://www.travis-ci.org/Ajhaa/ohtu-EIKU)
+[![Build Status](https://www.travis-ci.org/Ajhaa/ohtu-EIKU.svg?branch=master)](https://www.travis-ci.org/Ajhaa/ohtu-EIKU)  
+[![codecov](https://codecov.io/gh/Ajhaa/ohtu-EIKU/branch/master/graph/badge.svg)](https://codecov.io/gh/Ajhaa/ohtu-EIKU)  
+
 
 Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
 
