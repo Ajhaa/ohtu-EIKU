@@ -1,5 +1,1 @@
-language: java
-
-script: 
-  - cd ./application/linkkivinkit
-  - ./gradlew build
+before_script: cd application/linkkivinkit
