@@ -1,0 +1,5 @@
+language: java
+
+script: 
+  - cd application/linkkivinkit
+  - ./gradlew build
