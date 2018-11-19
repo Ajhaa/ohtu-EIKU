@@ -1,2 +1,8 @@
 language: java
 before_script: cd application/linkkivinkit
+
+script:
+  - ./gradlew check
+  - ./gradlew jacocoTestReport
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
