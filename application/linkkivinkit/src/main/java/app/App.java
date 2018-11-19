@@ -11,11 +11,13 @@ public class App {
     private IO io;
     private Dao bookDao;
     private Dao icDao;
+    private Dao podcastDao;
 
-    public App(IO io, Dao bookDao, Dao icDao) {
+    public App(IO io, Dao bookDao, Dao icDao, Dao podcastDao) {
         this.io = io;
         this.bookDao = bookDao;
         this.icDao = icDao;
+        this.podcastDao = podcastDao;
     }
 
     public void start() {
@@ -76,7 +78,9 @@ public class App {
                 case "podcasts":
                 case "podcast":
                 case "p":
-                    Podcast newPodcast = io.newPodcast();
+                    podcastDao.findAll().forEach((podcast) -> {
+                        io.print(podcast.toString());
+                    });
                     return true;
                 default:
                     break;
@@ -109,8 +113,7 @@ public class App {
                 case "podcast":
                 case "p":
                     Podcast newPodcast = io.newPodcast();
-                    io.print("not supported");
-                    break;
+                    return podcastDao.add(newPodcast);
                 default:
                     break;
             }
