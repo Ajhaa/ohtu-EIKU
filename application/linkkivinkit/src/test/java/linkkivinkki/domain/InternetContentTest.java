@@ -26,6 +26,6 @@ public class InternetContentTest {
     
     @Test
     public void toStringOfInternetContentWorks() {
-        assertEquals("title (url.fi)", content.toString());
+        assertEquals("-1 title (url.fi)", content.toString());
     }
 }

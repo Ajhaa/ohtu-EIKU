@@ -40,6 +40,6 @@ public class Book extends Item {
 
     @Override
     public String toString() {
-        return title + " by " + author;
+        return getId() + " " + title + " by " + author;
     }
 }

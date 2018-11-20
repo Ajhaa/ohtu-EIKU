@@ -56,6 +56,6 @@ public class Podcast extends Item {
 
     @Override
     public String toString() {
-        return name + " - " + title + "\n" + description;
+        return getId() + " " + name + " - " + title + "\n" + description;
     }
 }

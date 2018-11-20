@@ -40,7 +40,7 @@ public class InternetContent extends Item {
     
     @Override
     public String toString() {
-        return title + " (" + url + ")";
+        return getId() + " " + title + " (" + url + ")";
     }
 
 

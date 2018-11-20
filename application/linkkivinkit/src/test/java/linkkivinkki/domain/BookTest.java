@@ -52,7 +52,7 @@ public class BookTest {
     @Test
     public void toStringReturnsAProperString() {
         Book b = new Book("hello", "world");
-        String expected = "world by hello";
+        String expected = "-1 world by hello";
         assertEquals(expected, b.toString());
     }
 

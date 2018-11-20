@@ -33,7 +33,7 @@ public class PodcastTest {
     
     @Test
     public void toStringOfPodcastWorks() {
-        String shouldBe = "name - title" + "\n" + "description";
+        String shouldBe = "-1 name - title" + "\n" + "description";
         assertEquals(shouldBe, podcast.toString());
     }
     
