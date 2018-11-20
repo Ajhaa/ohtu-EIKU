@@ -10,7 +10,5 @@ Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
 - [Definition of Done](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/definition-of-done.md)
 - [Asennus- ja käyttöohje](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/manual.md)
 
-https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/manual.md
-
 ### Sprintit
   - [Sprint #1](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-1.md)
