@@ -3,6 +3,7 @@ package linkkivinkki.dao;
 
 import linkkivinkki.data.Database;
 import linkkivinkki.domain.Book;
+import linkkivinkki.domain.Podcast;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,11 +11,12 @@ import java.util.ArrayList;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
 public class BookDaoTest {
-    
+
     private Database db;
     private BookDao dao;
     private Connection conn;
@@ -38,7 +40,13 @@ public class BookDaoTest {
         Book b = new Book("hello", "world");
         assertTrue(dao.add(b));
     }
-    
+
+    @Test
+    public void tryingToAddNonBookFalse() {
+        Podcast p = new Podcast("name", "title", "desc");
+        assertFalse(dao.add(p));
+    }
+
     @Test
     public void booksAreFetchedProperly() throws SQLException {
         Book b = new Book("hello", "world");
@@ -47,7 +55,7 @@ public class BookDaoTest {
         assertEquals(b.getAuthor(), books.get(0).getAuthor());
         assertEquals(b.getTitle(), books.get(0).getTitle());
     }
-    
+
     @Test
     public void booksAreRemovedProperly() throws SQLException {
         Book b = new Book("hello", "world");

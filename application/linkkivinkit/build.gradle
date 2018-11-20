@@ -46,7 +46,6 @@ run {
 
 test {
     testLogging.showStandardStreams = true
-
 }
 
 jacocoTestReport {
