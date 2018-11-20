@@ -1,6 +1,8 @@
 package linkkivinkki.app;
 
+import java.util.List;
 import linkkivinkki.dao.Dao;
+import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Podcast;
@@ -26,7 +28,7 @@ public class App {
         LOOP:
         while (true) {
             io.print("");
-            io.print("Type 'view' to view existing memo items or type 'add' to add a new memo item.");
+            io.print("Type 'view' to view existing memo items, 'add' to add a new memo item or 'delete' to view and delete items.");
             io.print("Type 'quit' to exit the app.");
             String input = io.getString();
 
@@ -42,6 +44,9 @@ public class App {
                 case "a":
                     this.add();
                     break;
+                case "delete":
+                case "d":
+                    this.delete();
                 default:
                     break;
             }
@@ -120,5 +125,79 @@ public class App {
         }
 
         return false;
+    }
+
+    public boolean delete() {
+        LOOP:
+        while (true) {
+            io.print("What kind of item do you wish to delete?");
+            io.print("Available types: book, internetcontent, podcast");
+            io.print("Select an item type or type 'return' to return to the main menu.");
+            String input = io.getString();
+
+            switch (input) {
+                case "return":
+                case "r":
+                    break LOOP;
+                case "book":
+                case "b":
+                    return listForDeletion("book");
+                case "internetcontent":
+                case "i":
+                    return listForDeletion("internetContent");
+                case "podcast":
+                case "p":
+                    return listForDeletion("podcast");
+                default:
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean listForDeletion(String type) {
+        List<Item> items;
+
+        if (type.equals("book")) {
+            items = bookDao.findAll();
+        } else if (type.equals("internetContent")) {
+            items = icDao.findAll();
+        } else if (type.equals("podcast")) {
+            items = podcastDao.findAll();
+        } else {
+            return false;
+        }
+
+        for (Item item : items) {
+            io.print("id: " + item.getId() + ", title: " + item.getTitle());
+        }
+
+        return deleteItem(type);
+    }
+
+    public boolean deleteItem(String type) {
+        while(true) {
+            io.print("\n" + "Enter the ID of the item you wish to delete or type 'return' to return to the main menu.");
+            String input = io.getString();
+
+            if (input.equals("return") || input.equals("r")) {
+                return false;
+            } else {
+                try {
+                    int id = Integer.parseInt(input);
+
+                    if (type.equals("book")) {
+                        return bookDao.delete(id);
+                    } else if (type.equals("internetContent")) {
+                        return icDao.delete(id);
+                    } else {
+                        return podcastDao.delete(id);
+                    }
+                } catch (Exception e) {
+                    io.print("Not a valid input.");
+                }
+            }
+        }
     }
 }

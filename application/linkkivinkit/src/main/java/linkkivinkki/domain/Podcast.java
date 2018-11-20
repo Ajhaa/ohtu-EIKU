@@ -2,14 +2,13 @@ package linkkivinkki.domain;
 
 public class Podcast extends Item {
     private String name;
-    private String title;
     private String description;
 
     public Podcast(String name, String title, String description) {
         super();
         this.name = name;
-        this.title = title;
         this.description = description;
+        this.setTitle(title);
     }
 
     /**
@@ -18,14 +17,6 @@ public class Podcast extends Item {
     public String getName() {
         return name;
     }
-
-    /**
-     * @return the title
-     */
-    public String getTitle() {
-        return title;
-    }
-
     /**
      * @return the description
      */
@@ -41,13 +32,6 @@ public class Podcast extends Item {
     }
 
     /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
      * @param description the description to set
      */
     public void setDescription(String description) {
@@ -56,6 +40,6 @@ public class Podcast extends Item {
 
     @Override
     public String toString() {
-        return getId() + " " + name + " - " + title + "\n" + description;
+        return getId() + " " + name + " - " + this.getTitle() + "\n" + description;
     }
 }

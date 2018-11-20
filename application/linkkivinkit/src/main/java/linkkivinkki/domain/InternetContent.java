@@ -1,20 +1,12 @@
 package linkkivinkki.domain;
 
 public class InternetContent extends Item {
-    private String title;
     private String url;
 
     public InternetContent(String title, String url) {
         super();
-        this.title = title;
         this.url = url;
-    }
-
-    /**
-     * @return the title
-     */
-    public String getTitle() {
-        return title;
+        this.setTitle(title);
     }
 
     /**
@@ -25,22 +17,15 @@ public class InternetContent extends Item {
     }
 
     /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
      * @param url the url to set
      */
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
     @Override
     public String toString() {
-        return getId() + " " + title + " (" + url + ")";
+        return getId() + " " + this.getTitle() + " (" + url + ")";
     }
 
 
