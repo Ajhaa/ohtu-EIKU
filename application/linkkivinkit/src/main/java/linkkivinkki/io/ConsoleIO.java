@@ -52,6 +52,9 @@ public class ConsoleIO implements IO {
         System.out.println("Insert podcast description: ");
         String description = scanner.nextLine();
         
-        return new Podcast(name, title, description);
+        Podcast p = new Podcast(name, title);
+        p.setDescription(description);
+        
+        return p;
     }
 }

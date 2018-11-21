@@ -11,17 +11,19 @@ public class Item {
     private List<String> tags;
     private boolean read;
     private Date readDate;
+    private String description;
 
-    public Item(int id, String title, List<String> tags, boolean read, Date read_date) {
+    public Item(int id, String title, List<String> tags, boolean read, Date read_date, String description) {
         this.id = id;
         this.title = title;
         this.tags = tags;
         this.read = read;
         this.readDate = read_date;
+        this.description = description;
     }
 
     public Item() {
-        this(-1, "", new ArrayList<>(), false, null);
+        this(-1, "", new ArrayList<>(), false, null, "");
     }
 
     public void addTag(String tag) {
@@ -71,6 +73,13 @@ public class Item {
     public Date getReadDate() {
         return readDate;
     }
+    
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * @return the read
@@ -91,5 +100,13 @@ public class Item {
      */
     public void setReadDate(Date readDate) {
         this.readDate = readDate;
+    }
+    
+    /**
+     * 
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

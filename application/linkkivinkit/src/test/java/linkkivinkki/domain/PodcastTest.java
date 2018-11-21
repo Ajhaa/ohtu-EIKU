@@ -10,7 +10,7 @@ public class PodcastTest {
     
     @Before
     public void setUp() {
-        this.podcast = new Podcast("name", "title", "description");
+        this.podcast = new Podcast("name", "title");
     }
     
     @Test
@@ -33,7 +33,7 @@ public class PodcastTest {
     
     @Test
     public void toStringOfPodcastWorks() {
-        String shouldBe = "-1 name - title" + "\n" + "description";
+        String shouldBe = "-1 name - title" + "\n" + "";
         assertEquals(shouldBe, podcast.toString());
     }
     

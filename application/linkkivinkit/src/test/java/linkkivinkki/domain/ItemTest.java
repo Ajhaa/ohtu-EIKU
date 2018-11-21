@@ -17,7 +17,7 @@ public class ItemTest {
         ArrayList<String> list = new ArrayList<>();
         list.add("tag1");
         list.add("tag2");
-        this.item = new Item(1, "title", list, false, new Date()) ;
+        this.item = new Item(1, "title", list, false, new Date(), "") ;
     }
 
     @After

@@ -42,7 +42,7 @@ public class BookDaoTest {
 
     @Test
     public void tryingToAddNonBookFalse() {
-        Podcast p = new Podcast("name", "title", "desc");
+        Podcast p = new Podcast("name", "title");
         assertFalse(dao.add(p));
     }
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  * Handles connecting to the Database.
- * Current database structure: http://yuml.me/edit/17c7d172
+ * Current database structure: http://yuml.me/edit/c30b9e39
  */
 public class Database {
 
@@ -36,7 +36,8 @@ public class Database {
             PreparedStatement initBook = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Book ("
                     + "id integer PRIMARY KEY, "
                     + "title varchar(255), "
-                    + "author varchar(255)); "
+                    + "author varchar(255), "
+                    + "description varchar(255)); "
             );
             initBook.execute();
             initBook.close();
@@ -44,7 +45,8 @@ public class Database {
             PreparedStatement initLink = conn.prepareStatement("CREATE TABLE IF NOT EXISTS InternetContent ("
                     + "id integer PRIMARY KEY, "
                     + "title varchar(255), "
-                    + "url varchar(255));"
+                    + "url varchar(255), "
+                    + "description varchar(255));"
             );
             initLink.execute();
             initLink.close();
