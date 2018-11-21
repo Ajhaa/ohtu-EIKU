@@ -110,4 +110,24 @@ public class BookDao implements Dao {
         return true;
     }
 
+    public Book findOne(int id) {
+        Book found = null;
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement findBook = conn.prepareStatement("SELECT * FROM Book WHERE id = ?;");
+            findBook.setInt(1, id);
+            ResultSet results = findBook.executeQuery();
+            
+            if (results.next()) {
+                found = new Book(results.getString("author"), results.getString("title"));
+                found.setId(id);
+            }
+            
+        } catch (SQLException ex) {
+            // Do nothing, null is returned at the end of the method
+        }
+        
+        return found;
+    }
+
 }

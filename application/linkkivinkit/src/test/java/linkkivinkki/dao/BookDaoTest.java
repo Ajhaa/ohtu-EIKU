@@ -1,6 +1,5 @@
 package linkkivinkki.dao;
 
-
 import linkkivinkki.data.Database;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.Podcast;
@@ -63,5 +62,24 @@ public class BookDaoTest {
         ArrayList<Book> books = dao.findAll();
         b = books.get(0);
         assertTrue(dao.delete(b.getId()));
+    }
+
+    @Test
+    public void findOneFindsOne() throws SQLException {
+        Book b = new Book("hello", "world");
+        dao.add(b);
+        b = new Book("hei", "maailma");
+        dao.add(b);
+        
+        b = dao.findOne(2);
+        assertEquals(2, b.getId());
+        assertEquals("hei", b.getAuthor());
+        assertEquals("maailma", b.getTitle());
+    }
+    
+    @Test
+    public void findOneReturnsNullIfIdIsInvalid() throws SQLException {
+        Book b = dao.findOne(10);
+        assertEquals(null, b);
     }
 }
