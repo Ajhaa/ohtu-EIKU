@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class InternetContentDao implements Dao {
-    
+
     private Database database;
-    
+
     public InternetContentDao(Database database) {
         this.database = database;
     }
@@ -33,7 +33,7 @@ public class InternetContentDao implements Dao {
             ResultSet results = fetch.executeQuery();
 
             while (results.next()) {
-                InternetContent content = new InternetContent(results.getString("title"), results.getString("url"));
+                InternetContent content = new InternetContent(results.getString("title"), results.getString("url"), "fixthis!");
                 content.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
@@ -110,7 +110,7 @@ public class InternetContentDao implements Dao {
         }
 
         return true;
-    }    
+    }
 }
-    
+
 

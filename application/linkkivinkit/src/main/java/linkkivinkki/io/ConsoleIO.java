@@ -8,16 +8,16 @@ import java.util.Scanner;
 
 public class ConsoleIO implements IO {
     private Scanner scanner;
-    
+
     public ConsoleIO() {
         scanner = new Scanner(System.in);
     }
-    
+
     @Override
     public void print(String text) {
         System.out.println(text);
     }
-    
+
     @Override
     public String getString() {
         return scanner.nextLine();
@@ -29,8 +29,10 @@ public class ConsoleIO implements IO {
         String title = scanner.nextLine();
         System.out.println("Insert book author: ");
         String author = scanner.nextLine();
-        
-        return new Book(author, title);
+        System.out.println("Insert a description (or leave blank): ");
+        String description = scanner.nextLine();
+
+        return new Book(author, title, description);
     }
 
     @Override
@@ -39,8 +41,10 @@ public class ConsoleIO implements IO {
         String title = scanner.nextLine();
         System.out.println("Insert content url: ");
         String url = scanner.nextLine();
-        
-        return new InternetContent(title, url);
+        System.out.println("Insert a description (or leave blank): ");
+        String description = scanner.nextLine();
+
+        return new InternetContent(title, url, description);
     }
 
     @Override
@@ -49,12 +53,11 @@ public class ConsoleIO implements IO {
         String name = scanner.nextLine();
         System.out.println("Insert podcast title: ");
         String title = scanner.nextLine();
-        System.out.println("Insert podcast description: ");
+        System.out.println("Insert a description (or leave blank): ");
         String description = scanner.nextLine();
-        
-        Podcast p = new Podcast(name, title);
-        p.setDescription(description);
-        
+
+        Podcast p = new Podcast(name, title, description);
+
         return p;
     }
 }

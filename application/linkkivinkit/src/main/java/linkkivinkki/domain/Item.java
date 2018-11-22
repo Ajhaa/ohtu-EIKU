@@ -22,6 +22,10 @@ public class Item {
         this.description = description;
     }
 
+    public Item(String title, String description) {
+        this(-1, title, new ArrayList<>(), false, null, description);
+    }
+
     public Item() {
         this(-1, "", new ArrayList<>(), false, null, "");
     }
@@ -52,6 +56,10 @@ public class Item {
         this.id = id;
     }
 
+    /**
+     *
+     * @return the title
+     */
     public String getTitle() {
         return this.title;
     }
@@ -73,7 +81,7 @@ public class Item {
     public Date getReadDate() {
         return readDate;
     }
-    
+
     /**
      * @return the description
      */
@@ -101,9 +109,9 @@ public class Item {
     public void setReadDate(Date readDate) {
         this.readDate = readDate;
     }
-    
+
     /**
-     * 
+     *
      * @param description the description to set
      */
     public void setDescription(String description) {

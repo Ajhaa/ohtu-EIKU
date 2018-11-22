@@ -3,10 +3,9 @@ package linkkivinkki.domain;
 public class InternetContent extends Item {
     private String url;
 
-    public InternetContent(String title, String url) {
-        super();
+    public InternetContent(String title, String url, String description) {
+        super(title, description);
         this.url = url;
-        this.setTitle(title);
     }
 
     /**

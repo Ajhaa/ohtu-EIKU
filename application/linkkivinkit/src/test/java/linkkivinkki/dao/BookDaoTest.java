@@ -36,19 +36,19 @@ public class BookDaoTest {
 
     @Test
     public void booksAreAddedCorrectly() {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         assertTrue(dao.add(b));
     }
 
     @Test
-    public void tryingToAddNonBookFalse() {
-        Podcast p = new Podcast("name", "title");
+    public void tryingToAddNonBookFails() {
+        Podcast p = new Podcast("name", "title", "desc");
         assertFalse(dao.add(p));
     }
 
     @Test
     public void booksAreFetchedProperly() throws SQLException {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         dao.add(b);
         ArrayList<Book> books = dao.findAll();
         assertEquals(b.getAuthor(), books.get(0).getAuthor());
@@ -57,7 +57,7 @@ public class BookDaoTest {
 
     @Test
     public void booksAreRemovedProperly() throws SQLException {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         dao.add(b);
         ArrayList<Book> books = dao.findAll();
         b = books.get(0);
@@ -66,17 +66,17 @@ public class BookDaoTest {
 
     @Test
     public void findOneFindsOne() throws SQLException {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         dao.add(b);
-        b = new Book("hei", "maailma");
+        b = new Book("hei", "maailma", "kuvaus");
         dao.add(b);
-        
+
         b = dao.findOne(2);
         assertEquals(2, b.getId());
         assertEquals("hei", b.getAuthor());
         assertEquals("maailma", b.getTitle());
     }
-    
+
     @Test
     public void findOneReturnsNullIfIdIsInvalid() throws SQLException {
         Book b = dao.findOne(10);

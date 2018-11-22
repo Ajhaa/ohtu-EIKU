@@ -31,7 +31,7 @@ public class PodcastDao implements Dao {
             PreparedStatement fetch = conn.prepareStatement("SELECT * FROM Podcast;");
             ResultSet results = fetch.executeQuery();
             while (results.next()) {
-                Podcast p = new Podcast(results.getString("name"), results.getString("title"));
+                Podcast p = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
                 p.setDescription(results.getString("description"));
                 p.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable

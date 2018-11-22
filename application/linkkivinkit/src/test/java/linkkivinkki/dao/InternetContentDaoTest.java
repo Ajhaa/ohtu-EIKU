@@ -34,19 +34,19 @@ public class InternetContentDaoTest {
 
      @Test
     public void internetContentsAreAddedCorrectly() {
-        InternetContent content = new InternetContent("title", "www.com");
+        InternetContent content = new InternetContent("title", "www.com", "desc");
         assertTrue(dao.add(content));
     }
 
     @Test
-    public void tryingToAddNonInternetContentReturnsFalse() {
-        Book b = new Book("author", "title");
+    public void tryingToAddNonInternetContentFails() {
+        Book b = new Book("author", "title", "desc");
         assertFalse(dao.add(b));
     }
 
     @Test
     public void internetContentsAreFetchedProperly() throws SQLException {
-        InternetContent content = new InternetContent("title", "www.com");
+        InternetContent content = new InternetContent("title", "www.com", "desc");
         dao.add(content);
         ArrayList<InternetContent> contents = dao.findAll();
         assertEquals(content.getTitle(), contents.get(0).getTitle());
@@ -55,7 +55,7 @@ public class InternetContentDaoTest {
 
     @Test
     public void internetContentsAreRemovedProperly() throws SQLException {
-        InternetContent content = new InternetContent("title", "www.com");
+        InternetContent content = new InternetContent("title", "www.com", "desc");
         dao.add(content);
         ArrayList<InternetContent> contents = dao.findAll();
         content = contents.get(0);

@@ -10,7 +10,7 @@ public class StubIO implements IO {
     private ArrayList<String> prints;
     private List<String> lines;
     private int i;
-    
+
     public StubIO(List<String> lines) {
         this.lines = lines;
         prints = new ArrayList<>();
@@ -31,12 +31,11 @@ public class StubIO implements IO {
 
     @Override
     public Book newBook() {
-        print("Insert book title: ");
         String title = getString();
-        print("Insert book author: ");
         String author = getString();
-        
-        return new Book(author, title);
+        String description = getString();
+
+        return new Book(author, title, description);
     }
 
     @Override

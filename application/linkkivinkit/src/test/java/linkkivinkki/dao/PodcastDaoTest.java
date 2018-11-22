@@ -34,19 +34,19 @@ public class PodcastDaoTest {
 
     @Test
     public void podcastsAreAddedCorrectly() {
-        Podcast p = new Podcast("name", "title");
+        Podcast p = new Podcast("name", "title", "desc");
         assertTrue(dao.add(p));
     }
 
     @Test
-    public void tryingToAddNonPodcastReturnsFalse() {
-        Book b = new Book("author", "title");
+    public void tryingToAddNonPodcastFails() {
+        Book b = new Book("author", "title", "desc");
         assertFalse(dao.add(b));
     }
 
     @Test
     public void podcastsAreFetchedProperly() throws SQLException {
-        Podcast p = new Podcast("name", "title");
+        Podcast p = new Podcast("name", "title", "desc");
         dao.add(p);
         ArrayList<Podcast> podcasts = dao.findAll();
         assertEquals(p.getName(), podcasts.get(0).getName());
@@ -56,7 +56,7 @@ public class PodcastDaoTest {
 
     @Test
     public void podcastsAreRemovedProperly() throws SQLException {
-        Podcast p = new Podcast("name", "title");
+        Podcast p = new Podcast("name", "title", "desc");
         dao.add(p);
         ArrayList<Podcast> podcasts = dao.findAll();
         p = podcasts.get(0);

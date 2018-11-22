@@ -3,10 +3,9 @@ package linkkivinkki.domain;
 public class Book extends Item {
     private String author;
 
-    public Book(String author, String title) {
-        super();
+    public Book(String author, String title, String description) {
+        super(title, description);
         this.author = author;
-        this.setTitle(title);
     }
 
     /**

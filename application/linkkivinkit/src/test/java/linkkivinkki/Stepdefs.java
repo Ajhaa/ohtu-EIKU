@@ -39,10 +39,11 @@ public class Stepdefs {
         inputLines.add("book");
     }
 
-    @When("^title \"([^\"]*)\" and author \"([^\"]*)\" are entered")
+    @When("^title \"([^\"]*)\", author \"([^\"]*)\" and an empty description are entered")
     public void titleAndAuthorEntered(String title, String author) {
         inputLines.add(title);
         inputLines.add(author);
+        inputLines.add("");
         inputLines.add("quit");
 
         io = new StubIO(inputLines);

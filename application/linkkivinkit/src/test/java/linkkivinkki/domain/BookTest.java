@@ -30,28 +30,36 @@ public class BookTest {
 
     @Test
     public void bookIsInitializedCorrectly() {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         assertEquals("hello", b.getAuthor());
         assertEquals("world", b.getTitle());
+        assertEquals("desc", b.getDescription());
     }
 
     @Test
     public void authorCanBeSet() {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         b.setAuthor("heyo");
         assertEquals("heyo", b.getAuthor());
     }
 
     @Test
     public void titleCanBeSet() {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         b.setTitle("maailma");
         assertEquals("maailma", b.getTitle());
     }
-    
+
+    @Test
+    public void descriptionCanBeSet() {
+        Book b = new Book("hello", "world", "desc");
+        b.setDescription("kuvaus");
+        assertEquals("kuvaus", b.getDescription());
+    }
+
     @Test
     public void toStringReturnsAProperString() {
-        Book b = new Book("hello", "world");
+        Book b = new Book("hello", "world", "desc");
         String expected = "-1 world by hello";
         assertEquals(expected, b.toString());
     }

@@ -31,7 +31,7 @@ public class BookDao implements Dao {
             PreparedStatement fetch = conn.prepareStatement("SELECT * FROM Book;");
             ResultSet results = fetch.executeQuery();
             while (results.next()) {
-                Book b = new Book(results.getString("author"), results.getString("title"));
+                Book b = new Book(results.getString("author"), results.getString("title"), "fixthis!");
                 b.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
@@ -117,16 +117,16 @@ public class BookDao implements Dao {
             PreparedStatement findBook = conn.prepareStatement("SELECT * FROM Book WHERE id = ?;");
             findBook.setInt(1, id);
             ResultSet results = findBook.executeQuery();
-            
+
             if (results.next()) {
-                found = new Book(results.getString("author"), results.getString("title"));
+                found = new Book(results.getString("author"), results.getString("title"), "fixthis!");
                 found.setId(id);
             }
-            
+
         } catch (SQLException ex) {
             // Do nothing, null is returned at the end of the method
         }
-        
+
         return found;
     }
 

@@ -3,10 +3,9 @@ package linkkivinkki.domain;
 public class Podcast extends Item {
     private String name;
 
-    public Podcast(String name, String title) {
-        super();
+    public Podcast(String name, String title, String description) {
+        super(title, description);
         this.name = name;
-        this.setTitle(title);
     }
 
     /**
