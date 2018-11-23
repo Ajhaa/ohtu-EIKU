@@ -70,29 +70,100 @@ public class App {
                 case "books":
                 case "book":
                 case "b":
-                    bookDao.findAll().forEach((book) -> {
-                        io.print(book.toString());
-                    });
-                    return true;
+                    return viewItems("book");
                 case "internetcontent":
                 case "i":
-                    icDao.findAll().forEach((ic) -> {
-                        io.print(ic.toString());
-                    });
-                    return true;
+                    return viewItems("internetContent");
                 case "podcasts":
                 case "podcast":
                 case "p":
-                    podcastDao.findAll().forEach((podcast) -> {
-                        io.print(podcast.toString());
-                    });
-                    return true;
+                    return viewItems("podcast");
                 default:
                     break;
             }
         }
 
         return false;
+    }
+
+    public boolean viewItems(String type) {
+        List<Item> items;
+
+        switch (type) {
+            case "book":
+                items = bookDao.findAll();
+                break;
+            case "internetContent":
+                items = icDao.findAll();
+                break;
+            case "podcast":
+                items = podcastDao.findAll();
+                break;
+            default:
+                return false;
+        }
+
+        while (true) {
+            for (Item item : items) {
+                io.print(item.toString());
+            }
+
+            io.print("\n" + "Enter an item ID to view more information about the specified item or type 'return' to return to the main menu.");
+            String input = io.getString();
+
+            if (input.equals("return") || input.equals("r")) {
+                return true;
+            } else {
+                try {
+                    int id = Integer.parseInt(input);
+
+                    boolean keepGoing = viewOne(type, id);
+                    if (!keepGoing) {
+                        return true;
+                    }
+                } catch (Exception e) {
+                    io.print("Not a valid input.");
+                    io.print(e.getMessage());
+                }
+            }
+        }
+    }
+
+    public boolean viewOne(String type, int id) {
+        Item item;
+
+        //actual database search to be added
+        switch (type) {
+            case "book":
+                item = new Book("author", "title", "description");
+                break;
+            case "internetContent":
+                item = new InternetContent("title", "url", "description");
+                break;
+            case "podcast":
+                item = new Podcast("name", "title", "description");
+                break;
+            default:
+                return false;
+        }
+
+        io.printItem(item);
+
+        while (true) {
+            io.print("Type 'return' to return to the previous list or 'main' to return to the main menu.");
+            String input = io.getString();
+
+            switch (input) {
+                case "return":
+                case "r":
+                    return true;
+                case "main":
+                case "m":
+                    return false;
+                default:
+                    break;
+            }
+        }
     }
 
     public boolean add() {
@@ -159,14 +230,18 @@ public class App {
     public boolean listForDeletion(String type) {
         List<Item> items;
 
-        if (type.equals("book")) {
-            items = bookDao.findAll();
-        } else if (type.equals("internetContent")) {
-            items = icDao.findAll();
-        } else if (type.equals("podcast")) {
-            items = podcastDao.findAll();
-        } else {
-            return false;
+        switch (type) {
+            case "book":
+                items = bookDao.findAll();
+                break;
+            case "internetContent":
+                items = icDao.findAll();
+                break;
+            case "podcast":
+                items = podcastDao.findAll();
+                break;
+            default:
+                return false;
         }
 
         for (Item item : items) {

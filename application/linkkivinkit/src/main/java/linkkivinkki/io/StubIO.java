@@ -2,6 +2,7 @@ package linkkivinkki.io;
 
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
+import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,11 @@ public class StubIO implements IO {
     @Override
     public void print(String text) {
         prints.add(text);
+    }
+
+    @Override
+    public void printItem(Item item) {
+        prints.add(item.toString());
     }
 
     @Override

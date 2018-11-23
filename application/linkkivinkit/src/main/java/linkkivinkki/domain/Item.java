@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Item {
-    // could only use read_date, no need for read?
     private int id;
     private String title;
     private List<String> tags;

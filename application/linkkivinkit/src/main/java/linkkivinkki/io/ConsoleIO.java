@@ -1,10 +1,12 @@
 
 package linkkivinkki.io;
 
+import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Podcast;
 import java.util.Scanner;
+import java.util.List;
 
 public class ConsoleIO implements IO {
     private Scanner scanner;
@@ -16,6 +18,24 @@ public class ConsoleIO implements IO {
     @Override
     public void print(String text) {
         System.out.println(text);
+    }
+
+    @Override
+    public void printItem(Item item) {
+        System.out.println(item);
+        System.out.println("Description: " + item.getDescription());
+
+        List<String> tags = item.getTags();
+        System.out.print("Tags: ");
+        System.out.println(tags.toString().substring(1, tags.toString().length() - 1));
+
+        if (item.isRead()) {
+            System.out.println("Read on: " + item.getReadDate());
+        } else {
+            System.out.println("Not yet read.");
+        }
+
+        System.out.println("");
     }
 
     @Override
