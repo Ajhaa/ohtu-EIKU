@@ -1,4 +1,3 @@
-
 package linkkivinkki.dao;
 
 import linkkivinkki.data.Database;
@@ -18,7 +17,7 @@ public class InternetContentDao implements Dao {
         this.database = database;
     }
 
-     /**
+    /**
      * Fetch all InternetContents from the database
      *
      * @return a list containing every InternetContent
@@ -33,7 +32,7 @@ public class InternetContentDao implements Dao {
             ResultSet results = fetch.executeQuery();
 
             while (results.next()) {
-                InternetContent content = new InternetContent(results.getString("title"), results.getString("url"), "fixthis!");
+                InternetContent content = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
                 content.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
@@ -71,10 +70,11 @@ public class InternetContentDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addContent = conn.prepareStatement("INSERT INTO InternetContent "
-                    + "(title, url) "
-                    + "VALUES (?, ?);");
+                    + "(title, url, description) "
+                    + "VALUES (?, ?, ?);");
             addContent.setString(1, content.getTitle());
             addContent.setString(2, content.getUrl());
+            addContent.setString(3, content.getDescription());
             addContent.execute();
 
             // Close the connection
@@ -88,8 +88,9 @@ public class InternetContentDao implements Dao {
         return true;
     }
 
-     /**
+    /**
      * Deletes a InternetContent with the given id
+     *
      * @param id - The id of the InternetContent to be deleted
      * @return True if successful, false if something went wrong
      */
@@ -111,6 +112,35 @@ public class InternetContentDao implements Dao {
 
         return true;
     }
+
+    /**
+     * Connects to the database and looks for an InternetContent with the given
+     * id
+     *
+     * @param id - The id of the InternetContent to be searched for
+     * @return InternetContent with the given id if successful, null otherwise
+     */
+    public InternetContent findOne(int id) {
+        InternetContent found = null;
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement findContent = conn.prepareStatement("SELECT * FROM InternetContent WHERE id = ?;");
+            findContent.setInt(1, id);
+            ResultSet results = findContent.executeQuery();
+
+            if (results.next()) {
+                found = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
+                found.setId(id);
+            }
+            
+            results.close();
+            findContent.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            // Do nothing, null is returned at the end of the method
+        }
+
+        return found;
+    }
 }
-
-

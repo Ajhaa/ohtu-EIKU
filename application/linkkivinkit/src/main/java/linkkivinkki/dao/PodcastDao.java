@@ -32,7 +32,6 @@ public class PodcastDao implements Dao {
             ResultSet results = fetch.executeQuery();
             while (results.next()) {
                 Podcast p = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
-                p.setDescription(results.getString("description"));
                 p.setId(results.getInt("id"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
@@ -90,6 +89,7 @@ public class PodcastDao implements Dao {
 
     /**
      * Deletes a Podcast with the given id
+     *
      * @param id - The id of the Podcast to be deleted
      * @return True if successful, false if something went wrong
      */
@@ -112,4 +112,33 @@ public class PodcastDao implements Dao {
         return true;
     }
 
+    /**
+     * Connects to the database and looks for a Podcast with the given id
+     *
+     * @param id - The id of the Podcast to be searched for
+     * @return Podcast with the given id if successful, null otherwise
+     */
+    public Podcast findOne(int id) {
+        Podcast found = null;
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement findPodcast = conn.prepareStatement("SELECT * FROM Podcast WHERE id = ?;");
+            findPodcast.setInt(1, id);
+            ResultSet results = findPodcast.executeQuery();
+
+            if (results.next()) {
+                found = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
+                found.setId(id);
+            }
+
+            results.close();
+            findPodcast.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            // Do nothing, null is returned at the end of the method
+        }
+
+        return found;
+    }
 }

@@ -26,5 +26,9 @@ public class InMemoryDao implements Dao {
     public List<Item> findAll() {
         return items;
     }
+    
+    public Item findOne(int id) {
+        return items.get(id);
+    }
 
 }

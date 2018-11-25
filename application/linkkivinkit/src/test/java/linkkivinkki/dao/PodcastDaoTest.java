@@ -62,5 +62,24 @@ public class PodcastDaoTest {
         p = podcasts.get(0);
         assertTrue(dao.delete(p.getId()));
     }
-
+    
+    @Test
+    public void findOneFindsOne() throws SQLException {
+        Podcast p = new Podcast("name", "title", "desc");
+        dao.add(p);
+        p = new Podcast("nimi", "otsikko", "kuvaus");
+        dao.add(p);
+        
+        Podcast found = dao.findOne(2);
+        assertEquals(2, found.getId());
+        assertEquals("nimi", found.getName());
+        assertEquals("otsikko", found.getTitle());
+        assertEquals("kuvaus", found.getDescription());
+    }
+    
+    @Test
+    public void findOneReturnsNullIfNoneFound() throws SQLException {
+        Podcast found = dao.findOne(71);
+        assertEquals(null, found);
+    }
 }

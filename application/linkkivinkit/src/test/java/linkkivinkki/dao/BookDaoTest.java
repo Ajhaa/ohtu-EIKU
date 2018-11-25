@@ -53,6 +53,7 @@ public class BookDaoTest {
         ArrayList<Book> books = dao.findAll();
         assertEquals(b.getAuthor(), books.get(0).getAuthor());
         assertEquals(b.getTitle(), books.get(0).getTitle());
+        assertEquals(b.getDescription(), books.get(0).getDescription());
     }
 
     @Test
@@ -75,6 +76,7 @@ public class BookDaoTest {
         assertEquals(2, b.getId());
         assertEquals("hei", b.getAuthor());
         assertEquals("maailma", b.getTitle());
+        assertEquals("kuvaus", b.getDescription());
     }
 
     @Test

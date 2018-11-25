@@ -51,6 +51,7 @@ public class InternetContentDaoTest {
         ArrayList<InternetContent> contents = dao.findAll();
         assertEquals(content.getTitle(), contents.get(0).getTitle());
         assertEquals(content.getUrl(), contents.get(0).getUrl());
+        assertEquals(content.getDescription(), contents.get(0).getDescription());
     }
 
     @Test
@@ -60,5 +61,25 @@ public class InternetContentDaoTest {
         ArrayList<InternetContent> contents = dao.findAll();
         content = contents.get(0);
         assertTrue(dao.delete(content.getId()));
+    }
+    
+    @Test
+    public void findOneFindsOne() throws SQLException {
+        InternetContent content = new InternetContent("title", "www.com", "desc");
+        dao.add(content);
+        content = new InternetContent("otsikko", "www.fi", "kuvaus");
+        dao.add(content);
+        
+        InternetContent found = dao.findOne(2);
+        assertEquals(2, found.getId());
+        assertEquals("otsikko", found.getTitle());
+        assertEquals("www.fi", found.getUrl());
+        assertEquals("kuvaus", found.getDescription());
+    }
+    
+    @Test
+    public void findOneReturnsNullIfNotFound() throws SQLException {
+        InternetContent content = dao.findOne(25);
+        assertEquals(null, content);
     }
 }
