@@ -7,6 +7,8 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -83,5 +85,43 @@ public class BookDaoTest {
     public void findOneReturnsNullIfIdIsInvalid() throws SQLException {
         Book b = dao.findOne(10);
         assertEquals(null, b);
+    }
+
+    @Test
+    public void updateReturnsTrueOnSuccess() throws SQLException {
+        Book b = new Book("hello", "world", "desc");
+        dao.add(b);
+
+        b = dao.findOne(1);
+
+        HashMap<String, String> updates = new HashMap<>();
+        updates.put("title", "new_title");
+        updates.put("author", "yolo");
+
+        boolean success = dao.update(updates, b.getId());
+
+        assertEquals(true, success);
+    }
+
+    @Test
+    public void updateUpdatesWithValidId() throws SQLException {
+        Book b = new Book("hello", "world", "desc");
+        dao.add(b);
+
+        b = dao.findOne(1);
+
+        HashMap<String, String> updates = new HashMap<>();
+        updates.put("title", "new_title");
+
+        dao.update(updates, b.getId());
+        b = dao.findOne(1);
+
+        assertEquals("new_title", b.getTitle());
+    }
+
+    @Test
+    public void updateReturnsFalseWithInvalidId() throws SQLException {
+        boolean success = dao.update(new HashMap<>(), 4);
+        assertEquals(success, false);
     }
 }

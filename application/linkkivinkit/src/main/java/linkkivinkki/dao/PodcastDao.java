@@ -1,13 +1,16 @@
 package linkkivinkki.dao;
 
-import linkkivinkki.data.Database;
-import linkkivinkki.domain.Item;
-import linkkivinkki.domain.Podcast;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import linkkivinkki.data.Database;
+import linkkivinkki.domain.Item;
+import linkkivinkki.domain.Podcast;
 
 public class PodcastDao implements Dao {
 
@@ -140,5 +143,37 @@ public class PodcastDao implements Dao {
         }
 
         return found;
+    }
+
+    public boolean update(Map<String, String> items, int id) {
+        if (items.isEmpty()) {
+            return false;
+        }
+
+        // Iterate through changed values to build a string for sql
+        String updateString = "";
+
+        for (Entry<String, String> e : items.entrySet()) {
+            updateString += e.getKey() + " = \"" + e.getValue() + "\", ";
+        }
+
+        updateString = updateString.substring(0, updateString.length() - 2);
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement update = conn.prepareStatement("UPDATE Podcast\n" +
+                                                             "SET " + updateString + "\n" +
+                                                             "WHERE id = ?;");
+            update.setInt(1, id);
+            update.execute();
+
+            update.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            return false;
+        }
+
+        return true;
     }
 }

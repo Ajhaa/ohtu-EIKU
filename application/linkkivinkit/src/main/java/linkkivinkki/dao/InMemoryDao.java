@@ -1,7 +1,9 @@
 package linkkivinkki.dao;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import linkkivinkki.domain.Item;
 
 public class InMemoryDao implements Dao {
@@ -26,9 +28,13 @@ public class InMemoryDao implements Dao {
     public List<Item> findAll() {
         return items;
     }
-    
+
     public Item findOne(int id) {
         return items.get(id);
+    }
+
+    public boolean update(Map<String, String> items, int id) {
+        throw new UnsupportedOperationException();
     }
 
 }

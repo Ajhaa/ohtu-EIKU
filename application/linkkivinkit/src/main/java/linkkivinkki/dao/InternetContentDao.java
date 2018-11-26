@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class InternetContentDao implements Dao {
 
@@ -132,7 +134,7 @@ public class InternetContentDao implements Dao {
                 found = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
                 found.setId(id);
             }
-            
+
             results.close();
             findContent.close();
             conn.close();
@@ -142,5 +144,37 @@ public class InternetContentDao implements Dao {
         }
 
         return found;
+    }
+
+    public boolean update(Map<String, String> items, int id) {
+        if (items.isEmpty()) {
+            return false;
+        }
+
+        // Iterate through changed values to build a string for sql
+        String updateString = "";
+
+        for (Entry<String, String> e : items.entrySet()) {
+            updateString += e.getKey() + " = \"" + e.getValue() + "\", ";
+        }
+
+        updateString = updateString.substring(0, updateString.length() - 2);
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement update = conn.prepareStatement("UPDATE InternetContent\n" +
+                                                             "SET " + updateString + "\n" +
+                                                             "WHERE id = ?;");
+            update.setInt(1, id);
+            update.execute();
+
+            update.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            return false;
+        }
+
+        return true;
     }
 }

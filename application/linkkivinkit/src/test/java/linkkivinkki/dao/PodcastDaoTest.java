@@ -1,16 +1,22 @@
 package linkkivinkki.dao;
 
-import linkkivinkki.data.Database;
-import linkkivinkki.domain.Podcast;
-import linkkivinkki.domain.Book;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import linkkivinkki.data.Database;
+import linkkivinkki.domain.Book;
+import linkkivinkki.domain.Podcast;
 
 public class PodcastDaoTest {
 
@@ -62,24 +68,65 @@ public class PodcastDaoTest {
         p = podcasts.get(0);
         assertTrue(dao.delete(p.getId()));
     }
-    
+
     @Test
     public void findOneFindsOne() throws SQLException {
         Podcast p = new Podcast("name", "title", "desc");
         dao.add(p);
         p = new Podcast("nimi", "otsikko", "kuvaus");
         dao.add(p);
-        
+
         Podcast found = dao.findOne(2);
         assertEquals(2, found.getId());
         assertEquals("nimi", found.getName());
         assertEquals("otsikko", found.getTitle());
         assertEquals("kuvaus", found.getDescription());
     }
-    
+
     @Test
     public void findOneReturnsNullIfNoneFound() throws SQLException {
         Podcast found = dao.findOne(71);
         assertEquals(null, found);
+    }
+
+    @Test
+    public void updateReturnsTrueOnSuccess() throws SQLException {
+        Podcast b = new Podcast("hello", "title", "desc");
+        dao.add(b);
+
+        b = dao.findOne(1);
+
+        HashMap<String, String> updates = new HashMap<>();
+        updates.put("title", "new_title");
+        updates.put("name", "yolo");
+
+        boolean success = dao.update(updates, b.getId());
+
+        assertEquals(true, success);
+    }
+
+    @Test
+    public void updateUpdatesWithValidId() throws SQLException {
+        Podcast b = new Podcast("hello", "world.fi", "desc");
+        dao.add(b);
+
+        b = dao.findOne(1);
+
+        HashMap<String, String> updates = new HashMap<>();
+        updates.put("title", "new_title");
+
+        dao.update(updates, b.getId());
+        b = dao.findOne(1);
+
+        assertEquals("new_title", b.getTitle());
+    }
+
+    @Test
+    public void updateReturnsFalseWithEmptyItems() throws SQLException {
+        Podcast b = new Podcast("hello", "world.fi", "desc");
+        dao.add(b);
+
+        boolean success = dao.update(new HashMap<>(), 1);
+        assertEquals(success, false);
     }
 }

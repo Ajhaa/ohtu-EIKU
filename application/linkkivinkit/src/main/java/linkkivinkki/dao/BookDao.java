@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class BookDao implements Dao {
 
@@ -130,7 +132,7 @@ public class BookDao implements Dao {
                 found = new Book(results.getString("author"), results.getString("title"), results.getString("description"));
                 found.setId(id);
             }
-            
+
             results.close();
             findBook.close();
             conn.close();
@@ -140,6 +142,44 @@ public class BookDao implements Dao {
         }
 
         return found;
+    }
+    /**
+     * Updates a book with given id.
+     *
+     * @param id - The id of the Book to be searched for
+     * @param items - Map of <field, new value> pairs
+     * @return true if successful, false if unsuccesful or empty update map
+     */
+    public boolean update(Map<String, String> items, int id) {
+        if (items.isEmpty()) {
+            return false;
+        }
+
+        // Iterate through changed values to build a string for sql
+        String updateString = "";
+
+        for (Entry<String, String> e : items.entrySet()) {
+            updateString += e.getKey() + " = \"" + e.getValue() + "\", ";
+        }
+
+        updateString = updateString.substring(0, updateString.length() - 2);
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement update = conn.prepareStatement("UPDATE Book\n" +
+                                                             "SET " + updateString + "\n" +
+                                                             "WHERE id = ?;");
+            update.setInt(1, id);
+            update.execute();
+
+            update.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            return false;
+        }
+
+        return true;
     }
 
 }
