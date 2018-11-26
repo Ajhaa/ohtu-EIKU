@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import linkkivinkki.domain.InternetContent;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -88,40 +89,27 @@ public class BookDaoTest {
     }
 
     @Test
+    public void updateReturnsFalseIfNotABook() {
+        assertFalse(dao.update(new Podcast("name", "title", "desc")));
+    }
+
+    @Test
     public void updateReturnsTrueOnSuccess() throws SQLException {
         Book b = new Book("hello", "world", "desc");
         dao.add(b);
 
         b = dao.findOne(1);
 
-        HashMap<String, String> updates = new HashMap<>();
-        updates.put("title", "new_title");
-        updates.put("author", "yolo");
+        b.setAuthor("newAuthor");
+        b.setTitle("newTitle");
 
-        boolean success = dao.update(updates, b.getId());
+        boolean success = dao.update(b);
 
         assertEquals(true, success);
     }
 
     @Test
-    public void updateUpdatesWithValidId() throws SQLException {
-        Book b = new Book("hello", "world", "desc");
-        dao.add(b);
-
-        b = dao.findOne(1);
-
-        HashMap<String, String> updates = new HashMap<>();
-        updates.put("title", "new_title");
-
-        dao.update(updates, b.getId());
-        b = dao.findOne(1);
-
-        assertEquals("new_title", b.getTitle());
-    }
-
-    @Test
-    public void updateReturnsFalseWithInvalidId() throws SQLException {
-        boolean success = dao.update(new HashMap<>(), 4);
-        assertEquals(success, false);
+    public void updateReturnsFalseIfBookDoesNotExist() throws SQLException {
+        assertFalse(dao.update(new Book("author", "title", "desc")));
     }
 }

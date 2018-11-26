@@ -145,35 +145,39 @@ public class PodcastDao implements Dao {
         return found;
     }
 
-    public boolean update(Map<String, String> items, int id) {
-        if (items.isEmpty()) {
+    /**
+     * Updates the given Podcast
+     *
+     * @param i - The Podcast to be updated
+     * @return true if successful, false if unsuccessful
+     */
+    public boolean update(Item i) {
+        if (i.getClass() != Podcast.class) {
             return false;
         }
+        
+        Podcast p = (Podcast) i;
 
-        // Iterate through changed values to build a string for sql
-        String updateString = "";
-
-        for (Entry<String, String> e : items.entrySet()) {
-            updateString += e.getKey() + " = \"" + e.getValue() + "\", ";
+        // Verify that the podcast actually exists in the database
+        if (findOne(i.getId()) == null) {
+            return false;
         }
-
-        updateString = updateString.substring(0, updateString.length() - 2);
-
+        
         try {
             Connection conn = database.getConnection();
-            PreparedStatement update = conn.prepareStatement("UPDATE Podcast\n" +
-                                                             "SET " + updateString + "\n" +
-                                                             "WHERE id = ?;");
-            update.setInt(1, id);
-            update.execute();
-
-            update.close();
+            PreparedStatement updatePodcast = conn.prepareStatement("UPDATE Podcast SET name=?, title=?, description=? WHERE id=?;");
+            updatePodcast.setString(1, p.getName());
+            updatePodcast.setString(2, p.getTitle());
+            updatePodcast.setString(3, p.getDescription());
+            updatePodcast.setInt(4, p.getId());
+            updatePodcast.executeUpdate();
+            
+            updatePodcast.close();
             conn.close();
-
-        } catch (SQLException ex) {
+        } catch (SQLException e) {
             return false;
         }
-
+        
         return true;
     }
 }

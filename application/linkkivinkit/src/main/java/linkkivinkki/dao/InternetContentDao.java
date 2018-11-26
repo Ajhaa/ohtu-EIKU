@@ -146,32 +146,36 @@ public class InternetContentDao implements Dao {
         return found;
     }
 
-    public boolean update(Map<String, String> items, int id) {
-        if (items.isEmpty()) {
+    /**
+     * Updates an InternetContent
+     *
+     * @param i - The InternetContent to be updated
+     * @return true if successful, false if unsuccessful
+     */
+    public boolean update(Item i) {
+        if (i.getClass() != InternetContent.class) {
             return false;
         }
 
-        // Iterate through changed values to build a string for sql
-        String updateString = "";
+        InternetContent ic = (InternetContent) i;
 
-        for (Entry<String, String> e : items.entrySet()) {
-            updateString += e.getKey() + " = \"" + e.getValue() + "\", ";
+        // Verify that the content actually exists in the database
+        if (findOne(i.getId()) == null) {
+            return false;
         }
-
-        updateString = updateString.substring(0, updateString.length() - 2);
 
         try {
             Connection conn = database.getConnection();
-            PreparedStatement update = conn.prepareStatement("UPDATE InternetContent\n" +
-                                                             "SET " + updateString + "\n" +
-                                                             "WHERE id = ?;");
-            update.setInt(1, id);
-            update.execute();
+            PreparedStatement updateContent = conn.prepareStatement("UPDATE InternetContent SET title=?, url=?, description=? WHERE id=?;");
+            updateContent.setString(1, ic.getTitle());
+            updateContent.setString(2, ic.getUrl());
+            updateContent.setString(3, ic.getDescription());
+            updateContent.setInt(4, ic.getId());
+            updateContent.executeUpdate();
 
-            update.close();
+            updateContent.close();
             conn.close();
-
-        } catch (SQLException ex) {
+        } catch (SQLException e) {
             return false;
         }
 

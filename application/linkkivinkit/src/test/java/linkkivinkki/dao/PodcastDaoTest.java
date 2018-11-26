@@ -89,44 +89,28 @@ public class PodcastDaoTest {
         assertEquals(null, found);
     }
 
+        @Test
+    public void updateReturnsFalseIfNotABook() {
+        assertFalse(dao.update(new Book("name", "title", "desc")));
+    }
+
     @Test
     public void updateReturnsTrueOnSuccess() throws SQLException {
-        Podcast b = new Podcast("hello", "title", "desc");
-        dao.add(b);
+        Podcast p = new Podcast("name", "title", "desc");
+        dao.add(p);
 
-        b = dao.findOne(1);
+        p = dao.findOne(1);
 
-        HashMap<String, String> updates = new HashMap<>();
-        updates.put("title", "new_title");
-        updates.put("name", "yolo");
+        p.setName("newName");
+        p.setTitle("newTitle");
 
-        boolean success = dao.update(updates, b.getId());
+        boolean success = dao.update(p);
 
         assertEquals(true, success);
     }
 
     @Test
-    public void updateUpdatesWithValidId() throws SQLException {
-        Podcast b = new Podcast("hello", "world.fi", "desc");
-        dao.add(b);
-
-        b = dao.findOne(1);
-
-        HashMap<String, String> updates = new HashMap<>();
-        updates.put("title", "new_title");
-
-        dao.update(updates, b.getId());
-        b = dao.findOne(1);
-
-        assertEquals("new_title", b.getTitle());
-    }
-
-    @Test
-    public void updateReturnsFalseWithEmptyItems() throws SQLException {
-        Podcast b = new Podcast("hello", "world.fi", "desc");
-        dao.add(b);
-
-        boolean success = dao.update(new HashMap<>(), 1);
-        assertEquals(success, false);
+    public void updateReturnsFalseIfContentDoesNotExist() throws SQLException {
+        assertFalse(dao.update(new Podcast("name", "title", "desc")));
     }
 }

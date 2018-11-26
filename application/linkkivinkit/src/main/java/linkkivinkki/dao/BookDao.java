@@ -144,41 +144,38 @@ public class BookDao implements Dao {
         return found;
     }
     /**
-     * Updates a book with given id.
+     * Updates a book
      *
-     * @param id - The id of the Book to be searched for
-     * @param items - Map of <field, new value> pairs
-     * @return true if successful, false if unsuccesful or empty update map
+     * @param i - The Book to be updated
+     * @return true if successful, false if unsuccessful
      */
-    public boolean update(Map<String, String> items, int id) {
-        if (items.isEmpty()) {
+    public boolean update(Item i) {
+        if (i.getClass() != Book.class) {
             return false;
         }
+        
+        Book b = (Book) i;
 
-        // Iterate through changed values to build a string for sql
-        String updateString = "";
-
-        for (Entry<String, String> e : items.entrySet()) {
-            updateString += e.getKey() + " = \"" + e.getValue() + "\", ";
+        // Verify that the book actually exists in the database
+        if (findOne(i.getId()) == null) {
+            return false;
         }
-
-        updateString = updateString.substring(0, updateString.length() - 2);
-
+        
         try {
             Connection conn = database.getConnection();
-            PreparedStatement update = conn.prepareStatement("UPDATE Book\n" +
-                                                             "SET " + updateString + "\n" +
-                                                             "WHERE id = ?;");
-            update.setInt(1, id);
-            update.execute();
-
-            update.close();
+            PreparedStatement updateBook = conn.prepareStatement("UPDATE Book SET title=?, author=?, description=? WHERE id=?;");
+            updateBook.setString(1, b.getTitle());
+            updateBook.setString(2, b.getAuthor());
+            updateBook.setString(3, b.getDescription());
+            updateBook.setInt(4, b.getId());
+            updateBook.executeUpdate();
+            
+            updateBook.close();
             conn.close();
-
-        } catch (SQLException ex) {
+        } catch (SQLException e) {
             return false;
         }
-
+        
         return true;
     }
 

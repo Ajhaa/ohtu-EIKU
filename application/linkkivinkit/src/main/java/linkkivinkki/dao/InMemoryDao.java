@@ -2,7 +2,6 @@ package linkkivinkki.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import linkkivinkki.domain.Item;
 
@@ -33,8 +32,10 @@ public class InMemoryDao implements Dao {
         return items.get(id);
     }
 
-    public boolean update(Map<String, String> items, int id) {
-        throw new UnsupportedOperationException();
+    public boolean update(Item i) {
+        // Replaces the previous item - could also be set to replace parameters
+        items.set(i.getId(), i);
+        return true;
     }
 
 }

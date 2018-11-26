@@ -38,7 +38,7 @@ public class InternetContentDaoTest {
         conn.close();
     }
 
-     @Test
+    @Test
     public void internetContentsAreAddedCorrectly() {
         InternetContent content = new InternetContent("title", "www.com", "desc");
         assertTrue(dao.add(content));
@@ -90,43 +90,27 @@ public class InternetContentDaoTest {
     }
 
     @Test
+    public void updateReturnsFalseIfNotABook() {
+        assertFalse(dao.update(new Book("name", "title", "desc")));
+    }
+
+    @Test
     public void updateReturnsTrueOnSuccess() throws SQLException {
-        InternetContent b = new InternetContent("hello", "world.fi", "desc");
-        dao.add(b);
+        InternetContent content = new InternetContent("title", "www.com", "desc");
+        dao.add(content);
 
-        b = dao.findOne(1);
+        content = dao.findOne(1);
 
-        HashMap<String, String> updates = new HashMap<>();
-        updates.put("title", "new_title");
-        updates.put("url", "yolo.fi");
+        content.setTitle("newTitle");
+        content.setUrl("IdkWhyYouWouldWantToReplaceThis.url");
 
-        boolean success = dao.update(updates, b.getId());
+        boolean success = dao.update(content);
 
         assertEquals(true, success);
     }
 
     @Test
-    public void updateUpdatesWithValidId() throws SQLException {
-        InternetContent b = new InternetContent("hello", "world.fi", "desc");
-        dao.add(b);
-
-        b = dao.findOne(1);
-
-        HashMap<String, String> updates = new HashMap<>();
-        updates.put("title", "new_title");
-
-        dao.update(updates, b.getId());
-        b = dao.findOne(1);
-
-        assertEquals("new_title", b.getTitle());
-    }
-
-    @Test
-    public void updateReturnsFalseWithEmptyItems() throws SQLException {
-        InternetContent b = new InternetContent("hello", "world.fi", "desc");
-        dao.add(b);
-
-        boolean success = dao.update(new HashMap<>(), 1);
-        assertEquals(success, false);
+    public void updateReturnsFalseIfContentDoesNotExist() throws SQLException {
+        assertFalse(dao.update(new InternetContent("title", "www.com", "desc")));
     }
 }
