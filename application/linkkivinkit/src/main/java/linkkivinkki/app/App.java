@@ -132,21 +132,23 @@ public class App {
     public boolean viewOne(String type, int id) {
         Item item;
 
-        //actual database search to be added
         switch (type) {
             case "book":
-                item = new Book("author", "title", "description");
+                item = (Item) this.bookDao.findOne(id);
                 break;
             case "internetContent":
-                item = new InternetContent("title", "url", "description");
+                item = (Item) this.icDao.findOne(id);
                 break;
             case "podcast":
-                item = new Podcast("name", "title", "description");
+                item = (Item) this.podcastDao.findOne(id);
                 break;
             default:
                 return false;
         }
-
+        if (item == null) {
+            io.print("No item found with that id");
+            return false;
+        }
         io.printItem(item);
 
         while (true) {
