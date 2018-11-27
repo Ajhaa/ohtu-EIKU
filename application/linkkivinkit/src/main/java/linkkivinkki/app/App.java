@@ -46,6 +46,7 @@ public class App {
                 case "delete":
                 case "d":
                     this.delete();
+                    break;
                 default:
                     break LOOP;
             }
