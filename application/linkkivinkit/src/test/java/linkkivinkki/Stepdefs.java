@@ -168,23 +168,22 @@ public class Stepdefs {
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
     public void confirmation_message_is_shown(String message) throws Throwable {
-        // FIX THIS
-        // assertTrue(io.getPrints().contains(message));
+        assertTrue(io.getPrints().contains(message));
     }
 
     @Then("^the information of the podcast is shown$")
     public void the_information_of_the_podcast_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(pDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
+        assertTrue(io.getPrints().contains(pDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^the information of the content is shown$")
     public void the_information_of_the_content_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(icDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
+        assertTrue(io.getPrints().contains(icDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^the information of the book is shown$")
     public void the_information_of_the_book_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(bookDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
+        assertTrue(io.getPrints().contains(bookDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^error message \"([^\"]*)\" is shown to the user$")

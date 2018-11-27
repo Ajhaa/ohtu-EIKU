@@ -31,7 +31,6 @@ public class App {
             io.print("Type 'view' to view existing memo items, 'add' to add a new memo item or 'delete' to view and delete items.");
             io.print("Type 'quit' to exit the app.");
             String input = io.getString();
-
             switch (input) {
                 case "quit":
                 case "q":
@@ -48,7 +47,7 @@ public class App {
                 case "d":
                     this.delete();
                 default:
-                    break;
+                    break LOOP;
             }
         }
 
@@ -62,7 +61,6 @@ public class App {
             io.print("Available listings: books, internetcontent, podcasts");
             io.print("Select a listing type or type 'return' to return to the main menu.");
             String input = io.getString();
-
             switch (input) {
                 case "return":
                 case "r":
@@ -79,7 +77,7 @@ public class App {
                 case "p":
                     return viewItems("podcast");
                 default:
-                    break;
+                    break LOOP;
             }
         }
 
@@ -110,8 +108,7 @@ public class App {
 
             io.print("\n" + "Enter an item ID to view more information about the specified item or type 'return' to return to the main menu.");
             String input = io.getString();
-
-            if (input.equals("return") || input.equals("r")) {
+            if (input.equals("return") || input.equals("r") || input.length() == 0) {
                 return true;
             } else {
                 try {
@@ -152,12 +149,11 @@ public class App {
         }
 
         io.printItem(item);
-
         while (true) {
             io.print("Type 'edit' if you want to edit this item's information. type 'return' to return to the previous list or 'main' to return to the main menu.");
             io.print("Otherwise type 'return' to return to the previous list or 'main' to return to the main menu.");
             String input = io.getString();
-
+            
             switch (input) {
                 case "return":
                 case "r":
