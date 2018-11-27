@@ -6,7 +6,7 @@ Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
 
 ## Dokumentaatio
 - [Kuvaus](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/description.md)
-- [Product Backlog](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/backlog.md)
+- [Product Backlog](https://github.com/Ajhaa/ohtu-EIKU/projects/1)
 - [Definition of Done](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/definition-of-done.md)
 - [Asennus- ja käyttöohje](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/manual.md)
 
