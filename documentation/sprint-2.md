@@ -5,8 +5,9 @@ https://docs.google.com/spreadsheets/d/18_Mxzq13ptoMNUHXJ_jidIJJ6xROo-tDHJXb_TSL
 
 # Toteutettavat käyttäjätarinat
 
-- Voidaan lisätä lukuvinkille kuvaus
-- Voidaan tarkastella yksittäistä lukuvinkkiä
-- Voidaan muokata lukuvinkkiä
-
-*lisätkää* *näille* *toteutumismäärittelyt*
+- [x] Voidaan lisätä lukuvinkille kuvaus
+  - [Määrittely osa uuden vinkin luontia](https://github.com/Ajhaa/ohtu-EIKU/blob/master/application/linkkivinkit/src/test/resources/linkkivinkki/new.feature)
+- [x] Voidaan tarkastella yksittäistä lukuvinkkiä
+  - [Määrittely](https://github.com/Ajhaa/ohtu-EIKU/blob/master/application/linkkivinkit/src/test/resources/linkkivinkki/viewOne.feature)
+- [ ] Voidaan muokata lukuvinkkiä
+  - [Määrittely](https://github.com/Ajhaa/ohtu-EIKU/blob/master/application/linkkivinkit/src/test/resources/linkkivinkki/edit.feature)
