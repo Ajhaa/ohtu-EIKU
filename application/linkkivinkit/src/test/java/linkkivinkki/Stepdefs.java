@@ -7,6 +7,7 @@ import linkkivinkki.app.App;
 import linkkivinkki.dao.InMemoryDao;
 import linkkivinkki.dao.Dao;
 import linkkivinkki.io.StubIO;
+import linkkivinkki.domain.Book;
 
 
 import static org.junit.Assert.*;
@@ -19,7 +20,7 @@ public class Stepdefs {
     int testi;
     App app;
     StubIO io;
-    Dao userDao = new InMemoryDao();
+    Dao bookDao = new InMemoryDao();
     List<String> inputLines = new ArrayList<>();
 
 
@@ -34,9 +35,19 @@ public class Stepdefs {
         inputLines.add("add");
     }
 
+    @Given("^book with title \"([^\"]*)\" and author \"([^\"]*)\" and description \"([^\"]*)\" is created")
+    public void bookIsCreated(String title, String author, String desc) {
+        bookDao.add(new Book(title, author, desc));
+    }
+
     @When("^book is selected$")
     public void bookIsSelected() {
         inputLines.add("book");
+    }
+
+    @When("^\"([^\"]*)\" is selected$")
+    public void somethingIsSelected(String s) {
+        inputLines.add(s);
     }
 
     @When("^title \"([^\"]*)\", author \"([^\"]*)\" and an empty description are entered")
@@ -47,13 +58,13 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, userDao, new InMemoryDao(), new InMemoryDao());
+        app = new App(io, bookDao, new InMemoryDao(), new InMemoryDao());
         app.start();
     }
 
     @Then("^amount of books should be 1$")
     public void amountOfBooksOne() {
-        assertEquals(userDao.findAll().size(), 1);
+        assertEquals(bookDao.findAll().size(), 1);
     }
 
     @When("^something happens$")
