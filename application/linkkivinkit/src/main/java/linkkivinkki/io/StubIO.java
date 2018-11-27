@@ -46,12 +46,20 @@ public class StubIO implements IO {
 
     @Override
     public InternetContent newInternetContent() {
-        return null;
+        String title = getString();
+        String url = getString();
+        String description = getString();
+
+        return new InternetContent(title, url, description);
     }
 
     @Override
     public Podcast newPodcast() {
-        return null;
+        String name = getString();
+        String title = getString();
+        String description = getString();
+
+        return new Podcast(name, title, description);
     }
 
 
