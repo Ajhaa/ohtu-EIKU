@@ -1,6 +1,5 @@
 package linkkivinkki;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -15,6 +14,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 import linkkivinkki.domain.InternetContent;
+import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
 
 public class Stepdefs {
@@ -71,6 +71,17 @@ public class Stepdefs {
     public void view_is_selected() throws Throwable {
         somethingIsSelected("view");
     }
+    
+    @When("^edit is selected$")
+    public void edit_is_selected() throws Throwable {
+        somethingIsSelected("edit");
+    }
+    
+    @When("^item with id \"([^\"]*)\" is selected$")
+    public void item_with_id_is_selected(String id) throws Throwable {
+        somethingIsSelected(id);
+    }
+
 
     @When("^id \"([^\"]*)\" is entered$")
     public void id_is_entered(String id) throws Throwable {
@@ -141,6 +152,24 @@ public class Stepdefs {
         io = new StubIO(inputLines);
         app = new App(io, bookDao, icDao, pDao);
         app.start();
+    }
+
+    @When("^new title \"([^\"]*)\" and author \"([^\"]*)\" and an empty description are set$")
+    public void new_title_and_author_and_an_empty_description_are_set(String title, String author) throws Throwable {
+        inputLines.add(title);
+        inputLines.add(author);
+        inputLines.add("");
+        inputLines.add("quit");
+
+        io = new StubIO(inputLines);
+        app = new App(io, bookDao, icDao, pDao);
+        app.start();
+    }
+
+    @Then("^confirmation message \"([^\"]*)\" is shown$")
+    public void confirmation_message_is_shown(String message) throws Throwable {
+        // FIX THIS
+        // assertTrue(io.getPrints().contains(message));
     }
 
     @Then("^the information of the podcast is shown$")
