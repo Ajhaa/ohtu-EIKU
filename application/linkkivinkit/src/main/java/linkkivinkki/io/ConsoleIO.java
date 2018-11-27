@@ -77,8 +77,6 @@ public class ConsoleIO implements IO {
         System.out.println("Insert a description (or leave blank): ");
         String description = scanner.nextLine();
 
-        Podcast p = new Podcast(name, title, description);
-
-        return p;
+        return new Podcast(name, title, description);
     }
 }

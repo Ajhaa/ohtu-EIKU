@@ -134,25 +134,28 @@ public class App {
 
         switch (type) {
             case "book":
-                item = (Item) this.bookDao.findOne(id);
+                item = (Item) bookDao.findOne(id);
                 break;
             case "internetContent":
-                item = (Item) this.icDao.findOne(id);
+                item = (Item) icDao.findOne(id);
                 break;
             case "podcast":
-                item = (Item) this.podcastDao.findOne(id);
+                item = (Item) podcastDao.findOne(id);
                 break;
             default:
                 return false;
         }
+
         if (item == null) {
             io.print("No item found with that id");
             return false;
         }
+
         io.printItem(item);
 
         while (true) {
-            io.print("Type 'return' to return to the previous list or 'main' to return to the main menu.");
+            io.print("Type 'edit' if you want to edit this item's information. type 'return' to return to the previous list or 'main' to return to the main menu.");
+            io.print("Otherwise type 'return' to return to the previous list or 'main' to return to the main menu.");
             String input = io.getString();
 
             switch (input) {
@@ -162,10 +165,91 @@ public class App {
                 case "main":
                 case "m":
                     return false;
+                case "edit":
+                case "e":
+                    edit(item);
+                    return false;
                 default:
                     break;
             }
         }
+    }
+
+    public boolean edit(Item item) {
+        io.print("Insert the new information you want for this item. Leave fields blank if you do not wish to change them." + "\n");
+
+        String name = "";
+        String title = "";
+        String url = "";
+        String author = "";
+        String description = "";
+
+        if (item.getClass().equals(Podcast.class)) {
+            io.print("Insert podcast name: ");
+            name = io.getString();
+        }
+
+        io.print("Insert content title: ");
+        title = io.getString();
+
+        if (item.getClass().equals(Book.class)) {
+            io.print("Insert book author: ");
+            author = io.getString();
+        } else if (item.getClass().equals(InternetContent.class)) {
+            io.print("Insert content url: ");
+            url = io.getString();
+        }
+
+        io.print("Insert a description: ");
+        description = io.getString();
+
+        return editAndUpdate(item, name, title, url, author, description);
+    }
+
+    public boolean editAndUpdate(Item item, String name, String title, String url, String author, String description) {
+        if (title.length() > 0) {
+            item.setTitle(title);
+        }
+
+        if (description.length() > 0) {
+            item.setDescription(description);
+        }
+
+        boolean success = false;
+
+        if (item.getClass().equals(Book.class)) {
+            Book book = (Book) item;
+
+            if (author.length() > 0) {
+                book.setAuthor(author);
+            }
+
+            success = bookDao.update(book);
+        } else if (item.getClass().equals(InternetContent.class))  {
+            InternetContent ic = (InternetContent) item;
+
+            if (url.length() > 0) {
+                ic.setUrl(url);
+            }
+
+            success = icDao.update(ic);
+        } else if (item.getClass().equals(Podcast.class)) {
+            Podcast podcast = (Podcast) item;
+
+            if (name.length() > 0) {
+                podcast.setName(name);
+            }
+
+            success = podcastDao.update(podcast);
+        }
+
+        if (success) {
+            io.print("Item was updated successfully");
+        } else {
+            io.print("Updating item failed.");
+        }
+
+        return success;
     }
 
     public boolean add() {

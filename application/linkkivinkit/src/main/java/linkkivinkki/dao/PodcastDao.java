@@ -155,14 +155,14 @@ public class PodcastDao implements Dao {
         if (i.getClass() != Podcast.class) {
             return false;
         }
-        
+
         Podcast p = (Podcast) i;
 
         // Verify that the podcast actually exists in the database
         if (findOne(i.getId()) == null) {
             return false;
         }
-        
+
         try {
             Connection conn = database.getConnection();
             PreparedStatement updatePodcast = conn.prepareStatement("UPDATE Podcast SET name=?, title=?, description=? WHERE id=?;");
@@ -171,13 +171,13 @@ public class PodcastDao implements Dao {
             updatePodcast.setString(3, p.getDescription());
             updatePodcast.setInt(4, p.getId());
             updatePodcast.executeUpdate();
-            
+
             updatePodcast.close();
             conn.close();
         } catch (SQLException e) {
             return false;
         }
-        
+
         return true;
     }
 }
