@@ -61,6 +61,9 @@ public class StubIO implements IO {
 
         return new Podcast(name, title, description);
     }
-
+    
+    public ArrayList<String> getPrints() {
+        return prints;
+    }
 
 }

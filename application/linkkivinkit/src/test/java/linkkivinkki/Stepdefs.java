@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import linkkivinkki.domain.InternetContent;
+import linkkivinkki.domain.Podcast;
 
 public class Stepdefs {
 
@@ -27,7 +29,7 @@ public class Stepdefs {
 
     @Given("^add is selected$")
     public void addIsSelected() {
-        inputLines.add("add");
+        somethingIsSelected("add");
     }
 
     @Given("^book with title \"([^\"]*)\" and author \"([^\"]*)\" and description \"([^\"]*)\" is created")
@@ -35,24 +37,50 @@ public class Stepdefs {
         bookDao.add(new Book(title, author, desc));
     }
 
-    @When("^book is selected$")
-    public void bookIsSelected() {
-        inputLines.add("book");
+    @Given("^content with title \"([^\"]*)\" and url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
+    public void content_with_title_and_url_and_description_is_created(String title, String url, String desc) throws Throwable {
+        icDao.add(new InternetContent(title, url, desc));
+    }
+
+    @Given("^podcast with name \"([^\"]*)\" and title \"([^\"]*)\" and description \"([^\"]*)\" is created$")
+    public void podcast_with_name_and_title_and_description_is_created(String name, String title, String desc) throws Throwable {
+        pDao.add(new Podcast(name, title, desc));
     }
 
     @When("^\"([^\"]*)\" is selected$")
     public void somethingIsSelected(String s) {
         inputLines.add(s);
     }
-        
+
+    @When("^book is selected$")
+    public void bookIsSelected() {
+        somethingIsSelected("book");
+    }
+
     @When("^internetcontent is selected$")
     public void internetcontent_is_selected() throws Throwable {
-        inputLines.add("internetcontent");
+        somethingIsSelected("internetcontent");
     }
 
     @When("^podcast is selected$")
     public void podcast_is_selected() throws Throwable {
-        inputLines.add("podcast");
+        somethingIsSelected("podcast");
+    }
+
+    @When("^view is selected$")
+    public void view_is_selected() throws Throwable {
+        somethingIsSelected("view");
+    }
+
+    @When("^id \"([^\"]*)\" is entered$")
+    public void id_is_entered(String id) throws Throwable {
+        inputLines.add(id);
+        inputLines.add("r");
+        inputLines.add("quit");
+
+        io = new StubIO(inputLines);
+        app = new App(io, bookDao, icDao, pDao);
+        app.start();
     }
 
     @When("^title \"([^\"]*)\", author \"([^\"]*)\" and an empty description are entered")
@@ -113,6 +141,21 @@ public class Stepdefs {
         io = new StubIO(inputLines);
         app = new App(io, bookDao, icDao, pDao);
         app.start();
+    }
+
+    @Then("^the information of the podcast is shown$")
+    public void the_information_of_the_podcast_is_shown() throws Throwable {
+        assertTrue(io.getPrints().contains(pDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
+    }
+
+    @Then("^the information of the content is shown$")
+    public void the_information_of_the_content_is_shown() throws Throwable {
+        assertTrue(io.getPrints().contains(icDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
+    }
+
+    @Then("^the information of the book is shown$")
+    public void the_information_of_the_book_is_shown() throws Throwable {
+        assertTrue(io.getPrints().contains(bookDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
     }
 
     @Then("^amount of books should be 1$")
