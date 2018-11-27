@@ -25,9 +25,10 @@ public class ConsoleIO implements IO {
         System.out.println(item);
         System.out.println("Description: " + item.getDescription());
 
-        List<String> tags = item.getTags();
-        System.out.print("Tags: ");
-        System.out.println(tags.toString().substring(1, tags.toString().length() - 1));
+        //(waiting for tag implementation)
+        //List<String> tags = item.getTags();
+        //System.out.print("Tags: ");
+        //System.out.println(tags.toString().substring(1, tags.toString().length() - 1));
 
         if (item.isRead()) {
             System.out.println("Read on: " + item.getReadDate());
