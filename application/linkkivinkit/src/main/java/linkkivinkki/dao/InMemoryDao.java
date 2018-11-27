@@ -28,10 +28,16 @@ public class InMemoryDao implements Dao {
         return items;
     }
 
+    @Override
     public Item findOne(int id) {
+        if (id >= items.size()) {
+            return null;
+        }
+        
         return items.get(id);
     }
 
+    @Override
     public boolean update(Item i) {
         // Replaces the previous item - could also be set to replace parameters
         items.set(i.getId(), i);

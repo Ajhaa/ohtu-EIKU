@@ -20,3 +20,21 @@ Feature: User can view single item
     And "podcast" is selected
     And id "1" is entered
     Then the information of the podcast is shown
+
+  Scenario: error message is shown when attempting to view nonexistent book
+    Given view is selected
+    When "book" is selected
+    And id "1" is entered
+    Then error message "No item found with that id" is shown to the user
+
+  Scenario: error message is shown when attempting to view nonexistent internetcontent
+    Given view is selected
+    When "internetcontent" is selected
+    And id "1" is entered
+    Then error message "No item found with that id" is shown to the user
+
+  Scenario: error message is shown when attempting to view nonexistent podcast
+    Given view is selected
+    When "podcast" is selected
+    And id "1" is entered
+    Then error message "No item found with that id" is shown to the user

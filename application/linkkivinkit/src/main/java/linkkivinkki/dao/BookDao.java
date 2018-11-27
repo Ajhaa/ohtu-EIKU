@@ -120,6 +120,7 @@ public class BookDao implements Dao {
      * @param id - The id of the Podcast to be searched for
      * @return Podcast with the given id if successful, null otherwise
      */
+    @Override
     public Book findOne(int id) {
         Book found = null;
         try {

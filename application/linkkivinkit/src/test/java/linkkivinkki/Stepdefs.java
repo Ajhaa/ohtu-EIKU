@@ -158,6 +158,11 @@ public class Stepdefs {
         assertTrue(io.getPrints().contains(bookDao.findOne(0).toString())); // USING INDEX 0 B/C INMEMORYDAO RETURNS A LIST
     }
 
+    @Then("^error message \"([^\"]*)\" is shown to the user$")
+    public void error_message_is_shown_to_the_user(String error) throws Throwable {
+        assertTrue(io.getPrints().contains("No item found with that id"));
+    }
+
     @Then("^amount of books should be 1$")
     public void amountOfBooksOne() {
         assertEquals(bookDao.findAll().size(), 1);
