@@ -1,8 +1,14 @@
 # ohtu-EIKU
-[![Build Status](https://www.travis-ci.org/Ajhaa/ohtu-EIKU.svg?branch=master)](https://www.travis-ci.org/Ajhaa/ohtu-EIKU)  
-[![codecov](https://codecov.io/gh/Ajhaa/ohtu-EIKU/branch/master/graph/badge.svg)](https://codecov.io/gh/Ajhaa/ohtu-EIKU)  
 
 Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
+
+**Jatkuva integraatio (Travis):**
+
+[![Build Status](https://www.travis-ci.org/Ajhaa/ohtu-EIKU.svg?branch=master)](https://www.travis-ci.org/Ajhaa/ohtu-EIKU)  
+
+**Koodin testikattavuus (CodeCov):**
+
+[![codecov](https://codecov.io/gh/Ajhaa/ohtu-EIKU/branch/master/graph/badge.svg)](https://codecov.io/gh/Ajhaa/ohtu-EIKU)  
 
 ## Dokumentaatio
 - [Kuvaus](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/description.md)
@@ -12,3 +18,4 @@ Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
 ### Sprintit
   - [Sprint #1](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-1.md)
   - [Sprint #2](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-2.md)
+  - [Sprint #3](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-2.md)
