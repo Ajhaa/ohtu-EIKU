@@ -23,6 +23,11 @@ public class StubIO implements IO {
     }
 
     @Override
+    public void printColor(String text, Color color) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
     public void printItem(Item item) {
         prints.add(item.toString());
     }

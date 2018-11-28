@@ -11,6 +11,8 @@ import java.util.List;
 public class ConsoleIO implements IO {
     private Scanner scanner;
 
+
+
     public ConsoleIO() {
         scanner = new Scanner(System.in);
     }
@@ -18,6 +20,11 @@ public class ConsoleIO implements IO {
     @Override
     public void print(String text) {
         System.out.println(text);
+    }
+    
+    @Override
+    public void printColor(String text, Color color) {
+        System.out.println(color + text + Color.Reset);
     }
 
     @Override
