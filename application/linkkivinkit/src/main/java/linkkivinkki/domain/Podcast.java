@@ -1,5 +1,7 @@
 package linkkivinkki.domain;
 
+import linkkivinkki.io.Color;
+
 public class Podcast extends Item {
     private String name;
 
@@ -24,6 +26,6 @@ public class Podcast extends Item {
 
     @Override
     public String toString() {
-        return getId() + " " + name + " - " + this.getTitle() + "\n" + getDescription();
+        return Color.cyanText("" + getId()) + " " + name + " - " + this.getTitle() + "\n" + getDescription();
     }
 }

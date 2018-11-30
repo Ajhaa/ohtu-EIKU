@@ -32,4 +32,11 @@ public enum Color {
         return coloredString(text, Cyan);
     }
 
+    public static String redText(String text) {
+        return coloredString(text, Red);
+    }
+
+    public static String greenText(String text) {
+        return coloredString(text, Green);
+    }
 }

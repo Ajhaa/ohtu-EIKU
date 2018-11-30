@@ -1,5 +1,7 @@
 package linkkivinkki.domain;
 
+import linkkivinkki.io.Color;
+
 public class InternetContent extends Item {
     private String url;
 
@@ -24,8 +26,7 @@ public class InternetContent extends Item {
 
     @Override
     public String toString() {
-        return getId() + " " + this.getTitle() + " (" + url + ")";
+        return Color.cyanText("" + getId()) + " " + this.getTitle() + " (" + url + ")";
     }
-
 
 }

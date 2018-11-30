@@ -1,5 +1,7 @@
 package linkkivinkki.domain;
 
+import linkkivinkki.io.Color;
+
 public class Book extends Item {
     private String author;
 
@@ -24,6 +26,6 @@ public class Book extends Item {
 
     @Override
     public String toString() {
-        return getId() + " " + this.getTitle() + " by " + author;
+        return Color.cyanText("" + getId()) + " " + this.getTitle() + " by " + author;
     }
 }
