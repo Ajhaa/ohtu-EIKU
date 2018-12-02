@@ -30,6 +30,19 @@ public class StubIO implements IO {
     @Override
     public void printItem(Item item) {
         prints.add(item.toString());
+        prints.add("Description: " + item.getDescription());
+
+        //(waiting for tag implementation)
+        //List<String> tags = item.getTags();
+        //prints.add("Tags: " + tags.toString().substring(1, tags.toString().length() - 1));
+        prints.add("Date created: " + item.getCreationDate());
+        
+        if (item.isRead()) {
+            prints.add("Read on: " + item.getReadDate());
+        } else {
+            prints.add("Not yet read.");
+        }
+
     }
 
     @Override
