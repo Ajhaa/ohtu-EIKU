@@ -33,9 +33,9 @@ public class Stepdefs {
         somethingIsSelected("add");
     }
 
-    @Given("^book with title \"([^\"]*)\" and author \"([^\"]*)\" and description \"([^\"]*)\" is created")
+    @Given("^book with title \"([^\"]*)\" and author \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void bookIsCreated(String title, String author, String desc) {
-        bookDao.add(new Book(title, author, desc));
+        bookDao.add(new Book(author, title, desc));
     }
 
     @Given("^content with title \"([^\"]*)\" and url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
@@ -167,10 +167,37 @@ public class Stepdefs {
         app = new App(io, bookDao, icDao, pDao);
         app.start();
     }
+    
+    @When("^new title \"([^\"]*)\" and url \"([^\"]*)\" and an empty description are set$")
+    public void new_title_and_url_and_an_empty_description_are_set(String title, String url) throws Throwable {
+        inputLines.add(title);
+        inputLines.add(url);
+        inputLines.add("");
+        inputLines.add("return");
+        inputLines.add("quit");
+
+        io = new StubIO(inputLines);
+        app = new App(io, bookDao, icDao, pDao);
+        app.start();
+    }
+    
+    @When("^new name \"([^\"]*)\" and title \"([^\"]*)\" and an empty description are set$")
+    public void new_name_and_title_and_an_empty_description_are_set(String name, String title) throws Throwable {
+        inputLines.add(name);
+        inputLines.add(title);
+        inputLines.add("");
+        inputLines.add("return");
+        inputLines.add("quit");
+
+        io = new StubIO(inputLines);
+        app = new App(io, bookDao, icDao, pDao);
+        app.start();
+    }
+
+
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
     public void confirmation_message_is_shown(String message) throws Throwable {
-        System.out.println(io.getPrints().contains(message));
         assertTrue(io.getPrints().contains(Color.greenText(message)));
     }
 
