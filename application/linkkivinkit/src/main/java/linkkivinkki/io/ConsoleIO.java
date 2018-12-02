@@ -36,7 +36,8 @@ public class ConsoleIO implements IO {
         //List<String> tags = item.getTags();
         //System.out.print("Tags: ");
         //System.out.println(tags.toString().substring(1, tags.toString().length() - 1));
-
+        System.out.println("Date created: " + item.getCreationDate());
+        
         if (item.isRead()) {
             System.out.println("Read on: " + item.getReadDate());
         } else {
