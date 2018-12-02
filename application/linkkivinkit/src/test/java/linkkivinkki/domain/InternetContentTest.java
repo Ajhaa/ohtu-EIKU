@@ -1,5 +1,6 @@
 package linkkivinkki.domain;
 
+import linkkivinkki.io.Color;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +33,6 @@ public class InternetContentTest {
 
     @Test
     public void toStringOfInternetContentWorks() {
-        assertEquals("-1 title (url.fi)", content.toString());
+        assertEquals(Color.cyanText("-1")+ " title (url.fi)", content.toString());
     }
 }
