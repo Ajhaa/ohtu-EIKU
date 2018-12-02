@@ -1,5 +1,6 @@
 package linkkivinkki.domain;
 
+import linkkivinkki.io.Color;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class PodcastTest {
 
     @Test
     public void toStringOfPodcastWorks() {
-        String shouldBe = "-1 name - title" + "\n" + "description";
+        String shouldBe = Color.cyanText("-1")+ " name - title" + "\n" + "description";
         assertEquals(shouldBe, podcast.toString());
     }
 

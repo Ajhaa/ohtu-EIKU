@@ -119,8 +119,9 @@ public class App {
                 try {
                     int id = Integer.parseInt(input);
 
-                    boolean keepGoing = viewOne(type, id);
-                    if (!keepGoing) {
+                    boolean stop = viewOne(type, id);
+                    
+                    if (stop) {
                         return true;
                     }
                 } catch (Exception e) {

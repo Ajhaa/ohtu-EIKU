@@ -16,6 +16,7 @@ import java.util.List;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
+import linkkivinkki.io.Color;
 
 public class Stepdefs {
 
@@ -86,7 +87,7 @@ public class Stepdefs {
     @When("^id \"([^\"]*)\" is entered$")
     public void id_is_entered(String id) throws Throwable {
         inputLines.add(id);
-        inputLines.add("r");
+        inputLines.add("return");
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
@@ -159,6 +160,7 @@ public class Stepdefs {
         inputLines.add(title);
         inputLines.add(author);
         inputLines.add("");
+        inputLines.add("return");
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
@@ -168,7 +170,8 @@ public class Stepdefs {
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
     public void confirmation_message_is_shown(String message) throws Throwable {
-        assertTrue(io.getPrints().contains(message));
+        System.out.println(io.getPrints().contains(message));
+        assertTrue(io.getPrints().contains(Color.greenText(message)));
     }
 
     @Then("^the information of the podcast is shown$")
@@ -188,7 +191,7 @@ public class Stepdefs {
 
     @Then("^error message \"([^\"]*)\" is shown to the user$")
     public void error_message_is_shown_to_the_user(String error) throws Throwable {
-        assertTrue(io.getPrints().contains("No item found with that id"));
+        assertTrue(io.getPrints().contains(Color.redText(error)));
     }
 
     @Then("^amount of books should be 1$")

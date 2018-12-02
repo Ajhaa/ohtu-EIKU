@@ -1,5 +1,6 @@
 package linkkivinkki.domain;
 
+import linkkivinkki.io.Color;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,7 +61,7 @@ public class BookTest {
     @Test
     public void toStringReturnsAProperString() {
         Book b = new Book("hello", "world", "desc");
-        String expected = "-1 world by hello";
+        String expected = Color.cyanText("-1")+ " world by hello";
         assertEquals(expected, b.toString());
     }
 
