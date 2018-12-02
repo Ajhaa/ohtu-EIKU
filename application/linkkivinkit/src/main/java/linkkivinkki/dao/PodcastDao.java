@@ -36,6 +36,7 @@ public class PodcastDao implements Dao {
             while (results.next()) {
                 Podcast p = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
                 p.setId(results.getInt("id"));
+                p.setCreationDate(results.getDate("date_created"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
                 list.add(p);
@@ -72,11 +73,12 @@ public class PodcastDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addPodcast = conn.prepareStatement("INSERT INTO Podcast "
-                    + "(name, title, description) "
-                    + "VALUES (?, ?, ?);");
+                    + "(name, title, description, date_created) "
+                    + "VALUES (?, ?, ?, ?);");
             addPodcast.setString(1, p.getName());
             addPodcast.setString(2, p.getTitle());
             addPodcast.setString(3, p.getDescription());
+            addPodcast.setDate(4, new java.sql.Date(p.getCreationDate().getTime()));
             addPodcast.execute();
 
             // Close the connection
@@ -132,6 +134,7 @@ public class PodcastDao implements Dao {
             if (results.next()) {
                 found = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
                 found.setId(id);
+                found.setCreationDate(results.getDate("date_created"));
             }
 
             results.close();

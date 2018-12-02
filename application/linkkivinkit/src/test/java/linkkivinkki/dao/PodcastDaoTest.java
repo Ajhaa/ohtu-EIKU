@@ -8,7 +8,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,6 +58,7 @@ public class PodcastDaoTest {
         assertEquals(p.getName(), podcasts.get(0).getName());
         assertEquals(p.getTitle(), podcasts.get(0).getTitle());
         assertEquals(p.getDescription(), podcasts.get(0).getDescription());
+        assertEquals(p.getCreationDate(), podcasts.get(0).getCreationDate());
     }
 
     @Test
@@ -81,6 +82,7 @@ public class PodcastDaoTest {
         assertEquals("nimi", found.getName());
         assertEquals("otsikko", found.getTitle());
         assertEquals("kuvaus", found.getDescription());
+        assertEquals(p.getCreationDate(), found.getCreationDate());
     }
 
     @Test

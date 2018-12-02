@@ -1,4 +1,3 @@
-
 package linkkivinkki.domain;
 
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ItemTest {
+
     private Item item;
 
     @Before
@@ -17,7 +17,7 @@ public class ItemTest {
         ArrayList<String> list = new ArrayList<>();
         list.add("tag1");
         list.add("tag2");
-        this.item = new Item(1, "title", list, false, new Date(), "") ;
+        this.item = new Item(1, "title", list, false, new Date(), new Date(), "");
     }
 
     @After
@@ -28,7 +28,7 @@ public class ItemTest {
     @Test
     public void itemConstructorWithoutArgumentsReturnsItem() {
         Item i = new Item();
-        assertTrue( Item.class == i .getClass());
+        assertTrue(Item.class == i.getClass());
     }
 
     @Test
@@ -70,6 +70,18 @@ public class ItemTest {
         Date date = new Date();
         item.setReadDate(date);
         assertEquals(date, item.getReadDate());
+    }
+
+    @Test
+    public void canSetCreationDateOfItem() {
+        Date date = new Date();
+        item.setCreationDate(date);
+        assertEquals(date, item.getCreationDate());
+    }
+
+    @Test
+    public void canGetCreationDateOfItem() {
+        assertEquals(Date.class, item.getCreationDate().getClass());
     }
 
     @Test

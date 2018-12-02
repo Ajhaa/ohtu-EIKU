@@ -9,24 +9,26 @@ public class Item {
     private String title;
     private List<String> tags;
     private boolean read;
+    private Date dateCreated;
     private Date readDate;
     private String description;
 
-    public Item(int id, String title, List<String> tags, boolean read, Date read_date, String description) {
+    public Item(int id, String title, List<String> tags, boolean read, Date dateCreated, Date read_date, String description) {
         this.id = id;
         this.title = title;
         this.tags = tags;
         this.read = read;
+        this.dateCreated = dateCreated;
         this.readDate = read_date;
         this.description = description;
     }
 
     public Item(String title, String description) {
-        this(-1, title, new ArrayList<>(), false, null, description);
+        this(-1, title, new ArrayList<>(), false, new Date(), null, description);
     }
 
     public Item() {
-        this(-1, "", new ArrayList<>(), false, null, "");
+        this(-1, "", new ArrayList<>(), false, new Date(), null, "");
     }
 
     public void addTag(String tag) {
@@ -100,6 +102,14 @@ public class Item {
      */
     public void setRead(boolean read) {
         this.read = read;
+    }
+    
+    public void setCreationDate(Date date) {
+        this.dateCreated = date;
+    }
+    
+    public Date getCreationDate() {
+        return this.dateCreated;
     }
 
     /**

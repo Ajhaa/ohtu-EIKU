@@ -37,7 +37,8 @@ public class Database {
                     + "id integer PRIMARY KEY, "
                     + "title varchar(255), "
                     + "author varchar(255), "
-                    + "description varchar(255)); "
+                    + "description varchar(255), "
+                    + "date_created datetime); "
             );
             initBook.execute();
             initBook.close();
@@ -46,7 +47,8 @@ public class Database {
                     + "id integer PRIMARY KEY, "
                     + "title varchar(255), "
                     + "url varchar(255), "
-                    + "description varchar(255));"
+                    + "description varchar(255), "
+                    + "date_created datetime);"
             );
             initLink.execute();
             initLink.close();
@@ -55,7 +57,8 @@ public class Database {
                     + "id integer PRIMARY KEY, "
                     + "name varchar(255), " // 'name' is the name of the Podcast, E.G. 'The EIKU Podcast'
                     + "title varchar(255), " // 'title' is the title of the episode, E.G. 'Ajhaa talks about MongoDB'
-                    + "description varchar(255));"
+                    + "description varchar(255), "
+                    + "date_created datetime);"
             );
             initPodcast.execute();
             initPodcast.close();

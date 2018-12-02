@@ -36,6 +36,7 @@ public class InternetContentDao implements Dao {
             while (results.next()) {
                 InternetContent content = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
                 content.setId(results.getInt("id"));
+                content.setCreationDate(results.getDate("date_created"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
                 list.add(content);
@@ -72,11 +73,12 @@ public class InternetContentDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addContent = conn.prepareStatement("INSERT INTO InternetContent "
-                    + "(title, url, description) "
-                    + "VALUES (?, ?, ?);");
+                    + "(title, url, description, date_created) "
+                    + "VALUES (?, ?, ?, ?);");
             addContent.setString(1, content.getTitle());
             addContent.setString(2, content.getUrl());
             addContent.setString(3, content.getDescription());
+            addContent.setDate(4, new java.sql.Date(content.getCreationDate().getTime()));
             addContent.execute();
 
             // Close the connection
@@ -133,6 +135,7 @@ public class InternetContentDao implements Dao {
             if (results.next()) {
                 found = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
                 found.setId(id);
+                found.setCreationDate(results.getDate("date_created"));
             }
 
             results.close();

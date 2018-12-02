@@ -35,6 +35,7 @@ public class BookDao implements Dao {
             while (results.next()) {
                 Book b = new Book(results.getString("author"), results.getString("title"), results.getString("description"));
                 b.setId(results.getInt("id"));
+                b.setCreationDate(results.getDate("date_created"));
                 // Other content related to the Item parent class should be inserted here when applicable
 
                 list.add(b);
@@ -71,11 +72,12 @@ public class BookDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addBook = conn.prepareStatement("INSERT INTO Book "
-                    + "(title, author, description) "
-                    + "VALUES (?, ?, ?);");
+                    + "(title, author, description, date_created) "
+                    + "VALUES (?, ?, ?, ?);");
             addBook.setString(1, b.getTitle());
             addBook.setString(2, b.getAuthor());
             addBook.setString(3, b.getDescription());
+            addBook.setDate(4, new java.sql.Date(b.getCreationDate().getTime()));
             addBook.execute();
 
             // Close the connection
@@ -132,6 +134,7 @@ public class BookDao implements Dao {
             if (results.next()) {
                 found = new Book(results.getString("author"), results.getString("title"), results.getString("description"));
                 found.setId(id);
+                found.setCreationDate(results.getDate("date_created"));
             }
 
             results.close();
@@ -144,6 +147,7 @@ public class BookDao implements Dao {
 
         return found;
     }
+
     /**
      * Updates a book
      *
@@ -154,14 +158,14 @@ public class BookDao implements Dao {
         if (i.getClass() != Book.class) {
             return false;
         }
-        
+
         Book b = (Book) i;
 
         // Verify that the book actually exists in the database
         if (findOne(i.getId()) == null) {
             return false;
         }
-        
+
         try {
             Connection conn = database.getConnection();
             PreparedStatement updateBook = conn.prepareStatement("UPDATE Book SET title=?, author=?, description=? WHERE id=?;");
@@ -170,13 +174,13 @@ public class BookDao implements Dao {
             updateBook.setString(3, b.getDescription());
             updateBook.setInt(4, b.getId());
             updateBook.executeUpdate();
-            
+
             updateBook.close();
             conn.close();
         } catch (SQLException e) {
             return false;
         }
-        
+
         return true;
     }
 

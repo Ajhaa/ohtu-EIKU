@@ -7,8 +7,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import linkkivinkki.domain.InternetContent;
+import java.util.Date;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -57,6 +56,7 @@ public class BookDaoTest {
         assertEquals(b.getAuthor(), books.get(0).getAuthor());
         assertEquals(b.getTitle(), books.get(0).getTitle());
         assertEquals(b.getDescription(), books.get(0).getDescription());
+        assertEquals(b.getCreationDate(), books.get(0).getCreationDate());
     }
 
     @Test
@@ -73,6 +73,7 @@ public class BookDaoTest {
         Book b = new Book("hello", "world", "desc");
         dao.add(b);
         b = new Book("hei", "maailma", "kuvaus");
+        Date d = b.getCreationDate();
         dao.add(b);
 
         b = dao.findOne(2);
@@ -80,6 +81,7 @@ public class BookDaoTest {
         assertEquals("hei", b.getAuthor());
         assertEquals("maailma", b.getTitle());
         assertEquals("kuvaus", b.getDescription());
+        assertEquals(d, b.getCreationDate());
     }
 
     @Test
