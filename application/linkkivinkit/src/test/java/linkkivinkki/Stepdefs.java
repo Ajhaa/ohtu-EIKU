@@ -72,12 +72,12 @@ public class Stepdefs {
     public void view_is_selected() throws Throwable {
         somethingIsSelected("view");
     }
-    
+
     @When("^edit is selected$")
     public void edit_is_selected() throws Throwable {
         somethingIsSelected("edit");
     }
-    
+
     @When("^item with id \"([^\"]*)\" is selected$")
     public void item_with_id_is_selected(String id) throws Throwable {
         somethingIsSelected(id);
@@ -87,7 +87,7 @@ public class Stepdefs {
     @When("^id \"([^\"]*)\" is entered$")
     public void id_is_entered(String id) throws Throwable {
         inputLines.add(id);
-        inputLines.add("return");
+        inputLines.add("main");
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
@@ -167,7 +167,7 @@ public class Stepdefs {
         app = new App(io, bookDao, icDao, pDao);
         app.start();
     }
-    
+
     @When("^new title \"([^\"]*)\" and url \"([^\"]*)\" and an empty description are set$")
     public void new_title_and_url_and_an_empty_description_are_set(String title, String url) throws Throwable {
         inputLines.add(title);
@@ -180,7 +180,7 @@ public class Stepdefs {
         app = new App(io, bookDao, icDao, pDao);
         app.start();
     }
-    
+
     @When("^new name \"([^\"]*)\" and title \"([^\"]*)\" and an empty description are set$")
     public void new_name_and_title_and_an_empty_description_are_set(String name, String title) throws Throwable {
         inputLines.add(name);

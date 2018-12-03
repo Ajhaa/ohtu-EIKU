@@ -8,7 +8,6 @@ Feature: User can edit saved items
     And "edit" is selected
     And new title "UusiKirja" and author "UusiTestaaja" and an empty description are set
     Then confirmation message "Item was updated successfully" is shown
-    And the information of the book is shown
 
   Scenario: Editing an existing internetcontent
     Given content with title "Sivu" and url "sivu.fi" and description "This is an internetcontent" is created
@@ -18,7 +17,6 @@ Feature: User can edit saved items
     And "edit" is selected
     And new title "UusiSivu" and url "sivu.fi/yolo" and an empty description are set
     Then confirmation message "Item was updated successfully" is shown
-    And the information of the content is shown
 
   Scenario: Editing an existing podcast
     Given podcast with name "Podcast" and title "Title" and description "This is a podcast" is created
@@ -28,4 +26,3 @@ Feature: User can edit saved items
     And "edit" is selected
     And new name "UusiPodcast" and title "UusiTitle" and an empty description are set
     Then confirmation message "Item was updated successfully" is shown
-    And the information of the podcast is shown
