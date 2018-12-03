@@ -1,9 +1,13 @@
 package linkkivinkki.app;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import linkkivinkki.dao.Dao;
 import linkkivinkki.domain.Item;
+import linkkivinkki.domain.ItemDateComparator;
+import linkkivinkki.domain.ItemTitleComparator;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Podcast;
@@ -29,7 +33,8 @@ public class App {
 
         LOOP:
         while (true) {
-            io.print("");
+            printEmpty();
+            io.print("MAIN MENU" + "\n");
             io.print("Commands:");
             io.print(Color.cyanText("view") + " - view existing items");
             io.print(Color.cyanText("add") + " - add a new memo item");
@@ -68,6 +73,7 @@ public class App {
             io.print("\n");
             io.print("What kind of items do you wish to view?");
 
+            io.print(Color.cyanText("all"));
             printCategories();
 
             io.print("Select a listing type or type " + Color.cyanText("return") + " to return to the main menu.");
@@ -81,12 +87,61 @@ public class App {
                 return viewItems("internetContent");
             } else if ("podcasts".startsWith(input)) {
                 return viewItems("podcast");
+            } else if ("all".startsWith(input)) {
+                return viewAll();
             } else {
                 break LOOP;
             }
         }
 
         return false;
+    }
+
+    public boolean viewAll() {
+        printEmpty();
+        io.print("Would you like to view items in " + Color.cyanText("alphabetical") + " order or by " + Color.cyanText("date") + " created");
+        String input = io.getString();
+
+        if ("alphabetical".startsWith(input)) {
+            return orderAndPrintAll("title");
+        } else if ("date created".startsWith(input)) {
+            return orderAndPrintAll("date");
+        } else {
+            io.print(Color.redText("Invalid command." + "\n"));
+            return false;
+        }
+    }
+
+    public boolean orderAndPrintAll(String order) {
+        ArrayList<Item> allItems = new ArrayList<>();
+        allItems.addAll(bookDao.findAll());
+        allItems.addAll(icDao.findAll());
+        allItems.addAll(podcastDao.findAll());
+
+        if (order.equals("title")) {
+            Collections.sort(allItems, new ItemTitleComparator());
+        } else if (order.equals("date")) {
+            Collections.sort(allItems, new ItemDateComparator());
+        } else {
+            return false;
+        }
+
+        printEmpty();
+
+        for (Item item : allItems) {
+            String text = "";
+            text += "(" + item.getClass().getSimpleName() + ") ";
+            text += item.toString();
+
+            if (order.equals("date")) {
+                text += item.getCreationDate().toString();
+            }
+
+            io.print(text);
+        }
+
+        //further stuff goes here
+        return true;
     }
 
     public boolean viewItems(String type) {
@@ -106,6 +161,10 @@ public class App {
                 return false;
         }
 
+        return viewListOfItems(items, type);
+    }
+
+    public boolean viewListOfItems(List<Item> items, String type) {
         while (true) {
             for (Item item : items) {
                 io.print(item.toString());
@@ -119,9 +178,9 @@ public class App {
                 try {
                     int id = Integer.parseInt(input);
 
-                    boolean stop = viewOne(type, id);
-                    
-                    if (stop) {
+                    boolean keepGoing = viewOne(type, id);
+
+                    if (!keepGoing) {
                         return true;
                     }
                 } catch (Exception e) {

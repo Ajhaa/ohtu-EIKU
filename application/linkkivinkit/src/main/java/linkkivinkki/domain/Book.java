@@ -26,6 +26,6 @@ public class Book extends Item {
 
     @Override
     public String toString() {
-        return Color.cyanText("" + getId()) + " " + this.getTitle() + " by " + author;
+        return Color.cyanText(getId() + ".") + " " + this.getTitle() + " by " + author;
     }
 }

@@ -26,7 +26,7 @@ public class InternetContent extends Item {
 
     @Override
     public String toString() {
-        return Color.cyanText("" + getId()) + " " + this.getTitle() + " (" + url + ")";
+        return Color.cyanText(getId() + ".") + " " + this.getTitle() + " (" + url + ")";
     }
 
 }

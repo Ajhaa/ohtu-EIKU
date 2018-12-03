@@ -33,6 +33,6 @@ public class InternetContentTest {
 
     @Test
     public void toStringOfInternetContentWorks() {
-        assertEquals(Color.cyanText("-1")+ " title (url.fi)", content.toString());
+        assertEquals(Color.cyanText("-1.")+ " title (url.fi)", content.toString());
     }
 }

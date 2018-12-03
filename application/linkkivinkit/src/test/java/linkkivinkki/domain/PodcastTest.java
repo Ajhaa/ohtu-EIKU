@@ -34,7 +34,7 @@ public class PodcastTest {
 
     @Test
     public void toStringOfPodcastWorks() {
-        String shouldBe = Color.cyanText("-1")+ " name - title" + "\n" + "description";
+        String shouldBe = Color.cyanText("-1.")+ " name - title";
         assertEquals(shouldBe, podcast.toString());
     }
 

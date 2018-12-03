@@ -61,7 +61,7 @@ public class BookTest {
     @Test
     public void toStringReturnsAProperString() {
         Book b = new Book("hello", "world", "desc");
-        String expected = Color.cyanText("-1")+ " world by hello";
+        String expected = Color.cyanText("-1.")+ " world by hello";
         assertEquals(expected, b.toString());
     }
 

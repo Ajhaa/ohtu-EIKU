@@ -13,7 +13,7 @@ public class ItemTitleComparator implements Comparator<Item> {
      */
     @Override
     public int compare(Item i1, Item i2) {
-        int comparison = i1.getTitle().compareTo(i2.getTitle());
+        int comparison = i1.getTitle().toLowerCase().compareTo(i2.getTitle().toLowerCase());
         if (comparison < 0) {
             return -1;
         } else if (comparison > 0) {
