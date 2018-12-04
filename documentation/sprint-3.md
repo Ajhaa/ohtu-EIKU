@@ -5,5 +5,13 @@
 # Toteutettavat käyttäjätarinat
 
 - [ ] Käyttöliittymän luettavuuden parantaminen
-- [ ] Kaikkien lukuvinkkien listaaminen aakkosjärjestyksessä
-- [ ] Kaikkien lukuvinkkien listaaminen luontipäivämäärän mukaan
+  - Määrittely:
+    - Sovelluksen käyttöliittymää on jäsennetty ymmärrettävämmäksi mm. väreillä ja rivityksellä luettavammaksi
+    - Sovelluksen toiminnallisuus ei muutu
+    - Sovellus toimii edelleen halutusti (testit menevät läpi)
+
+- [x] Kaikkien lukuvinkkien listaaminen aakkosjärjestyksessä
+  - [Määrittely](https://github.com/Ajhaa/ohtu-EIKU/blob/master/application/linkkivinkit/src/test/resources/linkkivinkki/viewAll.feature)
+
+- [x] Kaikkien lukuvinkkien listaaminen luontipäivämäärän mukaan
+  - [Määrittely](https://github.com/Ajhaa/ohtu-EIKU/blob/master/application/linkkivinkit/src/test/resources/linkkivinkki/viewAll.feature)
