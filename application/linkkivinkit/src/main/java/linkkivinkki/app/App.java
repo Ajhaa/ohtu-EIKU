@@ -31,8 +31,7 @@ public class App {
     public void start() {
         io.print("App started.");
 
-        LOOP:
-        while (true) {
+        LOOP: while (true) {
             printDivide();
             io.print("MAIN MENU" + "\n");
             io.print("Commands:");
@@ -43,24 +42,24 @@ public class App {
             String input = io.getString();
 
             switch (input) {
-                case "quit":
-                case "q":
-                    break LOOP;
-                case "view":
-                case "v":
-                    this.view();
-                    break;
-                case "add":
-                case "a":
-                    this.add();
-                    break;
-                case "delete":
-                case "d":
-                    this.delete();
-                    break;
-                default:
-                    io.print(Color.redText("Invalid command."));
-                    break;
+            case "quit":
+            case "q":
+                break LOOP;
+            case "view":
+            case "v":
+                this.view();
+                break;
+            case "add":
+            case "a":
+                this.add();
+                break;
+            case "delete":
+            case "d":
+                this.delete();
+                break;
+            default:
+                io.print(Color.redText("Invalid command."));
+                break;
             }
         }
 
@@ -68,8 +67,7 @@ public class App {
     }
 
     public boolean view() {
-        LOOP:
-        while (true) {
+        LOOP: while (true) {
             printDivide();
             io.print("What kind of items do you wish to view?");
 
@@ -115,6 +113,7 @@ public class App {
             io.print(Color.redText("Invalid command." + "\n"));
             return false;
         }
+
     }
 
     public boolean orderAndPrintAll(String order) {
@@ -135,37 +134,62 @@ public class App {
 
         printDivide();
 
+        String text = "";
+
         for (Item item : allItems) {
-            String text = "";
             text += "(" + item.getClass().getSimpleName() + ") ";
             text += item.toString();
 
             if (order.equals("date")) {
                 text += item.getCreationDate().toString();
             }
-
-            io.print(text);
         }
+        while (true) {
+            io.print(text);
+            
+            io.print("\n" + "Enter an item ID to view more information about the specified item or type "
+                    + Color.cyanText("return") + " to return to the main menu.");
 
-        //further stuff goes here
-        return true;
+            String input = io.getString();
+
+            if (input.equals("return") || input.equals("r") || input.length() == 0) {
+                return true;
+            } else {
+                try {
+                    int id = Integer.parseInt(input);
+                    int index = id - 1;
+
+                    Item itemToView = allItems.get(index);
+
+                    String type = itemToView.getClass().getSimpleName();
+
+                    boolean keepGoing = viewOne(type.toLowerCase(), id);
+
+                    if (!keepGoing) {
+                        return true;
+                    }
+                } catch (Exception e) {
+                    io.print(Color.redText("Invalid command." + "\n"));
+                }
+            }
+        }
     }
 
     public boolean viewItems(String type) {
         List<Item> items;
 
         switch (type) {
-            case "book":
-                items = bookDao.findAll();
-                break;
-            case "internetContent":
-                items = icDao.findAll();
-                break;
-            case "podcast":
-                items = podcastDao.findAll();
-                break;
-            default:
-                return false;
+        case "book":
+            items = bookDao.findAll();
+            break;
+        case "internetContent":
+            items = icDao.findAll();
+            break;
+        case "podcast":
+            items = podcastDao.findAll();
+            break;
+        default:
+            return false;
         }
 
         return viewListOfItems(items, type);
@@ -179,7 +203,8 @@ public class App {
                 io.print(item.toString());
             }
 
-            io.print("\n" + "Enter an item ID to view more information about the specified item or type " + Color.cyanText("return") + " to return to the main menu.");
+            io.print("\n" + "Enter an item ID to view more information about the specified item or type "
+                    + Color.cyanText("return") + " to return to the main menu.");
             String input = io.getString();
             if (input.equals("return") || input.equals("r") || input.length() == 0) {
                 return true;
@@ -203,17 +228,17 @@ public class App {
         Item item;
 
         switch (type) {
-            case "book":
-                item = (Item) bookDao.findOne(id);
-                break;
-            case "internetContent":
-                item = (Item) icDao.findOne(id);
-                break;
-            case "podcast":
-                item = (Item) podcastDao.findOne(id);
-                break;
-            default:
-                return false;
+        case "book":
+            item = (Item) bookDao.findOne(id);
+            break;
+        case "internetContent":
+            item = (Item) icDao.findOne(id);
+            break;
+        case "podcast":
+            item = (Item) podcastDao.findOne(id);
+            break;
+        default:
+            return false;
         }
 
         if (item == null) {
@@ -232,26 +257,28 @@ public class App {
             String input = io.getString();
 
             switch (input) {
-                case "return":
-                case "r":
-                    return true;
-                case "main":
-                case "m":
-                    return false;
-                case "edit":
-                case "e":
-                    edit(item);
-                    return false;
-                default:
-                    io.print(Color.redText("Invalid command." + "\n"));
-                    break;
+            case "return":
+            case "r":
+                return true;
+            case "main":
+            case "m":
+                return false;
+            case "edit":
+            case "e":
+                edit(item);
+                return false;
+            default:
+                io.print(Color.redText("Invalid command." + "\n"));
+                break;
             }
         }
     }
 
     public boolean edit(Item item) {
         printDivide();
-        io.print("Insert the new information you want for this item. Leave fields blank if you do not wish to change them." + "\n");
+        io.print(
+                "Insert the new information you want for this item. Leave fields blank if you do not wish to change them."
+                        + "\n");
 
         String name = "";
         String title = "";
@@ -330,8 +357,7 @@ public class App {
     public boolean add() {
         boolean success = false;
 
-        LOOP:
-        while (true) {
+        LOOP: while (true) {
             printDivide();
             io.print("What kind of item do you wish to add?");
 
@@ -341,30 +367,30 @@ public class App {
             String input = io.getString();
 
             switch (input) {
-                case "return":
-                case "r":
-                    break LOOP;
-                case "book":
-                case "b":
-                    printDivide();
-                    Book newBook = io.newBook();
-                    success = bookDao.add(newBook);
-                    break LOOP;
-                case "internetcontent":
-                case "i":
-                    printDivide();
-                    InternetContent newInternetContent = io.newInternetContent();
-                    success = icDao.add(newInternetContent);
-                    break LOOP;
-                case "podcast":
-                case "p":
-                    printDivide();
-                    Podcast newPodcast = io.newPodcast();
-                    success = podcastDao.add(newPodcast);
-                    break LOOP;
-                default:
-                    io.print(Color.redText("Invalid command."));
-                    break;
+            case "return":
+            case "r":
+                break LOOP;
+            case "book":
+            case "b":
+                printDivide();
+                Book newBook = io.newBook();
+                success = bookDao.add(newBook);
+                break LOOP;
+            case "internetcontent":
+            case "i":
+                printDivide();
+                InternetContent newInternetContent = io.newInternetContent();
+                success = icDao.add(newInternetContent);
+                break LOOP;
+            case "podcast":
+            case "p":
+                printDivide();
+                Podcast newPodcast = io.newPodcast();
+                success = podcastDao.add(newPodcast);
+                break LOOP;
+            default:
+                io.print(Color.redText("Invalid command."));
+                break;
             }
         }
 
@@ -380,8 +406,7 @@ public class App {
     public boolean delete() {
         boolean success = false;
 
-        LOOP:
-        while (true) {
+        LOOP: while (true) {
             printDivide();
             io.print("What kind of item do you wish to delete?");
             printCategories();
@@ -389,24 +414,24 @@ public class App {
             String input = io.getString();
 
             switch (input) {
-                case "return":
-                case "r":
-                    break LOOP;
-                case "book":
-                case "b":
-                    success = listForDeletion("book");
-                    break LOOP;
-                case "internetcontent":
-                case "i":
-                    success = listForDeletion("internetContent");
-                    break LOOP;
-                case "podcast":
-                case "p":
-                    success = listForDeletion("podcast");
-                    break LOOP;
-                default:
-                    io.print(Color.redText("Invalid command."));
-                    break;
+            case "return":
+            case "r":
+                break LOOP;
+            case "book":
+            case "b":
+                success = listForDeletion("book");
+                break LOOP;
+            case "internetcontent":
+            case "i":
+                success = listForDeletion("internetContent");
+                break LOOP;
+            case "podcast":
+            case "p":
+                success = listForDeletion("podcast");
+                break LOOP;
+            default:
+                io.print(Color.redText("Invalid command."));
+                break;
             }
         }
 
@@ -423,17 +448,17 @@ public class App {
         List<Item> items;
 
         switch (type) {
-            case "book":
-                items = bookDao.findAll();
-                break;
-            case "internetContent":
-                items = icDao.findAll();
-                break;
-            case "podcast":
-                items = podcastDao.findAll();
-                break;
-            default:
-                return false;
+        case "book":
+            items = bookDao.findAll();
+            break;
+        case "internetContent":
+            items = icDao.findAll();
+            break;
+        case "podcast":
+            items = podcastDao.findAll();
+            break;
+        default:
+            return false;
         }
 
         for (Item item : items) {
@@ -445,7 +470,8 @@ public class App {
 
     public boolean deleteItem(String type) {
         while (true) {
-            io.print("\n" + "Enter the ID of the item you wish to delete or type " + Color.cyanText("return") + " to return to the main menu.");
+            io.print("\n" + "Enter the ID of the item you wish to delete or type " + Color.cyanText("return")
+                    + " to return to the main menu.");
             String input = io.getString();
 
             if (input.equals("return") || input.equals("r")) {

@@ -19,7 +19,7 @@ Feature: User can view single item
     When view is selected
     And "podcast" is selected
     And id "-1" is entered
-    Then the information of the podcast is shown
+    Then the information of the podcast is shown  
 
   Scenario: error message is shown when attempting to view nonexistent book
     Given view is selected

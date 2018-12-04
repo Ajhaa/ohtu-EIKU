@@ -81,6 +81,7 @@ public class Stepdefs {
     @When("^\"([^\"]*)\" order is selected$")
     public void order_is_selected(String order) throws Throwable {
         somethingIsSelected(order);
+        inputLines.add("return");
         inputLines.add("quit");
         io = new StubIO(inputLines);
         app = new App(io, bookDao, icDao, pDao);
