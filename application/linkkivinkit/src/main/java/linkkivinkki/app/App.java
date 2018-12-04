@@ -99,7 +99,10 @@ public class App {
 
     public boolean viewAll() {
         printDivide();
-        io.print("Would you like to view items in " + Color.cyanText("alphabetical") + " order, " + Color.cyanText("random") + " order or by " + Color.cyanText("date") + " created?");
+        io.print("What do you want to order the items by?");
+        io.print(Color.cyanText("alphabetical") + " - sorted by item title");
+        io.print(Color.cyanText("date") + " - sorted by date created");
+        io.print(Color.cyanText("random") + " - in random order");
         String input = io.getString();
 
         if ("alphabetical".startsWith(input)) {
@@ -218,6 +221,7 @@ public class App {
             return false;
         }
 
+        printDivide();
         io.printItem(item);
 
         while (true) {
@@ -246,6 +250,7 @@ public class App {
     }
 
     public boolean edit(Item item) {
+        printDivide();
         io.print("Insert the new information you want for this item. Leave fields blank if you do not wish to change them." + "\n");
 
         String name = "";
@@ -339,14 +344,17 @@ public class App {
                     break LOOP;
                 case "book":
                 case "b":
+                    printDivide();
                     Book newBook = io.newBook();
                     return bookDao.add(newBook);
                 case "internetcontent":
                 case "i":
+                    printDivide();
                     InternetContent newInternetContent = io.newInternetContent();
                     return icDao.add(newInternetContent);
                 case "podcast":
                 case "p":
+                    printDivide();
                     Podcast newPodcast = io.newPodcast();
                     return podcastDao.add(newPodcast);
                 default:
