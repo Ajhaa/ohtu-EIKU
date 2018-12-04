@@ -59,5 +59,7 @@ Next, you will be asked in which order you wish to list the memo items.
 - ```date``` lists the memo items in the order of their creation date, most recently added first.
 - ```random``` lists the memo items in a randomized order.
 
+To view a single item's information, enter the corresponding number.
+
 The memo items are sorted using Java's ```Collections.sort``` method, which uses Merge Sort.
 
