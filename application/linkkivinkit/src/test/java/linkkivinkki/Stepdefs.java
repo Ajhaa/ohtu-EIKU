@@ -77,6 +77,16 @@ public class Stepdefs {
     public void edit_is_selected() throws Throwable {
         somethingIsSelected("edit");
     }
+    
+    @When("^\"([^\"]*)\" order is selected$")
+    public void order_is_selected(String order) throws Throwable {
+        somethingIsSelected(order);
+        inputLines.add("quit");
+        io = new StubIO(inputLines);
+        app = new App(io, bookDao, icDao, pDao);
+        app.start();
+    }
+
 
     @When("^item with id \"([^\"]*)\" is selected$")
     public void item_with_id_is_selected(String id) throws Throwable {
@@ -235,5 +245,27 @@ public class Stepdefs {
     public void amount_of_podcasts_should_be() throws Throwable {
         assertEquals(1, pDao.findAll().size());
     }
+    
+    @Then("^book \"([^\"]*)\" and content \"([^\"]*)\" and podcast \"([^\"]*)\" are listed$")
+    public void book_and_content_and_podcast_are_listed(String book, String content, String podcast) throws Throwable {
+        System.out.println(io.getPrints());
+        boolean foundBook = false;
+        boolean foundContent = false;
+        boolean foundPodcast = false;
+        for (String line : io.getPrints()) {
+            if (line.contains(book)) {
+                foundBook = true;
+            }
+            if (line.contains(content)) {
+                foundContent = true;
+            }
+            if (line.contains(podcast)) {
+                foundPodcast = true;
+            }
+        }
+        
+        assertTrue(foundBook && foundContent && foundPodcast);
+    }
+
 
 }
