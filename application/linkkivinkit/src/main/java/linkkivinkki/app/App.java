@@ -328,6 +328,8 @@ public class App {
     }
 
     public boolean add() {
+        boolean success = false;
+
         LOOP:
         while (true) {
             printDivide();
@@ -346,21 +348,30 @@ public class App {
                 case "b":
                     printDivide();
                     Book newBook = io.newBook();
-                    return bookDao.add(newBook);
+                    success = bookDao.add(newBook);
+                    break LOOP;
                 case "internetcontent":
                 case "i":
                     printDivide();
                     InternetContent newInternetContent = io.newInternetContent();
-                    return icDao.add(newInternetContent);
+                    success = icDao.add(newInternetContent);
+                    break LOOP;
                 case "podcast":
                 case "p":
                     printDivide();
                     Podcast newPodcast = io.newPodcast();
-                    return podcastDao.add(newPodcast);
+                    success = podcastDao.add(newPodcast);
+                    break LOOP;
                 default:
                     io.print(Color.redText("Invalid command."));
                     break;
             }
+        }
+
+        if (success) {
+            io.print(Color.greenText("Item was added successfully"));
+        } else {
+            io.print(Color.redText("Adding item failed."));
         }
 
         return false;
@@ -394,6 +405,7 @@ public class App {
                     success = listForDeletion("podcast");
                     break LOOP;
                 default:
+                    io.print(Color.redText("Invalid command."));
                     break;
             }
         }
