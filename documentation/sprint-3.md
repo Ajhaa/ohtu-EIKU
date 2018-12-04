@@ -4,7 +4,7 @@
 
 # Toteutettavat käyttäjätarinat
 
-- [ ] Käyttöliittymän luettavuuden parantaminen
+- [x] Käyttöliittymän luettavuuden parantaminen
   - Määrittely:
     - Sovelluksen käyttöliittymää on jäsennetty ymmärrettävämmäksi mm. väreillä ja rivityksellä luettavammaksi
     - Sovelluksen toiminnallisuus ei muutu
