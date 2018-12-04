@@ -77,7 +77,7 @@ public class Stepdefs {
     public void edit_is_selected() throws Throwable {
         somethingIsSelected("edit");
     }
-    
+
     @When("^\"([^\"]*)\" order is selected$")
     public void order_is_selected(String order) throws Throwable {
         somethingIsSelected(order);
@@ -87,12 +87,10 @@ public class Stepdefs {
         app.start();
     }
 
-
     @When("^item with id \"([^\"]*)\" is selected$")
     public void item_with_id_is_selected(String id) throws Throwable {
         somethingIsSelected(id);
     }
-
 
     @When("^id \"([^\"]*)\" is entered$")
     public void id_is_entered(String id) throws Throwable {
@@ -204,7 +202,12 @@ public class Stepdefs {
         app.start();
     }
 
-
+    @Then("^the order is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+    public void the_order_is(String first, String second, String third) throws Throwable {
+        // Earlier in order = smaller index
+        assertTrue(inputLines.indexOf(first) <= inputLines.indexOf(second)); 
+        assertTrue(inputLines.indexOf(second) <= inputLines.indexOf(third));
+    }
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
     public void confirmation_message_is_shown(String message) throws Throwable {
@@ -245,7 +248,7 @@ public class Stepdefs {
     public void amount_of_podcasts_should_be() throws Throwable {
         assertEquals(1, pDao.findAll().size());
     }
-    
+
     @Then("^book \"([^\"]*)\" and content \"([^\"]*)\" and podcast \"([^\"]*)\" are listed$")
     public void book_and_content_and_podcast_are_listed(String book, String content, String podcast) throws Throwable {
         System.out.println(io.getPrints());
@@ -263,9 +266,8 @@ public class Stepdefs {
                 foundPodcast = true;
             }
         }
-        
+
         assertTrue(foundBook && foundContent && foundPodcast);
     }
-
 
 }
