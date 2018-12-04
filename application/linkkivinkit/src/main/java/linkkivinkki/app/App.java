@@ -136,18 +136,23 @@ public class App {
 
         String text = "";
 
+        int serial = 1;
+        
         for (Item item : allItems) {
-            text += "(" + item.getClass().getSimpleName() + ") ";
-            text += item.toString();
+            text += serial + ". (" + item.getClass().getSimpleName() + ") ";
+            text += " " + item.info();
+
+            serial++;
 
             if (order.equals("date")) {
-                text += item.getCreationDate().toString();
+                text += " " + item.getCreationDate().toString();
             }
+            text +=  "\n";
         }
         while (true) {
             io.print(text);
             
-            io.print("\n" + "Enter an item ID to view more information about the specified item or type "
+            io.print("\n" + "Enter an number to view more information about the specified item "
                     + Color.cyanText("return") + " to return to the main menu.");
 
             String input = io.getString();
@@ -163,7 +168,7 @@ public class App {
 
                     String type = itemToView.getClass().getSimpleName();
 
-                    boolean keepGoing = viewOne(type.toLowerCase(), id);
+                    boolean keepGoing = viewOne(type.toLowerCase(), itemToView.getId());
 
                     if (!keepGoing) {
                         return true;
@@ -227,11 +232,11 @@ public class App {
     public boolean viewOne(String type, int id) {
         Item item;
 
-        switch (type) {
+        switch (type.toLowerCase()) {
         case "book":
             item = (Item) bookDao.findOne(id);
             break;
-        case "internetContent":
+        case "internetcontent":
             item = (Item) icDao.findOne(id);
             break;
         case "podcast":

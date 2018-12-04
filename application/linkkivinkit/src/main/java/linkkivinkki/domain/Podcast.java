@@ -28,4 +28,9 @@ public class Podcast extends Item {
     public String toString() {
         return Color.cyanText(getId() + ".") + " " + name + " - " + this.getTitle();
     }
+
+    @Override
+    public String info() {
+        return name + " - " + this.getTitle();
+    }
 }

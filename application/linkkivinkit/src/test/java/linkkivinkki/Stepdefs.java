@@ -36,16 +36,19 @@ public class Stepdefs {
     @Given("^book with title \"([^\"]*)\" and author \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void bookIsCreated(String title, String author, String desc) {
         bookDao.add(new Book(author, title, desc));
+        sleep(10);
     }
 
     @Given("^content with title \"([^\"]*)\" and url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void content_with_title_and_url_and_description_is_created(String title, String url, String desc) throws Throwable {
         icDao.add(new InternetContent(title, url, desc));
+        sleep(10);
     }
 
     @Given("^podcast with name \"([^\"]*)\" and title \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void podcast_with_name_and_title_and_description_is_created(String name, String title, String desc) throws Throwable {
         pDao.add(new Podcast(name, title, desc));
+        sleep(10);
     }
 
     @When("^\"([^\"]*)\" is selected$")
@@ -164,6 +167,11 @@ public class Stepdefs {
         app.start();
     }
 
+    @When("^date is selected$")
+    public void date_is_selected() {
+        inputLines.add("date");
+    }
+
     @When("^new title \"([^\"]*)\" and author \"([^\"]*)\" and an empty description are set$")
     public void new_title_and_author_and_an_empty_description_are_set(String title, String author) throws Throwable {
         inputLines.add(title);
@@ -206,8 +214,12 @@ public class Stepdefs {
     @Then("^the order is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void the_order_is(String first, String second, String third) throws Throwable {
         // Earlier in order = smaller index
-        assertTrue(inputLines.indexOf(first) <= inputLines.indexOf(second)); 
-        assertTrue(inputLines.indexOf(second) <= inputLines.indexOf(third));
+        String items = io.getPrints().get(io.getPrints().size() - 10);
+        String[] splitItems = items.split("\n");
+
+        assertTrue(splitItems[0].contains(first)); 
+        assertTrue(splitItems[1].contains(second));
+        assertTrue(splitItems[2].contains(third));
     }
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
@@ -252,7 +264,6 @@ public class Stepdefs {
 
     @Then("^book \"([^\"]*)\" and content \"([^\"]*)\" and podcast \"([^\"]*)\" are listed$")
     public void book_and_content_and_podcast_are_listed(String book, String content, String podcast) throws Throwable {
-        System.out.println(io.getPrints());
         boolean foundBook = false;
         boolean foundContent = false;
         boolean foundPodcast = false;
@@ -269,6 +280,14 @@ public class Stepdefs {
         }
 
         assertTrue(foundBook && foundContent && foundPodcast);
+    }
+
+    private void sleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

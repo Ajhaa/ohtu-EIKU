@@ -29,4 +29,9 @@ public class InternetContent extends Item {
         return Color.cyanText(getId() + ".") + " " + this.getTitle() + " (" + url + ")";
     }
 
+    @Override
+    public String info() {
+        return this.getTitle() + " (" + url + ")";
+    }
+
 }
