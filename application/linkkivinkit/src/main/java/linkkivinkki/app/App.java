@@ -367,6 +367,8 @@ public class App {
     }
 
     public boolean delete() {
+        boolean success = false;
+
         LOOP:
         while (true) {
             printDivide();
@@ -381,20 +383,28 @@ public class App {
                     break LOOP;
                 case "book":
                 case "b":
-                    return listForDeletion("book");
+                    success = listForDeletion("book");
+                    break LOOP;
                 case "internetcontent":
                 case "i":
-                    return listForDeletion("internetContent");
+                    success = listForDeletion("internetContent");
+                    break LOOP;
                 case "podcast":
                 case "p":
-                    return listForDeletion("podcast");
+                    success = listForDeletion("podcast");
+                    break LOOP;
                 default:
-                    io.print(Color.redText("Invalid command."));
                     break;
             }
         }
 
-        return false;
+        if (success) {
+            io.print(Color.greenText("Item was deleted successfully"));
+        } else {
+            io.print(Color.redText("Deleting item failed."));
+        }
+
+        return success;
     }
 
     public boolean listForDeletion(String type) {
