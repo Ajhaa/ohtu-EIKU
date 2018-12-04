@@ -15,25 +15,25 @@ import linkkivinkki.io.IO;
 import linkkivinkki.io.Color;
 
 public class App {
-    
+
     private IO io;
     private Dao bookDao;
     private Dao icDao;
     private Dao podcastDao;
-    
+
     public App(IO io, Dao bookDao, Dao icDao, Dao podcastDao) {
         this.io = io;
         this.bookDao = bookDao;
         this.icDao = icDao;
         this.podcastDao = podcastDao;
     }
-    
+
     public void start() {
         io.print("App started.");
-        
+
         LOOP:
         while (true) {
-            printEmpty();
+            printDivide();
             io.print("MAIN MENU" + "\n");
             io.print("Commands:");
             io.print(Color.cyanText("view") + " - view existing items");
@@ -41,7 +41,7 @@ public class App {
             io.print(Color.cyanText("delete") + " - view and delete items");
             io.print(Color.cyanText("quit") + " - exit the app.");
             String input = io.getString();
-            
+
             switch (input) {
                 case "quit":
                 case "q":
@@ -63,22 +63,22 @@ public class App {
                     break;
             }
         }
-        
+
         io.print("\n" + "Shutting down.");
     }
-    
+
     public boolean view() {
         LOOP:
         while (true) {
-            io.print("\n");
+            printDivide();
             io.print("What kind of items do you wish to view?");
-            
+
             io.print(Color.cyanText("all"));
             printCategories();
-            
+
             io.print("Select a listing type or type " + Color.cyanText("return") + " to return to the main menu.");
             String input = io.getString();
-            
+
             if ("return".startsWith(input)) {
                 break LOOP;
             } else if ("books".startsWith(input)) {
@@ -90,18 +90,18 @@ public class App {
             } else if ("all".startsWith(input)) {
                 return viewAll();
             } else {
-                break LOOP;
+                io.print(Color.redText("Invalid command."));
             }
         }
-        
+
         return false;
     }
-    
+
     public boolean viewAll() {
-        printEmpty();
+        printDivide();
         io.print("Would you like to view items in " + Color.cyanText("alphabetical") + " order, " + Color.cyanText("random") + " order or by " + Color.cyanText("date") + " created?");
         String input = io.getString();
-        
+
         if ("alphabetical".startsWith(input)) {
             return orderAndPrintAll("title");
         } else if ("date created".startsWith(input)) {
@@ -113,13 +113,13 @@ public class App {
             return false;
         }
     }
-    
+
     public boolean orderAndPrintAll(String order) {
         ArrayList<Item> allItems = new ArrayList<>();
         allItems.addAll(bookDao.findAll());
         allItems.addAll(icDao.findAll());
         allItems.addAll(podcastDao.findAll());
-        
+
         if (order.equals("title")) {
             Collections.sort(allItems, new ItemTitleComparator());
         } else if (order.equals("date")) {
@@ -129,28 +129,28 @@ public class App {
         } else {
             return false;
         }
-        
-        printEmpty();
-        
+
+        printDivide();
+
         for (Item item : allItems) {
             String text = "";
             text += "(" + item.getClass().getSimpleName() + ") ";
             text += item.toString();
-            
+
             if (order.equals("date")) {
                 text += item.getCreationDate().toString();
             }
-            
+
             io.print(text);
         }
 
         //further stuff goes here
         return true;
     }
-    
+
     public boolean viewItems(String type) {
         List<Item> items;
-        
+
         switch (type) {
             case "book":
                 items = bookDao.findAll();
@@ -164,16 +164,18 @@ public class App {
             default:
                 return false;
         }
-        
+
         return viewListOfItems(items, type);
     }
-    
+
     public boolean viewListOfItems(List<Item> items, String type) {
+        printDivide();
+
         while (true) {
             for (Item item : items) {
                 io.print(item.toString());
             }
-            
+
             io.print("\n" + "Enter an item ID to view more information about the specified item or type " + Color.cyanText("return") + " to return to the main menu.");
             String input = io.getString();
             if (input.equals("return") || input.equals("r") || input.length() == 0) {
@@ -181,9 +183,9 @@ public class App {
             } else {
                 try {
                     int id = Integer.parseInt(input);
-                    
+
                     boolean keepGoing = viewOne(type, id);
-                    
+
                     if (!keepGoing) {
                         return true;
                     }
@@ -193,10 +195,10 @@ public class App {
             }
         }
     }
-    
+
     public boolean viewOne(String type, int id) {
         Item item;
-        
+
         switch (type) {
             case "book":
                 item = (Item) bookDao.findOne(id);
@@ -210,21 +212,21 @@ public class App {
             default:
                 return false;
         }
-        
+
         if (item == null) {
             io.print(Color.redText("No item found with that id"));
             return false;
         }
-        
+
         io.printItem(item);
-        
+
         while (true) {
             io.print("Commands: ");
             io.print(Color.cyanText("edit") + " - edit this item's information");
             io.print(Color.cyanText("return") + " - return to the previous list");
             io.print(Color.cyanText("main") + " - return to main menu");
             String input = io.getString();
-            
+
             switch (input) {
                 case "return":
                 case "r":
@@ -242,24 +244,24 @@ public class App {
             }
         }
     }
-    
+
     public boolean edit(Item item) {
         io.print("Insert the new information you want for this item. Leave fields blank if you do not wish to change them." + "\n");
-        
+
         String name = "";
         String title = "";
         String url = "";
         String author = "";
         String description = "";
-        
+
         if (item.getClass().equals(Podcast.class)) {
             io.print("Insert podcast name: ");
             name = io.getString();
         }
-        
+
         io.print("Insert content title: ");
         title = io.getString();
-        
+
         if (item.getClass().equals(Book.class)) {
             io.print("Insert book author: ");
             author = io.getString();
@@ -267,70 +269,70 @@ public class App {
             io.print("Insert content url: ");
             url = io.getString();
         }
-        
+
         io.print("Insert a description: ");
         description = io.getString();
-        
+
         return editAndUpdate(item, name, title, url, author, description);
     }
-    
+
     public boolean editAndUpdate(Item item, String name, String title, String url, String author, String description) {
         if (title.length() > 0) {
             item.setTitle(title);
         }
-        
+
         if (description.length() > 0) {
             item.setDescription(description);
         }
-        
+
         boolean success = false;
-        
+
         if (item.getClass().equals(Book.class)) {
             Book book = (Book) item;
-            
+
             if (author.length() > 0) {
                 book.setAuthor(author);
             }
-            
+
             success = bookDao.update(book);
         } else if (item.getClass().equals(InternetContent.class)) {
             InternetContent ic = (InternetContent) item;
-            
+
             if (url.length() > 0) {
                 ic.setUrl(url);
             }
-            
+
             success = icDao.update(ic);
         } else if (item.getClass().equals(Podcast.class)) {
             Podcast podcast = (Podcast) item;
-            
+
             if (name.length() > 0) {
                 podcast.setName(name);
             }
-            
+
             success = podcastDao.update(podcast);
         }
-        
+
         if (success) {
             io.print(Color.greenText("Item was updated successfully"));
         } else {
             io.print(Color.redText("Updating item failed."));
         }
-        
+
         return success;
     }
-    
+
     public boolean add() {
         LOOP:
         while (true) {
-            printEmpty();
+            printDivide();
             io.print("What kind of item do you wish to add?");
-            
+
             printCategories();
-            
+
             io.print("Select an item type or type " + Color.cyanText("return") + " to return to the main menu.");
             String input = io.getString();
-            
+
             switch (input) {
                 case "return":
                 case "r":
@@ -352,19 +354,19 @@ public class App {
                     break;
             }
         }
-        
+
         return false;
     }
-    
+
     public boolean delete() {
         LOOP:
         while (true) {
-            printEmpty();
+            printDivide();
             io.print("What kind of item do you wish to delete?");
             printCategories();
             io.print("Select an item type or type " + Color.cyanText("return") + " to return to the main menu.");
             String input = io.getString();
-            
+
             switch (input) {
                 case "return":
                 case "r":
@@ -383,13 +385,13 @@ public class App {
                     break;
             }
         }
-        
+
         return false;
     }
-    
+
     public boolean listForDeletion(String type) {
         List<Item> items;
-        
+
         switch (type) {
             case "book":
                 items = bookDao.findAll();
@@ -403,25 +405,25 @@ public class App {
             default:
                 return false;
         }
-        
+
         for (Item item : items) {
             io.print("id: " + item.getId() + ", title: " + item.getTitle());
         }
-        
+
         return deleteItem(type);
     }
-    
+
     public boolean deleteItem(String type) {
         while (true) {
             io.print("\n" + "Enter the ID of the item you wish to delete or type " + Color.cyanText("return") + " to return to the main menu.");
             String input = io.getString();
-            
+
             if (input.equals("return") || input.equals("r")) {
                 return false;
             } else {
                 try {
                     int id = Integer.parseInt(input);
-                    
+
                     if (type.equals("book")) {
                         return bookDao.delete(id);
                     } else if (type.equals("internetContent")) {
@@ -435,15 +437,15 @@ public class App {
             }
         }
     }
-    
+
     private void printCategories() {
         io.print(Color.cyanText("books"));
         io.print(Color.cyanText("internetcontent"));
         io.print(Color.cyanText("podcasts"));
         io.print("");
     }
-    
-    private void printEmpty() {
-        io.print("\n\n");
+
+    private void printDivide() {
+        io.print("-----------------------------\n");
     }
 }
