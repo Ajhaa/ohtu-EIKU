@@ -38,6 +38,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
     testCompile 'info.cukes:cucumber-java:' + cucumberVersion
     testCompile 'info.cukes:cucumber-junit:' + cucumberVersion
+	testCompile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.25.2'
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.25.2'
 
