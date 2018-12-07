@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import linkkivinkki.domain.User;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -57,6 +59,7 @@ public class BookDaoTest {
         assertEquals(b.getTitle(), books.get(0).getTitle());
         assertEquals(b.getDescription(), books.get(0).getDescription());
         assertEquals(b.getCreationDate(), books.get(0).getCreationDate());
+        assertEquals(b.getUserId(), books.get(0).getUserId());
     }
 
     @Test
@@ -81,6 +84,7 @@ public class BookDaoTest {
         assertEquals("hei", b.getAuthor());
         assertEquals("maailma", b.getTitle());
         assertEquals("kuvaus", b.getDescription());
+        assertEquals(-1, b.getUserId()); // -1 is the 'default' user id of an item
         assertEquals(d, b.getCreationDate());
     }
 
@@ -113,5 +117,29 @@ public class BookDaoTest {
     @Test
     public void updateReturnsFalseIfBookDoesNotExist() throws SQLException {
         assertFalse(dao.update(new Book("author", "title", "desc")));
+    }
+    
+    @Test
+    public void findAllByUserIdReturnsCorrectItems() throws SQLException {
+        User u1 = new User("käyttäjä1");
+        User u2 = new User("käyttäjä2");
+        u1.setId(1);
+        u2.setId(2);
+        
+        Book b1 = new Book("hello", "world", "desc");
+        b1.setUserId(u1.getId());
+        Book b2 = new Book("hei", "maailma", "kuvaus");
+        b2.setUserId(u2.getId());
+        Book b3 = new Book("abc", "def", "ghi");
+        b3.setUserId(u1.getId());
+        
+        dao.add(b1);
+        dao.add(b2);
+        dao.add(b3);
+        
+        List<Book> userOneBooks = dao.findAllByUserId(u1.getId());
+        assertEquals(2, userOneBooks.size());
+        assertEquals(u1.getId(), userOneBooks.get(0).getUserId());
+        assertEquals(u1.getId(), userOneBooks.get(1).getUserId());
     }
 }

@@ -5,12 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
+import static jdk.nashorn.internal.runtime.Debug.id;
 
 import linkkivinkki.data.Database;
 import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
+import linkkivinkki.domain.User;
 
 public class PodcastDao implements Dao {
 
@@ -37,8 +38,8 @@ public class PodcastDao implements Dao {
                 Podcast p = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
                 p.setId(results.getInt("id"));
                 p.setCreationDate(results.getDate("date_created"));
+                p.setUserId(results.getInt("user_id"));
                 // Other content related to the Item parent class should be inserted here when applicable
-
                 list.add(p);
             }
 
@@ -73,12 +74,13 @@ public class PodcastDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addPodcast = conn.prepareStatement("INSERT INTO Podcast "
-                    + "(name, title, description, date_created) "
-                    + "VALUES (?, ?, ?, ?);");
+                    + "(name, title, description, date_created, user_id) "
+                    + "VALUES (?, ?, ?, ?, ?);");
             addPodcast.setString(1, p.getName());
             addPodcast.setString(2, p.getTitle());
             addPodcast.setString(3, p.getDescription());
             addPodcast.setDate(4, new java.sql.Date(p.getCreationDate().getTime()));
+            addPodcast.setInt(5, i.getUserId());
             addPodcast.execute();
 
             // Close the connection
@@ -135,6 +137,7 @@ public class PodcastDao implements Dao {
                 found = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
                 found.setId(id);
                 found.setCreationDate(results.getDate("date_created"));
+                found.setUserId(results.getInt("user_id"));
             }
 
             results.close();
@@ -182,5 +185,36 @@ public class PodcastDao implements Dao {
         }
 
         return true;
+    }
+
+    @Override
+    public List<Podcast> findAllByUserId(int id) {
+        ArrayList<Podcast> list = new ArrayList<>();
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement fetch = conn.prepareStatement("SELECT * FROM Podcast WHERE user_id = ?;");
+            fetch.setInt(1, id);
+            ResultSet results = fetch.executeQuery();
+            while (results.next()) {
+                Podcast p = new Podcast(results.getString("name"), results.getString("title"), results.getString("description"));
+                p.setId(results.getInt("id"));
+                p.setCreationDate(results.getDate("date_created"));
+                p.setUserId(id);
+                // Other content related to the Item parent class should be inserted here when applicable
+
+                list.add(p);
+            }
+
+            // Close the connection
+            results.close();
+            fetch.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            // Nothing happens, an empty list is returned at the end of the method
+        }
+
+        return list;
     }
 }

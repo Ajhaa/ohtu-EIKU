@@ -9,4 +9,5 @@ public interface Dao {
     public boolean add(Item i); // Save one item of a type (!!! SQLite generates IDs automatically, DO NOT SAVE AN ID)
     public boolean delete(int id); // Delete an item (!!! Must be removed from both the 'Item' and type (E.G. 'Book') tables)
     public boolean update(Item i);
+    public List findAllByUserId(int id);
 }

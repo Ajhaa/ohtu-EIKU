@@ -8,8 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
+import static jdk.nashorn.internal.runtime.Debug.id;
+import linkkivinkki.domain.User;
 
 public class BookDao implements Dao {
 
@@ -36,8 +37,8 @@ public class BookDao implements Dao {
                 Book b = new Book(results.getString("author"), results.getString("title"), results.getString("description"));
                 b.setId(results.getInt("id"));
                 b.setCreationDate(results.getDate("date_created"));
+                b.setUserId(results.getInt("user_id"));
                 // Other content related to the Item parent class should be inserted here when applicable
-
                 list.add(b);
             }
 
@@ -72,12 +73,13 @@ public class BookDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addBook = conn.prepareStatement("INSERT INTO Book "
-                    + "(title, author, description, date_created) "
-                    + "VALUES (?, ?, ?, ?);");
+                    + "(title, author, description, date_created, user_id) "
+                    + "VALUES (?, ?, ?, ?, ?);");
             addBook.setString(1, b.getTitle());
             addBook.setString(2, b.getAuthor());
             addBook.setString(3, b.getDescription());
             addBook.setDate(4, new java.sql.Date(b.getCreationDate().getTime()));
+            addBook.setInt(5, i.getUserId());
             addBook.execute();
 
             // Close the connection
@@ -135,6 +137,7 @@ public class BookDao implements Dao {
                 found = new Book(results.getString("author"), results.getString("title"), results.getString("description"));
                 found.setId(id);
                 found.setCreationDate(results.getDate("date_created"));
+                found.setUserId(results.getInt("user_id"));
             }
 
             results.close();
@@ -182,6 +185,36 @@ public class BookDao implements Dao {
         }
 
         return true;
+    }
+
+    @Override
+    public List<Book> findAllByUserId(int id) {
+        ArrayList<Book> list = new ArrayList<>();
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement fetch = conn.prepareStatement("SELECT * FROM Book WHERE user_id = ?;");
+            fetch.setInt(1, id);
+            ResultSet results = fetch.executeQuery();
+            while (results.next()) {
+                Book b = new Book(results.getString("author"), results.getString("title"), results.getString("description"));
+                b.setId(results.getInt("id"));
+                b.setCreationDate(results.getDate("date_created"));
+                b.setUserId(id);
+                // Other content related to the Item parent class should be inserted here when applicable
+                list.add(b);
+            }
+
+            // Close the connection
+            results.close();
+            fetch.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            // Nothing happens, an empty list is returned at the end of the method
+        }
+
+        return list;
     }
 
 }

@@ -17,7 +17,7 @@ public class ItemTest {
         ArrayList<String> list = new ArrayList<>();
         list.add("tag1");
         list.add("tag2");
-        this.item = new Item(1, new User(), "title", list, false, new Date(), new Date(), "");
+        this.item = new Item(1, 1, "title", list, false, new Date(), new Date(), "");
     }
 
     @After
@@ -98,14 +98,14 @@ public class ItemTest {
     
     @Test
     public void canGetOwnerOfItem() {
-        assertEquals(User.class, item.getOwner().getClass());
+        assertEquals(1, item.getUserId());
     }
     
     @Test
     public void canSetOwnerOfItem() {
         User u = new User("uusiomistaja");
-        item.setOwner(u);
-        assertEquals(u, item.getOwner());
+        item.setUserId(2);
+        assertEquals(2, item.getUserId());
     }
 
 }

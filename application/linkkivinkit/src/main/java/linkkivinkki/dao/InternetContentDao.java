@@ -8,8 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
+import static jdk.nashorn.internal.runtime.Debug.id;
+import linkkivinkki.domain.User;
 
 public class InternetContentDao implements Dao {
 
@@ -37,8 +38,9 @@ public class InternetContentDao implements Dao {
                 InternetContent content = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
                 content.setId(results.getInt("id"));
                 content.setCreationDate(results.getDate("date_created"));
-                // Other content related to the Item parent class should be inserted here when applicable
+                content.setUserId(results.getInt("user_id"));
 
+                // Other content related to the Item parent class should be inserted here when applicable
                 list.add(content);
             }
 
@@ -73,12 +75,13 @@ public class InternetContentDao implements Dao {
             Connection conn = database.getConnection();
 
             PreparedStatement addContent = conn.prepareStatement("INSERT INTO InternetContent "
-                    + "(title, url, description, date_created) "
-                    + "VALUES (?, ?, ?, ?);");
+                    + "(title, url, description, date_created, user_id) "
+                    + "VALUES (?, ?, ?, ?, ?);");
             addContent.setString(1, content.getTitle());
             addContent.setString(2, content.getUrl());
             addContent.setString(3, content.getDescription());
             addContent.setDate(4, new java.sql.Date(content.getCreationDate().getTime()));
+            addContent.setInt(5, i.getUserId());
             addContent.execute();
 
             // Close the connection
@@ -136,6 +139,7 @@ public class InternetContentDao implements Dao {
                 found = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
                 found.setId(id);
                 found.setCreationDate(results.getDate("date_created"));
+                found.setUserId(results.getInt("user_id"));
             }
 
             results.close();
@@ -183,5 +187,37 @@ public class InternetContentDao implements Dao {
         }
 
         return true;
+    }
+
+    @Override
+    public List<InternetContent> findAllByUserId(int id) {
+        ArrayList<InternetContent> list = new ArrayList<>();
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement fetch = conn.prepareStatement("SELECT * FROM InternetContent where user_id = ?;");
+            fetch.setInt(1, id);
+            ResultSet results = fetch.executeQuery();
+
+            while (results.next()) {
+                InternetContent content = new InternetContent(results.getString("title"), results.getString("url"), results.getString("description"));
+                content.setId(results.getInt("id"));
+                content.setCreationDate(results.getDate("date_created"));
+                content.setUserId(id);
+                // Other content related to the Item parent class should be inserted here when applicable
+
+                list.add(content);
+            }
+
+            // Close the connection
+            results.close();
+            fetch.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            // Nothing happens, an empty list is returned at the end of the method
+        }
+
+        return list;
     }
 }
