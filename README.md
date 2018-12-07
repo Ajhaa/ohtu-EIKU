@@ -19,3 +19,4 @@ Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
   - [Sprint #1](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-1.md)
   - [Sprint #2](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-2.md)
   - [Sprint #3](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-3.md)
+  - [Sprint #4](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/sprint-4.md)
