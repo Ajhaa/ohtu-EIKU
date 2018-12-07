@@ -36,7 +36,7 @@ public class StubIO implements IO {
         //List<String> tags = item.getTags();
         //prints.add("Tags: " + tags.toString().substring(1, tags.toString().length() - 1));
         prints.add("Date created: " + item.getCreationDate());
-        
+
         if (item.isRead()) {
             prints.add("Read on: " + item.getReadDate());
         } else {
@@ -79,9 +79,22 @@ public class StubIO implements IO {
 
         return new Podcast(name, title, description);
     }
-    
+
     public ArrayList<String> getPrints() {
         return prints;
+    }
+
+    @Override
+    public void printCategories() {
+        print(Color.cyanText("books"));
+        print(Color.cyanText("internetcontent"));
+        print(Color.cyanText("podcasts"));
+        print("");
+    }
+
+    @Override
+    public void printDivide() {
+        print("-----------------------------\n");
     }
 
 }

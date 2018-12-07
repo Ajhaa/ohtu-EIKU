@@ -14,4 +14,6 @@ public interface IO {
     Book newBook();
     InternetContent newInternetContent();
     Podcast newPodcast();
+    void printCategories();
+    void printDivide();
 }

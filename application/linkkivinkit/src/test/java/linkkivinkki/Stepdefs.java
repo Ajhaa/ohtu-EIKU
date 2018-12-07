@@ -217,7 +217,7 @@ public class Stepdefs {
         String items = io.getPrints().get(io.getPrints().size() - 10);
         String[] splitItems = items.split("\n");
 
-        assertTrue(splitItems[0].contains(first)); 
+        assertTrue(splitItems[0].contains(first));
         assertTrue(splitItems[1].contains(second));
         assertTrue(splitItems[2].contains(third));
     }
