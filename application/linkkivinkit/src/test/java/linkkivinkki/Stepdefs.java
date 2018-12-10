@@ -55,7 +55,6 @@ public class Stepdefs {
         somethingIsSelected(title);
         somethingIsSelected(author);
         somethingIsSelected(desc);
-        sleep(10);
     }
 
     @Given("^content with title \"([^\"]*)\" and url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
@@ -65,7 +64,6 @@ public class Stepdefs {
         somethingIsSelected(title);
         somethingIsSelected(url);
         somethingIsSelected(desc);
-        sleep(10);
     }
 
     @Given("^podcast with name \"([^\"]*)\" and title \"([^\"]*)\" and description \"([^\"]*)\" is created$")
@@ -75,7 +73,7 @@ public class Stepdefs {
         somethingIsSelected(name);
         somethingIsSelected(title);
         somethingIsSelected(desc);
-        sleep(10);
+
     }
 
     @When("^\"([^\"]*)\" is selected$")
@@ -116,7 +114,7 @@ public class Stepdefs {
         app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
         
-        System.out.println(io.getPrints());
+        //System.out.println(io.getPrints());
     }
 
     @When("^\"([^\"]*)\" order is selected$")
@@ -221,7 +219,6 @@ public class Stepdefs {
         // Earlier in order = smaller index
         String items = io.getPrints().get(io.getPrints().size() - 13);
         String[] splitItems = items.split("\n");
-        System.out.println("items: "+items);
 
         assertTrue(splitItems[0].contains(first));
         assertTrue(splitItems[1].contains(second));

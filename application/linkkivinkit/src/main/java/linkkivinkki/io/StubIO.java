@@ -58,6 +58,7 @@ public class StubIO implements IO {
         String title = getString();
         String author = getString();
         String description = getString();
+        sleep();
 
         return new Book(author, title, description);
     }
@@ -67,6 +68,7 @@ public class StubIO implements IO {
         String title = getString();
         String url = getString();
         String description = getString();
+        sleep();
 
         return new InternetContent(title, url, description);
     }
@@ -76,6 +78,7 @@ public class StubIO implements IO {
         String name = getString();
         String title = getString();
         String description = getString();
+        sleep();
 
         return new Podcast(name, title, description);
     }
@@ -95,6 +98,14 @@ public class StubIO implements IO {
     @Override
     public void printDivide() {
         print("-----------------------------\n");
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(10);
+        } catch (Exception e) {
+
+        }
     }
 
 }
