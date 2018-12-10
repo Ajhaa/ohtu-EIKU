@@ -177,8 +177,10 @@ public class View implements Command {
         io.printDivide();
 
         while (true) {
+            int serial = 1;
+
             for (Item item : items) {
-                io.print(item.toString());
+                io.print(serial + ". " + item.info());
             }
 
             io.print("\n" + "Enter an item ID to view more information about the specified item or type "
@@ -189,14 +191,17 @@ public class View implements Command {
             } else {
                 try {
                     int id = Integer.parseInt(input);
+                    int index = id - 1;
 
-                    boolean keepGoing = viewOne(type, id);
+                    Item itemToView = items.get(index);
+
+                    boolean keepGoing = viewOne(type.toLowerCase(), itemToView.getId());
 
                     if (!keepGoing) {
                         return true;
                     }
                 } catch (Exception e) {
-                    io.print(Color.redText("Invalid command." + "\n"));
+                    io.print(Color.redText("Invalid command."));
                 }
             }
         }

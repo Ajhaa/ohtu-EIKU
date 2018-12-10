@@ -8,6 +8,7 @@ import linkkivinkki.domain.User;
 public class InMemoryUserDao implements UserDao {
 
     private List<User> users;
+    private int id = 0;
 
     public InMemoryUserDao() {
         users = new ArrayList<User>();
@@ -15,7 +16,10 @@ public class InMemoryUserDao implements UserDao {
 
     @Override
     public boolean add(User u) {
-        System.out.println("adding ");
+        System.out.println("adding user");
+        u.setId(id);
+        id++;
+        System.out.println("NEW USER ID " + id);
         return users.add(u);
     }
 

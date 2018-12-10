@@ -36,9 +36,10 @@ public class Login implements Command {
 
             if (user == null) {
                 io.print(Color.redText("Invalid username"));
+                System.out.println("HUPSISTA SAATANA");
             } else {
                 io.print(Color.greenText("User " + user.getUsername() + " logged in"));
-
+                System.out.println("User id " + user.getId());
                 App.currentUser = user;
 
                 Command main = commandFactory.getCommand("login", "mainView");

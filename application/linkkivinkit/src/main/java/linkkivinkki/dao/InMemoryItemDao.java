@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import static jdk.nashorn.internal.runtime.Debug.id;
 
+import linkkivinkki.app.App;
 import linkkivinkki.domain.Item;
 import linkkivinkki.domain.User;
 
 public class InMemoryItemDao implements ItemDao {
 
     private List<Item> items;
+    private int id = 1;
 
     public InMemoryItemDao() {
         items = new ArrayList<Item>();
@@ -18,6 +20,10 @@ public class InMemoryItemDao implements ItemDao {
     @Override
     public boolean add(Item i) {
         System.out.println("adding ");
+        i.setUserId(App.currentUser.getId());
+        i.setId(id);
+        id++;
+        System.out.println("USER ID: " + App.currentUser.getId());
         return items.add(i);
     }
 
@@ -62,6 +68,8 @@ public class InMemoryItemDao implements ItemDao {
                 found.add(i);
             }
         }
+
+        System.out.println("FOUND: " + items.size());
         
         return found;
     }

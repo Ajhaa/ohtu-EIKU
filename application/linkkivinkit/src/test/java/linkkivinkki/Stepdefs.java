@@ -10,6 +10,7 @@ import linkkivinkki.domain.Book;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import linkkivinkki.dao.InMemoryItemDao;
 import linkkivinkki.dao.InMemoryUserDao;
@@ -50,6 +51,7 @@ public class Stepdefs {
         bookDao.add(new Book(author, title, desc));
         somethingIsSelected("l");
         somethingIsSelected("admin"); */
+
         addIsSelected();
         bookIsSelected();
         somethingIsSelected(title);
@@ -74,6 +76,14 @@ public class Stepdefs {
         somethingIsSelected(title);
         somethingIsSelected(desc);
 
+    }
+
+    @When("^another user is logged in")
+    public void anotherUserLogged() {
+        somethingIsSelected("r");
+        somethingIsSelected("user2");
+        somethingIsSelected("l");
+        somethingIsSelected("user2");
     }
 
     @When("^\"([^\"]*)\" is selected$")
@@ -107,7 +117,7 @@ public class Stepdefs {
     }
     
     public void appIsStarted() {
-        //inputLines.add("return");
+        inputLines.add("return");
         inputLines.add("logout");
         inputLines.add("quit");
         io = new StubIO(inputLines);
@@ -127,6 +137,11 @@ public class Stepdefs {
     @When("^item with id \"([^\"]*)\" is selected$")
     public void item_with_id_is_selected(String id) throws Throwable {
         somethingIsSelected(id);
+    }
+
+    @When("^user logs out$")
+    public void userLogsOut() {
+        somethingIsSelected("logout");
     }
 
     @When("^id \"([^\"]*)\" is entered$")
@@ -217,8 +232,9 @@ public class Stepdefs {
     @Then("^the order is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void the_order_is(String first, String second, String third) throws Throwable {
         // Earlier in order = smaller index
-        String items = io.getPrints().get(io.getPrints().size() - 13);
+        String items = io.getPrints().get(io.getPrints().size() - 21);
         String[] splitItems = items.split("\n");
+        System.out.println(Arrays.toString(splitItems));
 
         assertTrue(splitItems[0].contains(first));
         assertTrue(splitItems[1].contains(second));
@@ -232,21 +248,24 @@ public class Stepdefs {
 
     @Then("^the information of the podcast is shown$")
     public void the_information_of_the_podcast_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(pDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
+        assertTrue(io.getPrints().contains(pDao.findOne(1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^the information of the content is shown$")
     public void the_information_of_the_content_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(icDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
+        assertTrue(io.getPrints().contains(icDao.findOne(1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^the information of the book is shown$")
     public void the_information_of_the_book_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(bookDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
+        assertTrue(io.getPrints().contains(bookDao.findOne(1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^error message \"([^\"]*)\" is shown to the user$")
     public void error_message_is_shown_to_the_user(String error) throws Throwable {
+        for (String s : io.getPrints()) {
+            System.out.println(s);
+        }
         assertTrue(io.getPrints().contains(Color.redText(error)));
     }
 
@@ -267,6 +286,11 @@ public class Stepdefs {
 
     @Then("^book \"([^\"]*)\" and content \"([^\"]*)\" and podcast \"([^\"]*)\" are listed$")
     public void book_and_content_and_podcast_are_listed(String book, String content, String podcast) throws Throwable {
+        for (String s : io.getPrints()) {
+            System.out.println(s);
+        }
+
+
         boolean foundBook = false;
         boolean foundContent = false;
         boolean foundPodcast = false;

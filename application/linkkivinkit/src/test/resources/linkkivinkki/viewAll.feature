@@ -31,7 +31,10 @@ Feature: User can view all items
     And "all" is selected
     And "alphabetical" is selected
     And id "1" is entered
-    Then the information of the podcast is shown  
+    Then the information of the podcast is shown 
+
+    
+
 
 
 
