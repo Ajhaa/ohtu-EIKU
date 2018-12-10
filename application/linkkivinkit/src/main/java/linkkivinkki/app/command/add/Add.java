@@ -1,6 +1,7 @@
 
 package linkkivinkki.app.command.add;
 
+import linkkivinkki.app.App;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
 import linkkivinkki.domain.Book;
@@ -27,7 +28,9 @@ public class Add implements Command {
 
     @Override
     public boolean execute() {
+        int userId = App.currentUser.getId();
         boolean success = false;
+
 
         LOOP: while (true) {
             io.printDivide();
@@ -46,18 +49,21 @@ public class Add implements Command {
             case "b":
                 io.printDivide();
                 Book newBook = io.newBook();
+                newBook.setUserId(userId);
                 success = bookDao.add(newBook);
                 break LOOP;
             case "internetcontent":
             case "i":
                 io.printDivide();
                 InternetContent newInternetContent = io.newInternetContent();
+                newInternetContent.setUserId(userId);
                 success = icDao.add(newInternetContent);
                 break LOOP;
             case "podcast":
             case "p":
                 io.printDivide();
                 Podcast newPodcast = io.newPodcast();
+                newPodcast.setUserId(userId);
                 success = podcastDao.add(newPodcast);
                 break LOOP;
             default:
