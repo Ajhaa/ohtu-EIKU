@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import linkkivinkki.app.App;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
 import linkkivinkki.domain.Book;
@@ -84,10 +85,12 @@ public class View implements Command {
     }
 
     public boolean orderAndPrintAll(String order) {
+        int userId = App.currentUser.getId();
+
         ArrayList<Item> allItems = new ArrayList<>();
-        allItems.addAll(bookDao.findAll());
-        allItems.addAll(icDao.findAll());
-        allItems.addAll(podcastDao.findAll());
+        allItems.addAll(bookDao.findAllByUserId(userId));
+        allItems.addAll(icDao.findAllByUserId(userId));
+        allItems.addAll(podcastDao.findAllByUserId(userId));
 
         if (order.equals("title")) {
             Collections.sort(allItems, new ItemTitleComparator());
@@ -149,17 +152,19 @@ public class View implements Command {
     }
 
     public boolean viewItems(String type) {
+        int userId = App.currentUser.getId();
+
         List<Item> items;
 
         switch (type) {
         case "book":
-            items = bookDao.findAll();
+            items = bookDao.findAllByUserId(userId);
             break;
         case "internetContent":
-            items = icDao.findAll();
+            items = icDao.findAllByUserId(userId);
             break;
         case "podcast":
-            items = podcastDao.findAll();
+            items = podcastDao.findAllByUserId(userId);
             break;
         default:
             return false;
