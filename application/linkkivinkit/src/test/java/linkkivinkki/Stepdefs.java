@@ -31,13 +31,19 @@ public class Stepdefs {
     ItemDao pDao = new InMemoryItemDao();
     UserDao uDao = new InMemoryUserDao();
     List<String> inputLines = new ArrayList<>();
-    
+
     @Given("^a user is logged in")
     public void userIsLoggedIn() {
         somethingIsSelected("r");
         somethingIsSelected("user");
         somethingIsSelected("l");
         somethingIsSelected("user");
+    }
+
+    @Given("^user with username \"([^\"]*)\" exists$")
+    public void user_with_username_exists(String username) throws Throwable {
+        somethingIsSelected("r");
+        somethingIsSelected(username);
     }
 
     @Given("^add is selected$")
@@ -115,7 +121,7 @@ public class Stepdefs {
     public void edit_is_selected() throws Throwable {
         somethingIsSelected("edit");
     }
-    
+
     public void appIsStarted() {
         inputLines.add("return");
         inputLines.add("logout");
@@ -123,7 +129,7 @@ public class Stepdefs {
         io = new StubIO(inputLines);
         app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
-        
+
         //System.out.println(io.getPrints());
     }
 
@@ -227,6 +233,24 @@ public class Stepdefs {
         inputLines.add("");
 
         appIsStarted();
+    }
+
+    @When("^username \"([^\"]*)\" is entered$")
+    public void username_is_entered(String username) throws Throwable {
+        inputLines.add(username);
+        appIsStarted();
+    }
+
+    @When("^invalid username \"([^\"]*)\" is entered$")
+    public void invalid_username_is_entered(String username) throws Throwable {
+        inputLines.add(username);
+        inputLines.add("r");
+        appIsStarted();
+    }
+
+    @Then("^amount of users should be (\\d+)$")
+    public void amount_of_users_should_be(int amt) throws Throwable {
+        assertEquals(amt, uDao.findAll().size());
     }
 
     @Then("^the order is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
