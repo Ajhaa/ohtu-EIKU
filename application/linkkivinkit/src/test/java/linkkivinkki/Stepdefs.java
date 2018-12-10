@@ -4,8 +4,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import linkkivinkki.app.App;
-import linkkivinkki.dao.InMemoryDao;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.io.StubIO;
 import linkkivinkki.domain.Book;
 
@@ -13,19 +11,23 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import linkkivinkki.dao.InMemoryItemDao;
+import linkkivinkki.dao.InMemoryUserDao;
 import linkkivinkki.domain.InternetContent;
-import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
 import linkkivinkki.io.Color;
+import linkkivinkki.dao.ItemDao;
+import linkkivinkki.dao.UserDao;
 
 public class Stepdefs {
 
     int testi;
     App app;
     StubIO io;
-    Dao bookDao = new InMemoryDao();
-    Dao icDao = new InMemoryDao();
-    Dao pDao = new InMemoryDao();
+    ItemDao bookDao = new InMemoryItemDao();
+    ItemDao icDao = new InMemoryItemDao();
+    ItemDao pDao = new InMemoryItemDao();
+    UserDao uDao = new InMemoryUserDao();
     List<String> inputLines = new ArrayList<>();
 
     @Given("^add is selected$")
@@ -87,7 +89,7 @@ public class Stepdefs {
         inputLines.add("return");
         inputLines.add("quit");
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -103,7 +105,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -115,7 +117,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -127,7 +129,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -139,7 +141,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -151,7 +153,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -163,7 +165,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -181,7 +183,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -194,7 +196,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 
@@ -207,7 +209,7 @@ public class Stepdefs {
         inputLines.add("quit");
 
         io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
+        app = new App(io, bookDao, icDao, pDao, uDao);
         app.start();
     }
 

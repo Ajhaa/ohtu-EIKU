@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class UserDaoTest {
+public class DatabaseUserDaoTest {
     
     private Database db;
     private UserDao dao;
@@ -19,7 +19,7 @@ public class UserDaoTest {
     @Before
     public void setUp() throws SQLException {
         this.db = new Database("jdbc:sqlite:test.db");
-        this.dao = new UserDao(db);
+        this.dao = new DatabaseUserDao(db);
         this.conn = db.getConnection();
     }
 

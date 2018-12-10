@@ -7,7 +7,6 @@ import java.util.List;
 
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Item;
@@ -16,15 +15,16 @@ import linkkivinkki.domain.ItemTitleComparator;
 import linkkivinkki.domain.Podcast;
 import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
+import linkkivinkki.dao.ItemDao;
 
 public class View implements Command {
     private IO io;
-    private Dao bookDao;
-    private Dao icDao;
-    private Dao podcastDao;
+    private ItemDao bookDao;
+    private ItemDao icDao;
+    private ItemDao podcastDao;
     private CommandFactory commandFactory;
 
-    public View(IO io, Dao bookDao, Dao icDao, Dao podcastDao, CommandFactory commandFactory) {
+    public View(IO io, ItemDao bookDao, ItemDao icDao, ItemDao podcastDao, CommandFactory commandFactory) {
         this.io = io;
         this.bookDao = bookDao;
         this.icDao = icDao;

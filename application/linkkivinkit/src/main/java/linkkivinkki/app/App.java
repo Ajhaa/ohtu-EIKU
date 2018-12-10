@@ -4,10 +4,10 @@ package linkkivinkki.app;
 import linkkivinkki.domain.User;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.dao.UserDao;
 import linkkivinkki.io.IO;
 import linkkivinkki.io.Color;
+import linkkivinkki.dao.ItemDao;
 
 public class App {
 
@@ -18,7 +18,7 @@ public class App {
 
     public static User currentUser;
 
-    public App(IO io, Dao bookDao, Dao icDao, Dao podcastDao, UserDao userDao) {
+    public App(IO io, ItemDao bookDao, ItemDao icDao, ItemDao podcastDao, UserDao userDao) {
         this.io = io;
         this.commandFactory = new CommandFactory(io, bookDao, icDao, podcastDao, userDao);
     }

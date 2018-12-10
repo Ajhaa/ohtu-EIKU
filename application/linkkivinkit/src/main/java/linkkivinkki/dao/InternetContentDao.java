@@ -12,7 +12,7 @@ import java.util.List;
 import static jdk.nashorn.internal.runtime.Debug.id;
 import linkkivinkki.domain.User;
 
-public class InternetContentDao implements Dao {
+public class InternetContentDao implements ItemDao {
 
     private Database database;
 

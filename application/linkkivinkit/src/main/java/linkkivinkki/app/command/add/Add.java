@@ -3,21 +3,21 @@ package linkkivinkki.app.command.add;
 
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Podcast;
 import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
+import linkkivinkki.dao.ItemDao;
 
 public class Add implements Command {
     private IO io;
-    private Dao bookDao;
-    private Dao icDao;
-    private Dao podcastDao;
+    private ItemDao bookDao;
+    private ItemDao icDao;
+    private ItemDao podcastDao;
     private CommandFactory commandFactory;
 
-    public Add(IO io, Dao bookDao, Dao icDao, Dao podcastDao, CommandFactory commandFactory) {
+    public Add(IO io, ItemDao bookDao, ItemDao icDao, ItemDao podcastDao, CommandFactory commandFactory) {
         this.io = io;
         this.bookDao = bookDao;
         this.icDao = icDao;

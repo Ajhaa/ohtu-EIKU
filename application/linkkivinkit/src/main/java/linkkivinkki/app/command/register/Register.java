@@ -7,7 +7,6 @@ import java.util.List;
 
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.dao.UserDao;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
@@ -18,6 +17,7 @@ import linkkivinkki.domain.Podcast;
 import linkkivinkki.domain.User;
 import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
+import linkkivinkki.dao.ItemDao;
 
 public class Register implements Command {
     private IO io;

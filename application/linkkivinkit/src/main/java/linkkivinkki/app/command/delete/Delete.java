@@ -5,19 +5,19 @@ import java.util.List;
 
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.domain.Item;
 import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
+import linkkivinkki.dao.ItemDao;
 
 public class Delete implements Command {
     private IO io;
-    private Dao bookDao;
-    private Dao icDao;
-    private Dao podcastDao;
+    private ItemDao bookDao;
+    private ItemDao icDao;
+    private ItemDao podcastDao;
     private CommandFactory commandFactory;
 
-    public Delete(IO io, Dao bookDao, Dao icDao, Dao podcastDao, CommandFactory commandFactory) {
+    public Delete(IO io, ItemDao bookDao, ItemDao icDao, ItemDao podcastDao, CommandFactory commandFactory) {
         this.io = io;
         this.bookDao = bookDao;
         this.icDao = icDao;

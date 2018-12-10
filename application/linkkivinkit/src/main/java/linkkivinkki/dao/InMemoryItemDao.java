@@ -7,11 +7,11 @@ import static jdk.nashorn.internal.runtime.Debug.id;
 import linkkivinkki.domain.Item;
 import linkkivinkki.domain.User;
 
-public class InMemoryDao implements Dao {
+public class InMemoryItemDao implements ItemDao {
 
     private List<Item> items;
 
-    public InMemoryDao() {
+    public InMemoryItemDao() {
         items = new ArrayList<Item>();
     }
 

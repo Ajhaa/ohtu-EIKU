@@ -13,7 +13,7 @@ import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
 import linkkivinkki.domain.User;
 
-public class PodcastDao implements Dao {
+public class PodcastDao implements ItemDao {
 
     private Database database;
 

@@ -9,19 +9,19 @@ import linkkivinkki.app.command.register.Register;
 import linkkivinkki.app.command.login.Login;
 import linkkivinkki.app.command.mainview.MainView;
 import linkkivinkki.app.command.view.View;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.dao.UserDao;
 import linkkivinkki.io.IO;
+import linkkivinkki.dao.ItemDao;
 
 public class CommandFactory {
     private IO io;
-    private Dao bookDao;
-    private Dao icDao;
-    private Dao podcastDao;
+    private ItemDao bookDao;
+    private ItemDao icDao;
+    private ItemDao podcastDao;
     private UserDao userDao;
     private HashMap<String, HashMap<String, Command>> commands;
 
-    public CommandFactory(IO io, Dao bookDao, Dao icDao, Dao podcastDao, UserDao userDao) {
+    public CommandFactory(IO io, ItemDao bookDao, ItemDao icDao, ItemDao podcastDao, UserDao userDao) {
         this.io = io;
         this.bookDao = bookDao;
         this.icDao = icDao;
