@@ -13,9 +13,8 @@ Feature: User can view all items
 
   Scenario: viewing all items in order of creation date
     Given a user is logged in
-    And content with title "Sivu" and url "www.google.com" and description "content" is created
-
     And book with title "Kiria" and author "Kirijailia" and description "book" is created
+    And content with title "Sivu" and url "www.google.com" and description "content" is created
     And podcast with name "Jarin tarina" and title "Aamu" and description "podcast" is created
     When view is selected
     And "all" is selected

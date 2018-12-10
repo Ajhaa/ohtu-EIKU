@@ -54,8 +54,8 @@ public class Stepdefs {
         bookIsSelected();
         somethingIsSelected(title);
         somethingIsSelected(author);
-        sleep(100);
         somethingIsSelected(desc);
+        sleep(10);
     }
 
     @Given("^content with title \"([^\"]*)\" and url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
@@ -64,9 +64,8 @@ public class Stepdefs {
         internetcontentIsSelected();
         somethingIsSelected(title);
         somethingIsSelected(url);
-        sleep(100);
         somethingIsSelected(desc);
-        
+        sleep(10);
     }
 
     @Given("^podcast with name \"([^\"]*)\" and title \"([^\"]*)\" and description \"([^\"]*)\" is created$")
@@ -75,9 +74,8 @@ public class Stepdefs {
         podcastIsSelected();
         somethingIsSelected(name);
         somethingIsSelected(title);
-        sleep(100);
         somethingIsSelected(desc);
-        
+        sleep(10);
     }
 
     @When("^\"([^\"]*)\" is selected$")
