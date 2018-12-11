@@ -3,6 +3,7 @@ package linkkivinkki.app.command.delete;
 
 import java.util.List;
 
+import linkkivinkki.app.App;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
 import linkkivinkki.domain.Item;
@@ -68,17 +69,19 @@ public class Delete implements Command {
     }
 
     private boolean listForDeletion(String type) {
+        int userId = App.currentUser.getId();
+
         List<Item> items;
 
         switch (type) {
         case "book":
-            items = bookDao.findAll();
+            items = bookDao.findAllByUserId(userId);
             break;
         case "internetContent":
-            items = icDao.findAll();
+            items = icDao.findAllByUserId(userId);
             break;
         case "podcast":
-            items = podcastDao.findAll();
+            items = podcastDao.findAllByUserId(userId);
             break;
         default:
             return false;
@@ -98,7 +101,7 @@ public class Delete implements Command {
             String input = io.getString();
 
             if (input.equals("return") || input.equals("r")) {
-                return false;
+                return true;
             } else {
                 try {
                     int id = Integer.parseInt(input);
