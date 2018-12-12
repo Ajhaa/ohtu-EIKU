@@ -4,7 +4,10 @@ package linkkivinkki.app.command;
 import java.util.HashMap;
 
 import linkkivinkki.app.command.add.Add;
+import linkkivinkki.app.command.add.AddItemOfType;
 import linkkivinkki.app.command.delete.Delete;
+import linkkivinkki.app.command.delete.DeleteItem;
+import linkkivinkki.app.command.delete.ListForDeletion;
 import linkkivinkki.app.command.register.Register;
 import linkkivinkki.app.command.login.Login;
 import linkkivinkki.app.command.mainview.MainView;
@@ -44,20 +47,54 @@ public class CommandFactory {
     private void setupCommands() {
         commands = new HashMap<>();
 
+        setupLoginCommands();
+        setupMainCommands();
+        setupAddCommands();
+        setupDeleteCommands();
+
+        commands.put("misc", new HashMap<>());
+        commands.get("misc").put("invalid", new Invalid(io));
+    }
+
+    private void setupLoginCommands() {
         commands.put("login", new HashMap<>());
         commands.get("login").put("r", new Register(io, userDao, this));
         commands.get("login").put("l", new Login(io, userDao, this));
         commands.get("login").put("mainView", new MainView(io, this));
+    }
 
+    private void setupMainCommands() {
         commands.put("main", new HashMap<>());
-        commands.get("main").put("add", new Add(io, bookDao, icDao, podcastDao, this));
-        commands.get("main").put("a", new Add(io, bookDao, icDao, podcastDao, this));
-        commands.get("main").put("delete", new Delete(io, bookDao, icDao, podcastDao, this));
-        commands.get("main").put("d", new Delete(io, bookDao, icDao, podcastDao, this));
+        commands.get("main").put("add", new Add(io, this));
+        commands.get("main").put("a", new Add(io, this));
+        commands.get("main").put("delete", new Delete(io, this));
+        commands.get("main").put("d", new Delete(io, this));
         commands.get("main").put("view", new View(io, bookDao, icDao, podcastDao, this));
         commands.get("main").put("v", new View(io, bookDao, icDao, podcastDao, this));
+    }
 
-        commands.put("misc", new HashMap<>());
-        commands.get("misc").put("invalid", new Invalid(io));
+    private void setupAddCommands() {
+        commands.put("add", new HashMap<>());
+        commands.get("add").put("book", new AddItemOfType(io, bookDao, "book"));
+        commands.get("add").put("b", new AddItemOfType(io, bookDao, "book"));
+        commands.get("add").put("internetcontent", new AddItemOfType(io, icDao, "internetcontent"));
+        commands.get("add").put("i", new AddItemOfType(io, icDao, "internetcontent"));
+        commands.get("add").put("podcast", new AddItemOfType(io, podcastDao, "podcast"));
+        commands.get("add").put("p", new AddItemOfType(io, podcastDao, "podcast"));
+    }
+
+    private void setupDeleteCommands() {
+        commands.put("delete", new HashMap<>());
+        commands.get("delete").put("book", new ListForDeletion(io, bookDao, this, "book"));
+        commands.get("delete").put("b", new ListForDeletion(io, bookDao, this, "book"));
+        commands.get("delete").put("internetcontent", new ListForDeletion(io, icDao, this, "internetcontent"));
+        commands.get("delete").put("i", new ListForDeletion(io, icDao, this, "internetcontent"));
+        commands.get("delete").put("podcast", new ListForDeletion(io, podcastDao, this, "podcast"));
+        commands.get("delete").put("p", new ListForDeletion(io, podcastDao, this, "podcast"));
+
+        commands.put("listfordeletion", new HashMap<>());
+        commands.get("listfordeletion").put("book", new DeleteItem(io, bookDao));
+        commands.get("listfordeletion").put("internetcontent", new DeleteItem(io, icDao));
+        commands.get("listfordeletion").put("podcast", new DeleteItem(io, podcastDao));
     }
 }

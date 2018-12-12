@@ -1,73 +1,39 @@
 
 package linkkivinkki.app.command.add;
 
-import linkkivinkki.app.App;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.app.command.CommandFactory;
-import linkkivinkki.domain.Book;
-import linkkivinkki.domain.InternetContent;
-import linkkivinkki.domain.Podcast;
+import linkkivinkki.app.command.Invalid;
 import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
-import linkkivinkki.dao.ItemDao;
 
 public class Add implements Command {
     private IO io;
-    private ItemDao bookDao;
-    private ItemDao icDao;
-    private ItemDao podcastDao;
     private CommandFactory commandFactory;
 
-    public Add(IO io, ItemDao bookDao, ItemDao icDao, ItemDao podcastDao, CommandFactory commandFactory) {
+    public Add(IO io, CommandFactory commandFactory) {
         this.io = io;
-        this.bookDao = bookDao;
-        this.icDao = icDao;
-        this.podcastDao = podcastDao;
         this.commandFactory = commandFactory;
     }
 
     @Override
     public boolean execute() {
-        int userId = App.currentUser.getId();
         boolean success = false;
 
+        while (true) {
+            printInstructions();
+            String input = io.getString().toLowerCase();
 
-        LOOP: while (true) {
+            if (input.equals("return") || input.equals("r")) {
+                break;
+            }
+
             io.printDivide();
-            io.print("What kind of item do you wish to add?");
 
-            io.printCategories();
+            Command cmd = commandFactory.getCommand("add", input);
+            success = cmd.execute();
 
-            io.print("Select an item type or type " + Color.cyanText("return") + " to return to the main menu.");
-            String input = io.getString();
-
-            switch (input) {
-            case "return":
-            case "r":
-                break LOOP;
-            case "book":
-            case "b":
-                io.printDivide();
-                Book newBook = io.newBook();
-                newBook.setUserId(userId);
-                success = bookDao.add(newBook);
-                break LOOP;
-            case "internetcontent":
-            case "i":
-                io.printDivide();
-                InternetContent newInternetContent = io.newInternetContent();
-                newInternetContent.setUserId(userId);
-                success = icDao.add(newInternetContent);
-                break LOOP;
-            case "podcast":
-            case "p":
-                io.printDivide();
-                Podcast newPodcast = io.newPodcast();
-                newPodcast.setUserId(userId);
-                success = podcastDao.add(newPodcast);
-                break LOOP;
-            default:
-                io.print(Color.redText("Invalid command."));
+            if (!cmd.getClass().equals(Invalid.class)) {
                 break;
             }
         }
@@ -81,4 +47,10 @@ public class Add implements Command {
         return success;
     }
 
+    private void printInstructions() {
+        io.printDivide();
+        io.print("What kind of item do you wish to add?");
+        io.printCategories();
+        io.print("Select an item type or type " + Color.cyanText("return") + " to return to the main menu.");
+    }
 }

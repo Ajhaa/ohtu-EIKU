@@ -26,14 +26,15 @@ public class App {
     public void start() {
         io.print("App started.");
 
-        LOGIN: while (true) {
+        LOGIN:
+        while (true) {
             state = "login";
 
             io.printDivide();
             io.print(Color.cyanText("(L)og in") + " or " + Color.cyanText("(R)egister") + " a new account");
             io.print("Enter " + Color.cyanText("quit") + " to quit program");
 
-            String input = io.getString();
+            String input = io.getString().toLowerCase();
 
             Command cmd = commandFactory.getCommand(state, input);
 
