@@ -256,13 +256,12 @@ public class Stepdefs {
     @Then("^the order is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void the_order_is(String first, String second, String third) throws Throwable {
         // Earlier in order = smaller index
-        String items = io.getPrints().get(io.getPrints().size() - 21);
-        String[] splitItems = items.split("\n");
-        System.out.println(Arrays.toString(splitItems));
+        Object[] items = io.getPrints().toArray();
+                
 
-        assertTrue(splitItems[0].contains(first));
-        assertTrue(splitItems[1].contains(second));
-        assertTrue(splitItems[2].contains(third));
+        assertTrue(items[items.length - 23].toString().contains(first));
+        assertTrue(items[items.length - 22].toString().contains(second));
+        assertTrue(items[items.length - 21].toString().contains(third));
     }
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
@@ -287,9 +286,6 @@ public class Stepdefs {
 
     @Then("^error message \"([^\"]*)\" is shown to the user$")
     public void error_message_is_shown_to_the_user(String error) throws Throwable {
-        for (String s : io.getPrints()) {
-            System.out.println(s);
-        }
         assertTrue(io.getPrints().contains(Color.redText(error)));
     }
 
@@ -310,9 +306,6 @@ public class Stepdefs {
 
     @Then("^book \"([^\"]*)\" and content \"([^\"]*)\" and podcast \"([^\"]*)\" are listed$")
     public void book_and_content_and_podcast_are_listed(String book, String content, String podcast) throws Throwable {
-        for (String s : io.getPrints()) {
-            System.out.println(s);
-        }
 
 
         boolean foundBook = false;

@@ -38,12 +38,6 @@ public class Add implements Command {
             }
         }
 
-        if (success) {
-            io.print(Color.greenText("Item was added successfully"));
-        } else {
-            io.print(Color.redText("Adding item failed."));
-        }
-
         return success;
     }
 

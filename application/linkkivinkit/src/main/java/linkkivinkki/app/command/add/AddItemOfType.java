@@ -4,6 +4,7 @@ package linkkivinkki.app.command.add;
 import linkkivinkki.app.App;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.domain.Item;
+import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
 import linkkivinkki.dao.ItemDao;
 
@@ -32,7 +33,15 @@ public class AddItemOfType implements Command {
         }
 
         newItem.setUserId(userId);
-        return dao.add(newItem);
+        boolean success = dao.add(newItem);
+
+        if (success) {
+            io.print(Color.greenText("Item was added successfully"));
+        } else {
+            io.print(Color.redText("Adding item failed."));
+        }
+
+        return success;
     }
 
 }

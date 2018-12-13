@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import static jdk.nashorn.internal.runtime.Debug.id;
 import linkkivinkki.domain.User;
 
 public class InternetContentDao implements ItemDao {

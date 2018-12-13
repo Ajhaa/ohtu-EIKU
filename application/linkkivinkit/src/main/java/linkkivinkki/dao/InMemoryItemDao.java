@@ -2,7 +2,6 @@ package linkkivinkki.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import static jdk.nashorn.internal.runtime.Debug.id;
 
 import linkkivinkki.app.App;
 import linkkivinkki.domain.Item;

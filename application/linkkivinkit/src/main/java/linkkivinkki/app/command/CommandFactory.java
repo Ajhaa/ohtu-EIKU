@@ -12,8 +12,12 @@ import linkkivinkki.app.command.register.Register;
 import linkkivinkki.app.command.login.Login;
 import linkkivinkki.app.command.mainview.MainView;
 import linkkivinkki.app.command.view.View;
+import linkkivinkki.app.command.view.ViewAll;
+import linkkivinkki.app.command.view.ViewAllOfType;
+
 import linkkivinkki.dao.UserDao;
 import linkkivinkki.io.IO;
+import linkkivinkki.dao.BookDao;
 import linkkivinkki.dao.ItemDao;
 
 public class CommandFactory {
@@ -51,6 +55,7 @@ public class CommandFactory {
         setupMainCommands();
         setupAddCommands();
         setupDeleteCommands();
+        setupViewCommands();
 
         commands.put("misc", new HashMap<>());
         commands.get("misc").put("invalid", new Invalid(io));
@@ -69,8 +74,22 @@ public class CommandFactory {
         commands.get("main").put("a", new Add(io, this));
         commands.get("main").put("delete", new Delete(io, this));
         commands.get("main").put("d", new Delete(io, this));
-        commands.get("main").put("view", new View(io, bookDao, icDao, podcastDao, this));
-        commands.get("main").put("v", new View(io, bookDao, icDao, podcastDao, this));
+        commands.get("main").put("view", new View(io, this));
+        commands.get("main").put("v", new View(io, this));
+    }
+
+    private void setupViewCommands() {
+        commands.put("view", new HashMap<>());
+        commands.get("view").put("book", new ViewAllOfType(io, bookDao, this));
+        commands.get("view").put("b", new ViewAllOfType(io, bookDao, this));
+        commands.get("view").put("internetcontent", new ViewAllOfType(io, icDao, this));
+        commands.get("view").put("i", new ViewAllOfType(io, icDao, this));
+        commands.get("view").put("podcast", new ViewAllOfType(io, podcastDao, this));
+        commands.get("view").put("p", new ViewAllOfType(io, podcastDao, this));
+        commands.get("view").put("all", new ViewAll(io, bookDao, icDao, podcastDao, this));
+        commands.get("view").put("a", new ViewAll(io, bookDao, icDao, podcastDao, this));
+        
+        
     }
 
     private void setupAddCommands() {
