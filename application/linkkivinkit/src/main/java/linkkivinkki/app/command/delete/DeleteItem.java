@@ -1,6 +1,7 @@
 
 package linkkivinkki.app.command.delete;
 
+import linkkivinkki.app.App;
 import linkkivinkki.app.command.Command;
 import linkkivinkki.io.Color;
 import linkkivinkki.io.IO;
@@ -29,7 +30,7 @@ public class DeleteItem implements Command {
             } else {
                 try {
                     int id = Integer.parseInt(input);
-                    success = dao.delete(id);
+                    success = dao.delete(id, App.currentUser.getId());
                     break;
                 } catch (Exception e) {
                     io.print(Color.redText("Invalid command."));

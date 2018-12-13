@@ -101,11 +101,12 @@ public class PodcastDao implements ItemDao {
      * @return True if successful, false if something went wrong
      */
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int userId) {
         try {
             Connection conn = database.getConnection();
-            PreparedStatement deletePodcast = conn.prepareStatement("DELETE FROM Podcast WHERE id = ?;");
+            PreparedStatement deletePodcast = conn.prepareStatement("DELETE FROM Podcast WHERE id = ? AND user_id = ?;");
             deletePodcast.setInt(1, id);
+            deletePodcast.setInt(2, userId);
             deletePodcast.execute();
 
             // Close the connection

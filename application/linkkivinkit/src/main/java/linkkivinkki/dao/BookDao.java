@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static jdk.nashorn.internal.runtime.Debug.id;
+import linkkivinkki.app.App;
 import linkkivinkki.domain.User;
 
 public class BookDao implements ItemDao {
@@ -97,14 +98,16 @@ public class BookDao implements ItemDao {
      * Deletes a Book with the given id
      *
      * @param id - The id of the Book to be deleted
+     * @param userId
      * @return True if successful, false if something went wrong
      */
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int userId) {
         try {
             Connection conn = database.getConnection();
-            PreparedStatement deleteBook = conn.prepareStatement("DELETE FROM Book WHERE id = ?;");
+            PreparedStatement deleteBook = conn.prepareStatement("DELETE FROM Book WHERE id = ? AND user_id = ?;");
             deleteBook.setInt(1, id);
+            deleteBook.setInt(2, userId);
             deleteBook.execute();
 
             // Close the connection

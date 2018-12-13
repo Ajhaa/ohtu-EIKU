@@ -69,7 +69,7 @@ public class PodcastDaoTest {
         dao.add(p);
         ArrayList<Podcast> podcasts = dao.findAll();
         p = podcasts.get(0);
-        assertTrue(dao.delete(p.getId()));
+        assertTrue(dao.delete(p.getId(), -1));
     }
 
     @Test

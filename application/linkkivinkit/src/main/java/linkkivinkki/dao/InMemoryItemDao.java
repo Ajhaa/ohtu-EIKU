@@ -27,7 +27,7 @@ public class InMemoryItemDao implements ItemDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int userId) {
         return true;
     }
 

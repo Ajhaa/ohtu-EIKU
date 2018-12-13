@@ -68,7 +68,7 @@ public class BookDaoTest {
         dao.add(b);
         ArrayList<Book> books = dao.findAll();
         b = books.get(0);
-        assertTrue(dao.delete(b.getId()));
+        assertTrue(dao.delete(b.getId(), -1)); // default userId is -1
     }
 
     @Test

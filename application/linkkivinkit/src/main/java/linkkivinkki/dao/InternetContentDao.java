@@ -98,14 +98,16 @@ public class InternetContentDao implements ItemDao {
      * Deletes a InternetContent with the given id
      *
      * @param id - The id of the InternetContent to be deleted
+     * @param userId
      * @return True if successful, false if something went wrong
      */
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int userId) {
         try {
             Connection conn = database.getConnection();
-            PreparedStatement deleteContent = conn.prepareStatement("DELETE FROM InternetContent WHERE id = ?;");
+            PreparedStatement deleteContent = conn.prepareStatement("DELETE FROM InternetContent WHERE id = ? AND user_id = ?;");
             deleteContent.setInt(1, id);
+            deleteContent.setInt(2, id);
             deleteContent.execute();
 
             // Close the connection

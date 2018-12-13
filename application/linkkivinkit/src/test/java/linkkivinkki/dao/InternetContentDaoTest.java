@@ -68,7 +68,7 @@ public class InternetContentDaoTest {
         dao.add(content);
         ArrayList<InternetContent> contents = dao.findAll();
         content = contents.get(0);
-        assertTrue(dao.delete(content.getId()));
+        assertTrue(dao.delete(content.getId(), -1));
     }
 
     @Test
