@@ -35,6 +35,7 @@ public class Database {
             
             PreparedStatement initBook = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Book ("
                     + "id integer PRIMARY KEY, "
+                    + "user_id integer, "
                     + "title varchar(255), "
                     + "author varchar(255), "
                     + "description varchar(255), "
@@ -45,6 +46,7 @@ public class Database {
 
             PreparedStatement initLink = conn.prepareStatement("CREATE TABLE IF NOT EXISTS InternetContent ("
                     + "id integer PRIMARY KEY, "
+                    + "user_id integer, "
                     + "title varchar(255), "
                     + "url varchar(255), "
                     + "description varchar(255), "
@@ -55,6 +57,7 @@ public class Database {
 
             PreparedStatement initPodcast = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Podcast ("
                     + "id integer PRIMARY KEY, "
+                    + "user_id integer, "
                     + "name varchar(255), " // 'name' is the name of the Podcast, E.G. 'The EIKU Podcast'
                     + "title varchar(255), " // 'title' is the title of the episode, E.G. 'Ajhaa talks about MongoDB'
                     + "description varchar(255), "
@@ -62,6 +65,13 @@ public class Database {
             );
             initPodcast.execute();
             initPodcast.close();
+            
+            PreparedStatement initUser = conn.prepareStatement("CREATE TABLE IF NOT EXISTS User ("
+                    + "id integer PRIMARY KEY, "
+                    + "username varchar(24));"
+            );
+            initUser.execute();
+            initUser.close();
             
             conn.close();
 

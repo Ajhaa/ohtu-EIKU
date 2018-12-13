@@ -1,6 +1,5 @@
 package linkkivinkki.dao;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -8,7 +7,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +16,8 @@ import org.junit.Test;
 import linkkivinkki.data.Database;
 import linkkivinkki.domain.Book;
 import linkkivinkki.domain.Podcast;
+import linkkivinkki.domain.User;
+import static org.junit.Assert.assertEquals;
 
 public class PodcastDaoTest {
 
@@ -59,6 +60,7 @@ public class PodcastDaoTest {
         assertEquals(p.getTitle(), podcasts.get(0).getTitle());
         assertEquals(p.getDescription(), podcasts.get(0).getDescription());
         assertEquals(p.getCreationDate(), podcasts.get(0).getCreationDate());
+        assertEquals(p.getUserId(), podcasts.get(0).getUserId());
     }
 
     @Test
@@ -67,7 +69,7 @@ public class PodcastDaoTest {
         dao.add(p);
         ArrayList<Podcast> podcasts = dao.findAll();
         p = podcasts.get(0);
-        assertTrue(dao.delete(p.getId()));
+        assertTrue(dao.delete(p.getId(), -1));
     }
 
     @Test
@@ -82,6 +84,7 @@ public class PodcastDaoTest {
         assertEquals("nimi", found.getName());
         assertEquals("otsikko", found.getTitle());
         assertEquals("kuvaus", found.getDescription());
+        assertEquals(-1, found.getUserId()); // -1 is the 'default' user id of an item
         assertEquals(p.getCreationDate(), found.getCreationDate());
     }
 
@@ -91,7 +94,7 @@ public class PodcastDaoTest {
         assertEquals(null, found);
     }
 
-        @Test
+    @Test
     public void updateReturnsFalseIfNotABook() {
         assertFalse(dao.update(new Book("name", "title", "desc")));
     }
@@ -114,5 +117,29 @@ public class PodcastDaoTest {
     @Test
     public void updateReturnsFalseIfContentDoesNotExist() throws SQLException {
         assertFalse(dao.update(new Podcast("name", "title", "desc")));
+    }
+
+    @Test
+    public void findAllByUserIdReturnsCorrectItems() throws SQLException {
+        User u1 = new User("käyttäjä1");
+        User u2 = new User("käyttäjä2");
+        u1.setId(1);
+        u2.setId(2);
+
+        Podcast p1 = new Podcast("hello", "world", "desc");
+        p1.setUserId(u1.getId());
+        Podcast p2 = new Podcast("hei", "maailma", "kuvaus");
+        p2.setUserId(u2.getId());
+        Podcast p3 = new Podcast("abc", "def", "ghi");
+        p3.setUserId(u1.getId());
+
+        dao.add(p1);
+        dao.add(p2);
+        dao.add(p3);
+
+        List<Podcast> userOnePodcasts = dao.findAllByUserId(u1.getId());
+        assertEquals(2, userOnePodcasts.size());
+        assertEquals(u1.getId(), userOnePodcasts.get(0).getUserId());
+        assertEquals(u1.getId(), userOnePodcasts.get(1).getUserId());
     }
 }

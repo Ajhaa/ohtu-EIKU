@@ -6,12 +6,9 @@ import linkkivinkki.domain.Book;
 import linkkivinkki.domain.InternetContent;
 import linkkivinkki.domain.Podcast;
 import java.util.Scanner;
-import java.util.List;
 
 public class ConsoleIO implements IO {
     private Scanner scanner;
-
-
 
     public ConsoleIO() {
         scanner = new Scanner(System.in);
@@ -21,7 +18,7 @@ public class ConsoleIO implements IO {
     public void print(String text) {
         System.out.println(text);
     }
-    
+
     @Override
     public void printColor(String text, Color color) {
         System.out.println(color + text + Color.Reset);
@@ -37,7 +34,7 @@ public class ConsoleIO implements IO {
         //System.out.print("Tags: ");
         //System.out.println(tags.toString().substring(1, tags.toString().length() - 1));
         System.out.println("Date created: " + item.getCreationDate());
-        
+
         if (item.isRead()) {
             System.out.println("Read on: " + item.getReadDate());
         } else {
@@ -86,5 +83,18 @@ public class ConsoleIO implements IO {
         String description = scanner.nextLine();
 
         return new Podcast(name, title, description);
+    }
+
+    @Override
+    public void printCategories() {
+        System.out.println(Color.cyanText("books"));
+        System.out.println(Color.cyanText("internetcontent"));
+        System.out.println(Color.cyanText("podcasts"));
+        System.out.println("");
+    }
+
+    @Override
+    public void printDivide() {
+        System.out.println("-----------------------------\n");
     }
 }

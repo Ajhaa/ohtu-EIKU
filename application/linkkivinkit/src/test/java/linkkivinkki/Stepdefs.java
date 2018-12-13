@@ -4,29 +4,47 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import linkkivinkki.app.App;
-import linkkivinkki.dao.InMemoryDao;
-import linkkivinkki.dao.Dao;
 import linkkivinkki.io.StubIO;
 import linkkivinkki.domain.Book;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import linkkivinkki.dao.InMemoryItemDao;
+import linkkivinkki.dao.InMemoryUserDao;
 import linkkivinkki.domain.InternetContent;
-import linkkivinkki.domain.Item;
 import linkkivinkki.domain.Podcast;
 import linkkivinkki.io.Color;
+import linkkivinkki.dao.ItemDao;
+import linkkivinkki.dao.UserDao;
+import linkkivinkki.domain.User;
 
 public class Stepdefs {
 
     int testi;
     App app;
     StubIO io;
-    Dao bookDao = new InMemoryDao();
-    Dao icDao = new InMemoryDao();
-    Dao pDao = new InMemoryDao();
+    ItemDao bookDao = new InMemoryItemDao();
+    ItemDao icDao = new InMemoryItemDao();
+    ItemDao pDao = new InMemoryItemDao();
+    UserDao uDao = new InMemoryUserDao();
     List<String> inputLines = new ArrayList<>();
+
+    @Given("^a user is logged in")
+    public void userIsLoggedIn() {
+        somethingIsSelected("r");
+        somethingIsSelected("user");
+        somethingIsSelected("l");
+        somethingIsSelected("user");
+    }
+
+    @Given("^user with username \"([^\"]*)\" exists$")
+    public void user_with_username_exists(String username) throws Throwable {
+        somethingIsSelected("r");
+        somethingIsSelected(username);
+    }
 
     @Given("^add is selected$")
     public void addIsSelected() {
@@ -35,20 +53,43 @@ public class Stepdefs {
 
     @Given("^book with title \"([^\"]*)\" and author \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void bookIsCreated(String title, String author, String desc) {
+        /*uDao.add(new User("admin"));
         bookDao.add(new Book(author, title, desc));
-        sleep(10);
+        somethingIsSelected("l");
+        somethingIsSelected("admin"); */
+
+        addIsSelected();
+        bookIsSelected();
+        somethingIsSelected(title);
+        somethingIsSelected(author);
+        somethingIsSelected(desc);
     }
 
     @Given("^content with title \"([^\"]*)\" and url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void content_with_title_and_url_and_description_is_created(String title, String url, String desc) throws Throwable {
-        icDao.add(new InternetContent(title, url, desc));
-        sleep(10);
+        addIsSelected();
+        internetcontentIsSelected();
+        somethingIsSelected(title);
+        somethingIsSelected(url);
+        somethingIsSelected(desc);
     }
 
     @Given("^podcast with name \"([^\"]*)\" and title \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void podcast_with_name_and_title_and_description_is_created(String name, String title, String desc) throws Throwable {
-        pDao.add(new Podcast(name, title, desc));
-        sleep(10);
+        addIsSelected();
+        podcastIsSelected();
+        somethingIsSelected(name);
+        somethingIsSelected(title);
+        somethingIsSelected(desc);
+
+    }
+
+    @When("^another user is logged in")
+    public void anotherUserLogged() {
+        somethingIsSelected("r");
+        somethingIsSelected("user2");
+        somethingIsSelected("l");
+        somethingIsSelected("user2");
     }
 
     @When("^\"([^\"]*)\" is selected$")
@@ -62,12 +103,12 @@ public class Stepdefs {
     }
 
     @When("^internetcontent is selected$")
-    public void internetcontent_is_selected() throws Throwable {
+    public void internetcontentIsSelected() throws Throwable {
         somethingIsSelected("internetcontent");
     }
 
     @When("^podcast is selected$")
-    public void podcast_is_selected() throws Throwable {
+    public void podcastIsSelected() throws Throwable {
         somethingIsSelected("podcast");
     }
 
@@ -81,14 +122,22 @@ public class Stepdefs {
         somethingIsSelected("edit");
     }
 
+    public void appIsStarted() {
+        inputLines.add("return");
+        inputLines.add("logout");
+        inputLines.add("quit");
+        io = new StubIO(inputLines);
+        app = new App(io, bookDao, icDao, pDao, uDao);
+        app.start();
+
+        //System.out.println(io.getPrints());
+    }
+
     @When("^\"([^\"]*)\" order is selected$")
     public void order_is_selected(String order) throws Throwable {
         somethingIsSelected(order);
         inputLines.add("return");
-        inputLines.add("quit");
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^item with id \"([^\"]*)\" is selected$")
@@ -96,15 +145,17 @@ public class Stepdefs {
         somethingIsSelected(id);
     }
 
+    @When("^user logs out$")
+    public void userLogsOut() {
+        somethingIsSelected("logout");
+    }
+
     @When("^id \"([^\"]*)\" is entered$")
     public void id_is_entered(String id) throws Throwable {
         inputLines.add(id);
         inputLines.add("main");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^title \"([^\"]*)\", author \"([^\"]*)\" and an empty description are entered")
@@ -112,11 +163,8 @@ public class Stepdefs {
         inputLines.add(title);
         inputLines.add(author);
         inputLines.add("");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^title \"([^\"]*)\", author \"([^\"]*)\" and description \"([^\"]*)\" are entered$")
@@ -124,11 +172,8 @@ public class Stepdefs {
         inputLines.add(title);
         inputLines.add(author);
         inputLines.add(description);
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^title \"([^\"]*)\", url \"([^\"]*)\" and an empty description are entered$")
@@ -136,11 +181,8 @@ public class Stepdefs {
         inputLines.add(title);
         inputLines.add(url);
         inputLines.add("");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^name \"([^\"]*)\", title \"([^\"]*)\" and an empty description are entered$")
@@ -148,11 +190,8 @@ public class Stepdefs {
         inputLines.add(name);
         inputLines.add(title);
         inputLines.add("");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^name \"([^\"]*)\", title \"([^\"]*)\" and description \"([^\"]*)\" are entered$")
@@ -160,11 +199,8 @@ public class Stepdefs {
         inputLines.add(name);
         inputLines.add(title);
         inputLines.add(description);
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^date is selected$")
@@ -177,12 +213,8 @@ public class Stepdefs {
         inputLines.add(title);
         inputLines.add(author);
         inputLines.add("");
-        inputLines.add("return");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^new title \"([^\"]*)\" and url \"([^\"]*)\" and an empty description are set$")
@@ -190,12 +222,8 @@ public class Stepdefs {
         inputLines.add(title);
         inputLines.add(url);
         inputLines.add("");
-        inputLines.add("return");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
     }
 
     @When("^new name \"([^\"]*)\" and title \"([^\"]*)\" and an empty description are set$")
@@ -203,23 +231,37 @@ public class Stepdefs {
         inputLines.add(name);
         inputLines.add(title);
         inputLines.add("");
-        inputLines.add("return");
-        inputLines.add("quit");
 
-        io = new StubIO(inputLines);
-        app = new App(io, bookDao, icDao, pDao);
-        app.start();
+        appIsStarted();
+    }
+
+    @When("^username \"([^\"]*)\" is entered$")
+    public void username_is_entered(String username) throws Throwable {
+        inputLines.add(username);
+        appIsStarted();
+    }
+
+    @When("^invalid username \"([^\"]*)\" is entered$")
+    public void invalid_username_is_entered(String username) throws Throwable {
+        inputLines.add(username);
+        inputLines.add("r");
+        appIsStarted();
+    }
+
+    @Then("^amount of users should be (\\d+)$")
+    public void amount_of_users_should_be(int amt) throws Throwable {
+        assertEquals(amt, uDao.findAll().size());
     }
 
     @Then("^the order is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void the_order_is(String first, String second, String third) throws Throwable {
         // Earlier in order = smaller index
-        String items = io.getPrints().get(io.getPrints().size() - 10);
-        String[] splitItems = items.split("\n");
+        Object[] items = io.getPrints().toArray();
+                
 
-        assertTrue(splitItems[0].contains(first)); 
-        assertTrue(splitItems[1].contains(second));
-        assertTrue(splitItems[2].contains(third));
+        assertTrue(items[items.length - 23].toString().contains(first));
+        assertTrue(items[items.length - 22].toString().contains(second));
+        assertTrue(items[items.length - 21].toString().contains(third));
     }
 
     @Then("^confirmation message \"([^\"]*)\" is shown$")
@@ -229,17 +271,17 @@ public class Stepdefs {
 
     @Then("^the information of the podcast is shown$")
     public void the_information_of_the_podcast_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(pDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
+        assertTrue(io.getPrints().contains(pDao.findOne(1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^the information of the content is shown$")
     public void the_information_of_the_content_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(icDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
+        assertTrue(io.getPrints().contains(icDao.findOne(1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^the information of the book is shown$")
     public void the_information_of_the_book_is_shown() throws Throwable {
-        assertTrue(io.getPrints().contains(bookDao.findOne(-1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
+        assertTrue(io.getPrints().contains(bookDao.findOne(1).toString())); // USING ID -1 B/C IT'S THE DEFAULT ID
     }
 
     @Then("^error message \"([^\"]*)\" is shown to the user$")
@@ -264,6 +306,8 @@ public class Stepdefs {
 
     @Then("^book \"([^\"]*)\" and content \"([^\"]*)\" and podcast \"([^\"]*)\" are listed$")
     public void book_and_content_and_podcast_are_listed(String book, String content, String podcast) throws Throwable {
+
+
         boolean foundBook = false;
         boolean foundContent = false;
         boolean foundPodcast = false;

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Item {
     private int id;
+    private int userId;
     private String title;
     private List<String> tags;
     private boolean read;
@@ -13,8 +14,9 @@ public class Item {
     private Date readDate;
     private String description;
 
-    public Item(int id, String title, List<String> tags, boolean read, Date dateCreated, Date read_date, String description) {
+    public Item(int id, int userId, String title, List<String> tags, boolean read, Date dateCreated, Date read_date, String description) {
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.tags = tags;
         this.read = read;
@@ -24,11 +26,11 @@ public class Item {
     }
 
     public Item(String title, String description) {
-        this(-1, title, new ArrayList<>(), false, new Date(), null, description);
+        this(-1, -1, title, new ArrayList<>(), false, new Date(), null, description);
     }
 
     public Item() {
-        this(-1, "", new ArrayList<>(), false, new Date(), null, "");
+        this(-1, -1, "", new ArrayList<>(), false, new Date(), null, "");
     }
 
     public void addTag(String tag) {
@@ -125,6 +127,14 @@ public class Item {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public void setUserId(int i) {
+        this.userId = i;
+    }
+    
+    public int getUserId() {
+        return this.userId;
     }
 
     public String info() {

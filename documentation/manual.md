@@ -16,6 +16,12 @@ on the command line.
 
 ## Operating the program
 
+### Registration & Logging in
+
+On startup, the application will ask you to either create a new user or log in with an existing user. To register a new user, enter ```r```. Enter a username of your choice (maximum length 25 characters). Usernames are unique! If the username you chose was valid, you will see a confirmation message, and can now log in.
+
+To log in, enter ```l```. If the username you enter is correct, you will now be shown the main menu. Memo items are only visible to the user who created them, so make sure not to forget your username!
+
 ### The Main Menu
 
 After executing, you are greeted with the main menu of the program where you currently have four commands available.
