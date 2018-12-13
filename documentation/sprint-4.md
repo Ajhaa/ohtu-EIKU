@@ -8,7 +8,11 @@
 - [x] Kirjautuminen
   - [Määrittely](https://github.com/Ajhaa/ohtu-EIKU/blob/master/application/linkkivinkit/src/test/resources/linkkivinkki/login.feature)
 - [ ] Käyttöliittymän refaktorointi
-  - Määrittely
-    - Käyttöliittymää on hajotettu loogisiin, pienempiin palasiin
-    - Sovelluksen toiminnallisuus ei muutu
-    - Sovellus toimii edelleen halutusti (testit menevät läpi)
+  - [ ] Käyttöliittymää on hajotettu loogisiin, pienempiin palasiin
+    - [x] Lisääminen
+    - [x] Poistaminen
+    - [x] Kirjautuminen
+    - [x] Rekisteröityminen
+    - [ ] Näyttäminen
+  - [x] Sovelluksen toiminnallisuus ei muutu
+  - [x] Sovellus toimii edelleen halutusti (testit menevät läpi)
