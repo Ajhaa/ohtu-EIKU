@@ -10,23 +10,20 @@ Topias Teittinen
 Ryhmän yhteistyö sujui suurimmaksi osaksi hyvin. Livetapaamisia olisi toki voinut olla enemmän, 
 varsinkin uusia kriittisiä ominaisuuksia toteuttaessa.
 Työnjako sujui hyvin, vaikka joillain viikoilla osa ei tavoittanut 6h työtunteja.
-Työnjako ei kuitenkaan ollut hirveän agile, ja osa tiimistä oli täysin pihalla toisten tekemistä asioista. Esimerkiksi vain puolet
-tiimistä osasi koodata käyttöliittymää.  
-Työskentely ei pysynyt pelkästään arkipäivissä, vaan myös viikonloppuisin tehtiin hommia.
+Työnjako ei kuitenkaan ollut hirveän agile, ja osa tiimistä oli täysin pihalla toisten tekemistä asioista. Esimerkiksi vain puolet tiimistä oli hyvin perillä käyttöliittymän toiminnasta. Työskentely ei pysynyt pelkästään arkipäivissä, vaan myös viikonloppuisin tehtiin hommia.  
+
+Miniprojektin alkuuviikoilla eivät 'walking skeleton' -periaate ja design patternit olleet kovin tuttuja ja tämä johti sovelluksen käyttöliittymän toteutukseen melko epäoptimaalisella tavalla, saaden aikaan teknistä velkaa, joka jouduttiin maksamaan projektin loppupuolella.
 
 ## Mitä opimme
 Scrum tuli tutuksi, paljon paremmin kuin olisi tullut pelkästeen luentokalvoista lukemalla. Huomasimme myös, että jopa pienen,
-neljän ihmisen tiimin koordinointi on hankalaa, varsinkin alussa.
+neljän ihmisen tiimin koordinointi on hankalaa, varsinkin alussa. Tätä kautta tuli hyvin esille scrum masterin tärkeys yhtään suuremmissa scrum-projekteissa. Käyttöliittymän refaktoroinnin kautta myös commmand-suunnittelumallin käyttäminen, hyödyt ja rajoitukset tulivat materiaalin lukemista paremmin selville.
 
-## Mitä oisimme halunnut oppia
+## Mitä olisimme halunneet oppia
 Miniprojekti tuki mielestämme hyvin kurssin oppimistavotteita; opimme ketteriä menetelmiä 
 ja saimme hyvän katsauksen tiimityöskentelyn ongelmiin ja hyötyihin.
 
 ## Mikä tuntui turhalta
-Cucumber-säätöön kului aivan liian paljon työaikaa,
-mikä ei edes johtunut siitä, että itse lopputuotteessa olisi ollut vikaa,
-vaan siitä, että testien käyttämien Stub-olioiden ja InMemoryDaojen toteutuksissa oli virheitä.
-Joillain viikoilla saattoi puolet työajasta kulua cucumberin kanssaa tappeluun.
+Cucumber-säätöön kului aivan liian paljon työaikaa, mikä ei edes johtunut siitä, että itse lopputuotteessa olisi ollut vikaa, vaan siitä, että testien käyttämien Stub-olioiden ja InMemoryDaojen toteutuksissa oli virheitä. Joillain viikoilla saattoi puolet työajasta kulua cucumberin kanssaa tappeluun.
 
 ## Sprinttikohtaiset ongelmat
 ### Sprintti 1
