@@ -1,6 +1,8 @@
 # ohtu-EIKU
 
-Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".
+Ryhmän EIKU miniprojekti Helsingin Yliopiston kurssille "Ohjelmistotuotanto".  
+
+[Loppuraportti](https://github.com/Ajhaa/ohtu-EIKU/blob/master/documentation/loppuraportti.md)  
 
 **Jatkuva integraatio (Travis):**
 
