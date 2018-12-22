@@ -10,7 +10,7 @@ Topias Teittinen
 Ryhmän yhteistyö sujui suurimmaksi osaksi hyvin. Livetapaamisia olisi toki voinut olla enemmän, 
 varsinkin uusia kriittisiä ominaisuuksia toteuttaessa.
 Työnjako sujui hyvin, vaikka joillain viikoilla osa ei tavoittanut 6h työtunteja.
-Työnjako ei kuitenkaan ollut hirveän agile, ja osa tiimistä oli täysin pihalla toisten tekemistä asioista. Esimerkiksi vain puolet tiimistä oli hyvin perillä käyttöliittymän toiminnasta. Työskentely ei pysynyt pelkästään arkipäivissä, vaan myös viikonloppuisin tehtiin hommia.  
+Työnjako ei kuitenkaan ollut hirveän agile, ja osa tiimistä oli täysin pihalla toisten tekemistä asioista. Esimerkiksi vain puolet tiimistä oli hyvin perillä käyttöliittymän toiminnasta. Työskentely ei pysynyt pelkästään arkipäivissä, vaan myös viikonloppuisin tehtiin hommia. Työtunnit kasautuivat usein sprintin vikoille päiville, vaikka luultavasti mukavampaa olisi ollut jakaa ne tasaisesti koko viikolle.
 
 Miniprojektin alkuuviikoilla eivät 'walking skeleton' -periaate ja design patternit olleet kovin tuttuja ja tämä johti sovelluksen käyttöliittymän toteutukseen melko epäoptimaalisella tavalla, saaden aikaan teknistä velkaa, joka jouduttiin maksamaan projektin loppupuolella.
 
